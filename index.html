@@ -197,6 +197,7 @@
     .modal h3 { font: 600 1.8rem 'Playfair Display', Georgia, serif; margin: 12px 0 9px; }
     .modal p { color: var(--muted); line-height: 1.65; margin: 0 0 22px; }
     .close { border: 0; border-radius: 12px; padding: 12px 22px; background: #6b3e2c; color: white; font: 700 .9rem 'DM Sans', sans-serif; cursor: pointer; }
+    .close:disabled { background: #b9aa9b; color: #f8f2eb; cursor: not-allowed; box-shadow: none; }
     @keyframes rise { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @media (max-width: 620px) {
       .page { width: min(100% - 24px, 520px); padding-top: 18px; }
@@ -331,7 +332,7 @@
       <div class="modal-icon" aria-hidden="true">🛠️</div>
       <h3 id="testingTitle">Website Still in Testing</h3>
       <p id="testingDescription">This website is still in testing! Some features and details may change as we get everything ready for Thanksgiving. Thanks for your patience!</p>
-      <button class="close" id="dismissTesting" type="button">Got it!</button>
+      <button class="close" id="dismissTesting" type="button" disabled>Let&#39;s Go! (3)</button>
     </div>
   </div>
 
@@ -346,7 +347,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-12';
+    const updateVersion = '2026-11-23-13';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -389,8 +390,23 @@
     }
 
     function closeTestingNotice() {
+      if (dismissTesting.disabled) return;
       testingModal.classList.remove('open');
     }
+
+    // Give visitors three seconds to read the testing notice before continuing.
+    let testingSecondsLeft = 3;
+    dismissTesting.textContent = "Let's Go! (" + testingSecondsLeft + ")";
+    const testingCountdown = setInterval(() => {
+      testingSecondsLeft -= 1;
+      if (testingSecondsLeft > 0) {
+        dismissTesting.textContent = "Let's Go! (" + testingSecondsLeft + ")";
+      } else {
+        clearInterval(testingCountdown);
+        dismissTesting.disabled = false;
+        dismissTesting.textContent = "Let's Go!";
+      }
+    }, 1000);
 
     dismissTesting.addEventListener('click', closeTestingNotice);
     testingModal.addEventListener('click', (event) => {
