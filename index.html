@@ -245,12 +245,18 @@
 </head>
 <body>
   <div class="falling-leaves" id="fallingLeaves" aria-hidden="true">
-    <span class="falling-leaf" style="--left: 7%; --size: 22px; --duration: 13s; --delay: -2s; --drift: 42px;">🍂</span>
-    <span class="falling-leaf" style="--left: 23%; --size: 18px; --duration: 16s; --delay: -9s; --drift: -35px;">🍁</span>
-    <span class="falling-leaf" style="--left: 41%; --size: 24px; --duration: 14s; --delay: -5s; --drift: 50px;">🍂</span>
-    <span class="falling-leaf" style="--left: 59%; --size: 19px; --duration: 17s; --delay: -12s; --drift: -44px;">🍁</span>
-    <span class="falling-leaf" style="--left: 76%; --size: 23px; --duration: 15s; --delay: -7s; --drift: 38px;">🍂</span>
-    <span class="falling-leaf" style="--left: 92%; --size: 17px; --duration: 18s; --delay: -14s; --drift: -32px;">🍁</span>
+    <span class="falling-leaf" style="--left: 4%; --size: 18px; --duration: 11s; --delay: -1s; --drift: 34px;">🍂</span>
+    <span class="falling-leaf" style="--left: 12%; --size: 22px; --duration: 13s; --delay: -7s; --drift: -42px;">🍁</span>
+    <span class="falling-leaf" style="--left: 20%; --size: 17px; --duration: 10s; --delay: -4s; --drift: 38px;">🍂</span>
+    <span class="falling-leaf" style="--left: 28%; --size: 21px; --duration: 12s; --delay: -10s; --drift: -36px;">🍁</span>
+    <span class="falling-leaf" style="--left: 36%; --size: 19px; --duration: 14s; --delay: -2s; --drift: 45px;">🍂</span>
+    <span class="falling-leaf" style="--left: 44%; --size: 23px; --duration: 11s; --delay: -8s; --drift: -40px;">🍁</span>
+    <span class="falling-leaf" style="--left: 52%; --size: 17px; --duration: 13s; --delay: -5s; --drift: 32px;">🍂</span>
+    <span class="falling-leaf" style="--left: 60%; --size: 22px; --duration: 10s; --delay: -12s; --drift: -44px;">🍁</span>
+    <span class="falling-leaf" style="--left: 68%; --size: 18px; --duration: 12s; --delay: -3s; --drift: 41px;">🍂</span>
+    <span class="falling-leaf" style="--left: 76%; --size: 21px; --duration: 14s; --delay: -9s; --drift: -35px;">🍁</span>
+    <span class="falling-leaf" style="--left: 84%; --size: 17px; --duration: 11s; --delay: -6s; --drift: 39px;">🍂</span>
+    <span class="falling-leaf" style="--left: 94%; --size: 22px; --duration: 13s; --delay: -11s; --drift: -42px;">🍁</span>
   </div>
 
   <main class="page">
@@ -409,7 +415,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-17';
+    const updateVersion = '2026-11-23-18';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -464,14 +470,14 @@
       dismissTesting.style.backgroundSize = '0% 100%';
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          dismissTesting.style.transition = 'background-size 1.5s linear';
+          dismissTesting.style.transition = 'background-size 1s linear';
           dismissTesting.style.backgroundSize = '100% 100%';
         });
       });
       setTimeout(() => {
         dismissTesting.disabled = false;
         dismissTesting.style.backgroundSize = '100% 100%';
-      }, 1500);
+      }, 1000);
     }
 
     dismissTesting.addEventListener('click', closeTestingNotice);
