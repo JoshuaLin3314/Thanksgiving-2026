@@ -470,7 +470,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-22';
+    const updateVersion = '2026-11-23-23';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -478,7 +478,16 @@
     const modal = document.getElementById('menuModal');
     const closeButton = document.getElementById('closeModal');
 
-    // Expand or collapse the older website update entries.\n    const previousUpdatesButton = document.getElementById('previousUpdatesButton');\n    const previousUpdates = document.getElementById('previousUpdates');\n    previousUpdatesButton.addEventListener('click', () => {\n      const isExpanded = previousUpdatesButton.getAttribute('aria-expanded') === 'true';\n      previousUpdatesButton.setAttribute('aria-expanded', String(!isExpanded));\n      previousUpdates.hidden = isExpanded;\n      previousUpdatesButton.textContent = isExpanded ? 'Click here for previous update logs ↓' : 'Hide previous update logs ↑';\n    });\n\n    // Count down to the start of Thanksgiving Day in each visitor's local time zone.
+    // Expand or collapse the older website update entries.
+    const previousUpdatesButton = document.getElementById('previousUpdatesButton');
+    const previousUpdates = document.getElementById('previousUpdates');
+    previousUpdatesButton.addEventListener('click', () => {
+      const isExpanded = previousUpdatesButton.getAttribute('aria-expanded') === 'true';
+      previousUpdatesButton.setAttribute('aria-expanded', String(!isExpanded));
+      previousUpdates.hidden = isExpanded;
+      previousUpdatesButton.textContent = isExpanded ? 'Click here for previous update logs ↓' : 'Hide previous update logs ↑';
+    });
+\n    // Count down to the start of Thanksgiving Day in each visitor's local time zone.
     const thanksgivingDate = new Date(2026, 10, 27, 17, 30, 0);
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
