@@ -470,7 +470,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-24';
+    const updateVersion = '2026-11-23-25';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -564,13 +564,19 @@
       dismissTesting.focus();
     }
 
-    // Also check for new published versions while someone already has the site open.
-    // A cache-busting request prevents the browser from reusing an old copy of this page.
+    // Check for newly published versions quickly while the page is open.
+    // The request is cache-busted and checks the published page visitors will refresh into.
+    let updateCheckInProgress = false;
     async function checkForLiveUpdate() {
+      if (updateCheckInProgress || updateModal.classList.contains('open')) return;
+      updateCheckInProgress = true;
       try {
         const pageUrl = new URL(window.location.href);
         pageUrl.searchParams.set('updateCheck', Date.now().toString());
-        const response = await fetch(pageUrl.toString(), { cache: 'no-store' });
+        const response = await fetch(pageUrl.toString(), {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' }
+        });
         if (!response.ok) return;
         const pageHtml = await response.text();
         const match = pageHtml.match(/const\s+updateVersion\s*=\s*['"]([^'"]+)['"]/);
@@ -588,10 +594,12 @@
         }
       } catch (error) {
         // A temporary network failure should not interrupt the invitation page.
+      } finally {
+        updateCheckInProgress = false;
       }
     }
     checkForLiveUpdate();
-    setInterval(checkForLiveUpdate, 5000);
+    setInterval(checkForLiveUpdate, 1500);
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) checkForLiveUpdate();
     });
