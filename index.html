@@ -137,6 +137,27 @@
     .upcoming-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
     .upcoming-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
     .upcoming-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .seating-section { max-width: 900px; margin: 38px auto 0; }
+    .seating-heading { text-align: center; margin-bottom: 18px; }
+    .seating-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
+    .seating-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
+    .seating-card { padding: 26px 18px 22px; border: 1px solid #eadcc9; border-radius: 20px; background: rgba(255,250,242,.9); box-shadow: 0 8px 24px rgba(80,52,33,.045); }
+    .round-table-wrap { width: min(100%, 430px); aspect-ratio: 1; margin: 0 auto; position: relative; }
+    .round-table { position: absolute; width: 49%; height: 49%; left: 25.5%; top: 25.5%; border-radius: 50%; display: grid; place-items: center; text-align: center; padding: 18px; color: #fff6e8; background: radial-gradient(circle at 35% 30%, #a96d48, #633b2b 75%); border: 7px solid #e5c69f; box-shadow: inset 0 0 0 2px rgba(255,255,255,.18), 0 8px 18px rgba(70,42,27,.16); }
+    .round-table strong { font: 600 clamp(1rem, 3vw, 1.3rem) 'Playfair Display', Georgia, serif; }
+    .round-table span { display: block; color: #f1d9bb; font-size: .72rem; margin-top: 5px; }
+    .seat { position: absolute; width: 23%; height: 18%; border: 1px solid #dfc5a8; border-radius: 13px; background: #fffaf2; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; box-shadow: 0 5px 13px rgba(80,52,33,.09); color: var(--ink); }
+    .seat .seat-icon { font-size: 1.15rem; }
+    .seat strong { font-size: .78rem; }
+    .seat small { color: var(--muted); font-size: .62rem; }
+    .seat-1 { left: 38.5%; top: 0; }
+    .seat-2 { right: 0; top: 22%; }
+    .seat-3 { right: 0; bottom: 22%; }
+    .seat-4 { left: 38.5%; bottom: 0; }
+    .seat-5 { left: 0; bottom: 22%; }
+    .seat-6 { left: 0; top: 22%; }
+    .seating-note { text-align: center; color: var(--muted); font-size: .78rem; margin: 18px 0 0; }
+
     .upcoming-card { padding: 22px 18px; text-align: center; border: 1px solid #eadcc9; border-radius: 18px; background: rgba(255,250,242,.88); box-shadow: 0 8px 24px rgba(80,52,33,.045); }
     .upcoming-icon { font-size: 1.8rem; margin-bottom: 10px; }
     .upcoming-card h3 { font: 600 1.25rem 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
@@ -250,6 +271,25 @@
       <p class="menu-note">Take a look at what's being served! 🍁</p>
     </section>
 
+    <section class="seating-section" aria-labelledby="seating-title">
+      <div class="seating-heading">
+        <h2 id="seating-title">Thanksgiving Seating Chart 🪑</h2>
+        <p>Find your place at the table!</p>
+      </div>
+      <div class="seating-card">
+        <div class="round-table-wrap" role="img" aria-label="Top-down view of one round table with six guest seats arranged evenly around it">
+          <div class="round-table"><div><strong>Thanksgiving</strong><span>🍂 Gather Around 🍂</span></div></div>
+          <div class="seat seat-1"><span class="seat-icon">🪑</span><strong>Guest 1</strong><small>Seat 1</small></div>
+          <div class="seat seat-2"><span class="seat-icon">🪑</span><strong>Guest 2</strong><small>Seat 2</small></div>
+          <div class="seat seat-3"><span class="seat-icon">🪑</span><strong>Guest 3</strong><small>Seat 3</small></div>
+          <div class="seat seat-4"><span class="seat-icon">🪑</span><strong>Guest 4</strong><small>Seat 4</small></div>
+          <div class="seat seat-5"><span class="seat-icon">🪑</span><strong>Guest 5</strong><small>Seat 5</small></div>
+          <div class="seat seat-6"><span class="seat-icon">🪑</span><strong>Guest 6</strong><small>Seat 6</small></div>
+        </div>
+        <p class="seating-note">Six seats · One round table · More details coming soon</p>
+      </div>
+    </section>
+
     <section class="upcoming-section" aria-labelledby="upcoming-title">
       <div class="upcoming-heading">
         <h2 id="upcoming-title">More to Come 🍁</h2>
@@ -309,7 +349,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-8';
+    const updateVersion = '2026-11-23-9';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
