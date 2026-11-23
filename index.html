@@ -85,6 +85,40 @@
     }
     .detail-label { color: #9a7659; text-transform: uppercase; letter-spacing: .13em; font-size: .68rem; font-weight: 700; margin: 1px 0 6px; }
     .detail-value { font-weight: 600; line-height: 1.45; font-size: .98rem; overflow-wrap: anywhere; }
+    .countdown-section { max-width: 790px; margin: 28px auto 0; }
+    .countdown-card {
+      text-align: center; padding: 30px 22px 25px;
+      border: 1px solid #e7d5bd; border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255,250,242,.96), rgba(245,231,211,.92));
+      box-shadow: 0 12px 30px rgba(80,52,33,.07);
+    }
+    .countdown-eyebrow {
+      color: #9a7659; font-size: .7rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+    }
+    .countdown-card h2 {
+      font: 600 clamp(1.65rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif;
+      margin: 10px 0 6px; color: var(--brown);
+    }
+    .countdown-subtitle { color: var(--muted); margin: 0; font-size: .92rem; }
+    .countdown-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px; max-width: 590px; margin: 24px auto 18px;
+    }
+    .countdown-unit {
+      display: flex; flex-direction: column; gap: 7px; align-items: center;
+      padding: 15px 8px; border-radius: 15px;
+      background: #6b3e2c; color: #fff8ee;
+    }
+    .countdown-number {
+      font: 600 clamp(1.8rem, 5vw, 2.65rem)/1 'Playfair Display', Georgia, serif;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown-label {
+      color: #efd6b7; font-size: .68rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    .countdown-date { color: #8d6b51; font-size: .82rem; margin: 0; font-weight: 600; }
     .menu-area { text-align: center; margin: 34px auto 0; }
     .menu-button {
       appearance: none; border: 0; cursor: pointer; color: #fff8ee;
@@ -135,6 +169,10 @@
       .page { width: min(100% - 24px, 520px); padding-top: 18px; }
       .hero { min-height: 300px; border-radius: 22px; padding: 45px 18px; }
       .details { grid-template-columns: 1fr; gap: 11px; }
+      .countdown-card { padding: 25px 13px 21px; }
+      .countdown-grid { gap: 7px; margin: 20px auto 16px; }
+      .countdown-unit { padding: 13px 4px; border-radius: 12px; }
+      .countdown-label { font-size: .58rem; letter-spacing: .08em; }
       .detail { padding: 17px; }
       .intro { margin: 34px auto 24px; }
       footer { margin-top: 35px; }
@@ -179,6 +217,21 @@
       </article>
     </section>
 
+    <section class="countdown-section" aria-label="Countdown to Thanksgiving">
+      <div class="countdown-card">
+        <div class="countdown-eyebrow">The celebration is getting closer</div>
+        <h2>Countdown to Thanksgiving 🍂</h2>
+        <p class="countdown-subtitle">We're saving you a seat!</p>
+        <div class="countdown-grid" id="countdown" aria-live="off">
+          <div class="countdown-unit"><span class="countdown-number" id="countDays">--</span><span class="countdown-label">Days</span></div>
+          <div class="countdown-unit"><span class="countdown-number" id="countHours">--</span><span class="countdown-label">Hours</span></div>
+          <div class="countdown-unit"><span class="countdown-number" id="countMinutes">--</span><span class="countdown-label">Minutes</span></div>
+          <div class="countdown-unit"><span class="countdown-number" id="countSeconds">--</span><span class="countdown-label">Seconds</span></div>
+        </div>
+        <p class="countdown-date" id="countdownMessage">Friday, November 27, 2026</p>
+      </div>
+    </section>
+
     <section class="menu-area" aria-label="Party menu">
       <button class="menu-button" id="menuButton" type="button">
         <span aria-hidden="true">🍽️</span> Explore the Menu <span aria-hidden="true">→</span>
@@ -218,13 +271,38 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-2';
+    const updateVersion = '2026-11-23-3';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
     const menuButton = document.getElementById('menuButton');
     const modal = document.getElementById('menuModal');
     const closeButton = document.getElementById('closeModal');
+
+    // Count down to the start of Thanksgiving Day in each visitor's local time zone.
+    const thanksgivingDate = new Date(2026, 10, 27, 0, 0, 0);
+    const countdownMessage = document.getElementById('countdownMessage');
+    function updateCountdown() {
+      const remaining = thanksgivingDate.getTime() - Date.now();
+      if (remaining <= 0) {
+        document.getElementById('countDays').textContent = '0';
+        document.getElementById('countHours').textContent = '00';
+        document.getElementById('countMinutes').textContent = '00';
+        document.getElementById('countSeconds').textContent = '00';
+        countdownMessage.textContent = 'Happy Thanksgiving! 🦃';
+        return;
+      }
+      const days = Math.floor(remaining / 86400000);
+      const hours = Math.floor((remaining % 86400000) / 3600000);
+      const minutes = Math.floor((remaining % 3600000) / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+      document.getElementById('countDays').textContent = days;
+      document.getElementById('countHours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('countMinutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('countSeconds').textContent = String(seconds).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
     function openMenuNotice() {
       modal.classList.add('open');
