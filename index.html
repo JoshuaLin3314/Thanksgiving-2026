@@ -197,7 +197,10 @@
     .modal h3 { font: 600 1.8rem 'Playfair Display', Georgia, serif; margin: 12px 0 9px; }
     .modal p { color: var(--muted); line-height: 1.65; margin: 0 0 22px; }
     .close { border: 0; border-radius: 12px; padding: 12px 22px; background: #6b3e2c; color: white; font: 700 .9rem 'DM Sans', sans-serif; cursor: pointer; }
-    .close:disabled { background: #b9aa9b; color: #f8f2eb; cursor: not-allowed; box-shadow: none; }
+    .close:disabled { background-color: #b9aa9b; background-image: linear-gradient(90deg, #6b3e2c, #6b3e2c); background-repeat: no-repeat; background-size: 0% 100%; color: #f8f2eb; cursor: not-allowed; box-shadow: none; }
+    .testing-progress { width: 100%; height: 7px; overflow: hidden; border-radius: 99px; background: #eadcc9; margin: -5px 0 18px; }
+    .testing-progress-fill { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #b85c35, #d69a4d); }
+    .testing-progress-fill.running { width: 100%; transition: width 3s linear; }
     @keyframes rise { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @media (max-width: 620px) {
       .page { width: min(100% - 24px, 520px); padding-top: 18px; }
@@ -332,6 +335,7 @@
       <div class="modal-icon" aria-hidden="true">🛠️</div>
       <h3 id="testingTitle">Website Still in Testing</h3>
       <p id="testingDescription">This website is still in testing! Some features and details may change as we get everything ready for Thanksgiving. Thanks for your patience!</p>
+      <div class="testing-progress" role="progressbar" aria-label="Reading time" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="testing-progress-fill" id="testingProgressFill"></span></div>
       <button class="close" id="dismissTesting" type="button" disabled>Let&#39;s Go! (3)</button>
     </div>
   </div>
@@ -347,10 +351,12 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-13';
+    const updateVersion = '2026-11-23-14';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
+    const testingProgressFill = document.getElementById('testingProgressFill');
+    const testingProgress = document.querySelector('.testing-progress');
     const menuButton = document.getElementById('menuButton');
     const modal = document.getElementById('menuModal');
     const closeButton = document.getElementById('closeModal');
@@ -394,19 +400,34 @@
       testingModal.classList.remove('open');
     }
 
-    // Give visitors three seconds to read the testing notice before continuing.
-    let testingSecondsLeft = 3;
-    dismissTesting.textContent = "Let's Go! (" + testingSecondsLeft + ")";
-    const testingCountdown = setInterval(() => {
-      testingSecondsLeft -= 1;
-      if (testingSecondsLeft > 0) {
-        dismissTesting.textContent = "Let's Go! (" + testingSecondsLeft + ")";
-      } else {
-        clearInterval(testingCountdown);
-        dismissTesting.disabled = false;
-        dismissTesting.textContent = "Let's Go!";
-      }
-    }, 1000);
+    // Animate the reading bar from left to right over three seconds.
+    function startTestingCountdown() {
+      let testingSecondsLeft = 3;
+      dismissTesting.disabled = true;
+      dismissTesting.textContent = "Let's Go! (3)";
+      testingProgress.setAttribute('aria-valuenow', '0');
+      testingProgressFill.classList.remove('running');
+      dismissTesting.style.transition = 'none';
+      dismissTesting.style.backgroundSize = '0% 100%';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          testingProgressFill.classList.add('running');
+          testingProgress.setAttribute('aria-valuenow', '100');
+          dismissTesting.style.transition = 'background-size 3s linear';
+          dismissTesting.style.backgroundSize = '100% 100%';
+        });
+      });
+      const testingCountdown = setInterval(() => {
+        testingSecondsLeft -= 1;
+        if (testingSecondsLeft > 0) {
+          dismissTesting.textContent = "Let's Go! (" + testingSecondsLeft + ")";
+        } else {
+          clearInterval(testingCountdown);
+          dismissTesting.disabled = false;
+          dismissTesting.textContent = "Let's Go!";
+        }
+      }, 1000);
+    }
 
     dismissTesting.addEventListener('click', closeTestingNotice);
     testingModal.addEventListener('click', (event) => {
@@ -423,6 +444,7 @@
     } else {
       // Show the testing notice on every page load, including refreshes.
       testingModal.classList.add('open');
+      startTestingCountdown();
       dismissTesting.focus();
     }
 
