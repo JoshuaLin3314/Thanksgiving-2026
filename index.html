@@ -271,7 +271,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-4';
+    const updateVersion = '2026-11-23-5';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -324,6 +324,7 @@
 
     // Show the update notice once for each newly published code version.
     let lastSeenUpdate = '';
+    let pendingUpdateVersion = updateVersion;
     try { lastSeenUpdate = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
     if (lastSeenUpdate !== updateVersion) {
       updateModal.classList.add('open');
@@ -334,8 +335,39 @@
       dismissTesting.focus();
     }
 
+    // Also check for new published versions while someone already has the site open.
+    // A cache-busting request prevents the browser from reusing an old copy of this page.
+    async function checkForLiveUpdate() {
+      try {
+        const pageUrl = new URL(window.location.href);
+        pageUrl.searchParams.set('updateCheck', Date.now().toString());
+        const response = await fetch(pageUrl.toString(), { cache: 'no-store' });
+        if (!response.ok) return;
+        const pageHtml = await response.text();
+        const match = pageHtml.match(/const\\s+updateVersion\\s*=\\s*['"]([^'"]+)['"]/);
+        if (!match) return;
+        const publishedVersion = match[1];
+        if (publishedVersion !== updateVersion) {
+          let seenVersion = '';
+          try { seenVersion = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
+          if (seenVersion !== publishedVersion) {
+            pendingUpdateVersion = publishedVersion;
+            testingModal.classList.remove('open');
+            updateModal.classList.add('open');
+            refreshUpdate.focus();
+          }
+        }
+      } catch (error) {
+        // A temporary network failure should not interrupt the invitation page.
+      }
+    }
+    setInterval(checkForLiveUpdate, 15000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) checkForLiveUpdate();
+    });
+
     refreshUpdate.addEventListener('click', () => {
-      try { localStorage.setItem(updateStorageKey, updateVersion); } catch (error) {}
+      try { localStorage.setItem(updateStorageKey, pendingUpdateVersion); } catch (error) {}
       window.location.reload();
     });
 
