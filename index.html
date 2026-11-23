@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#542d20">
+  <meta name="description" content="You're invited to our 2026 Thanksgiving Gathering!">
+  <title>2026 Thanksgiving Gathering 🍂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fbf4e9;
+      --paper: #fffaf2;
+      --ink: #38251d;
+      --muted: #80695a;
+      --brown: #633b2b;
+      --rust: #b85c35;
+      --gold: #d69a4d;
+      --sage: #78805b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      background:
+        radial-gradient(ellipse at 8% 10%, rgba(214,154,77,.17), transparent 30%),
+        radial-gradient(ellipse at 92% 85%, rgba(120,128,91,.14), transparent 28%),
+        var(--cream);
+      overflow-x: hidden;
+    }
+    .page { width: min(1080px, calc(100% - 36px)); margin: 0 auto; padding: 28px 0 42px; }
+    .topline {
+      display: flex; justify-content: center; align-items: center; gap: 12px;
+      color: var(--muted); font-size: .75rem; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase; margin: 8px 0 22px;
+    }
+    .topline::before, .topline::after { content: ''; width: 34px; height: 1px; background: #c7a47d; }
+    .hero {
+      position: relative; isolation: isolate; overflow: hidden;
+      min-height: 330px; border-radius: 28px;
+      display: grid; place-items: center; text-align: center;
+      padding: 54px 24px;
+      color: #fff6e8;
+      background:
+        linear-gradient(115deg, rgba(47,28,21,.92), rgba(98,54,34,.82)),
+        radial-gradient(circle at 80% 20%, #b87942, #543326 65%);
+      box-shadow: 0 22px 55px rgba(76,43,28,.17);
+    }
+    .hero::before, .hero::after {
+      content: '✦'; position: absolute; z-index: -1;
+      color: rgba(240,194,126,.22); font-size: 190px; line-height: 1;
+    }
+    .hero::before { left: -28px; bottom: -62px; transform: rotate(-20deg); }
+    .hero::after { right: -18px; top: -65px; transform: rotate(18deg); }
+    .hero-inner { max-width: 720px; }
+    .eyebrow { color: #e8c28f; font-size: .76rem; letter-spacing: .25em; text-transform: uppercase; font-weight: 700; }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.55rem, 7vw, 5rem); line-height: 1.08;
+      font-weight: 600; margin: 18px 0 14px; text-wrap: balance;
+    }
+    .hero p { color: #f3dfc6; font-size: clamp(1rem, 2vw, 1.18rem); margin: 0; }
+    .ornament { margin-top: 25px; color: #e3b36f; letter-spacing: .5em; font-size: 1.1rem; }
+    .intro { text-align: center; max-width: 690px; margin: 42px auto 30px; }
+    .intro h2 { font: 600 clamp(1.7rem, 4vw, 2.35rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 12px; }
+    .intro p { color: var(--muted); line-height: 1.8; margin: 0; font-size: 1rem; }
+    .details {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
+      max-width: 790px; margin: 0 auto;
+    }
+    .detail {
+      display: flex; gap: 15px; align-items: flex-start;
+      padding: 21px; background: rgba(255,250,242,.88);
+      border: 1px solid #eadcc9; border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(80,52,33,.045);
+    }
+    .detail-icon {
+      flex: 0 0 43px; height: 43px; border-radius: 14px;
+      display: grid; place-items: center; background: #f1e2ce; font-size: 1.25rem;
+    }
+    .detail-label { color: #9a7659; text-transform: uppercase; letter-spacing: .13em; font-size: .68rem; font-weight: 700; margin: 1px 0 6px; }
+    .detail-value { font-weight: 600; line-height: 1.45; font-size: .98rem; overflow-wrap: anywhere; }
+    .menu-area { text-align: center; margin: 34px auto 0; }
+    .menu-button {
+      appearance: none; border: 0; cursor: pointer; color: #fff8ee;
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 17px 27px; border-radius: 15px;
+      background: linear-gradient(120deg, #9f4c2f, #713c2b);
+      box-shadow: 0 10px 22px rgba(112,57,36,.2);
+      font: 700 1rem 'DM Sans', sans-serif; letter-spacing: .01em;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .menu-button:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(112,57,36,.25); filter: brightness(1.06); }
+    .menu-button:focus-visible, .close:focus-visible { outline: 3px solid #d69a4d; outline-offset: 4px; }
+    .menu-note { color: #927966; font-size: .8rem; margin: 12px 0 0; }
+    footer { text-align: center; color: #9b8573; font-size: .78rem; margin-top: 45px; }
+    footer span { color: var(--rust); }
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 5; display: none; place-items: center;
+      padding: 20px; background: rgba(35,23,18,.58); backdrop-filter: blur(5px);
+    }
+    .modal-backdrop.open { display: grid; }
+    .modal {
+      width: min(420px, 100%); padding: 34px 28px; text-align: center;
+      background: var(--paper); border: 1px solid #eadcc9; border-radius: 23px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.22); animation: rise .22s ease-out;
+    }
+    .modal-icon { font-size: 2.3rem; }
+    .modal h3 { font: 600 1.8rem 'Playfair Display', Georgia, serif; margin: 12px 0 9px; }
+    .modal p { color: var(--muted); line-height: 1.65; margin: 0 0 22px; }
+    .close { border: 0; border-radius: 12px; padding: 12px 22px; background: #6b3e2c; color: white; font: 700 .9rem 'DM Sans', sans-serif; cursor: pointer; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @media (max-width: 620px) {
+      .page { width: min(100% - 24px, 520px); padding-top: 18px; }
+      .hero { min-height: 300px; border-radius: 22px; padding: 45px 18px; }
+      .details { grid-template-columns: 1fr; gap: 11px; }
+      .detail { padding: 17px; }
+      .intro { margin: 34px auto 24px; }
+      footer { margin-top: 35px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline">Gather • Give Thanks • Celebrate</div>
+
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">You're warmly invited</div>
+        <h1>2026 Thanksgiving Gathering</h1>
+        <p>A little gathering, a lot to be thankful for.</p>
+        <div class="ornament" aria-hidden="true">✧ ❧ ✧</div>
+      </div>
+    </header>
+
+    <section class="intro" aria-labelledby="welcome-title">
+      <h2 id="welcome-title">So happy you're joining us! 🍂</h2>
+      <p>Let's gather around the table, enjoy some delicious food, play a few games, and make wonderful memories. Most of all, let's celebrate the people and moments we're grateful for.</p>
+    </section>
+
+    <section class="details" aria-label="Gathering details">
+      <article class="detail">
+        <div class="detail-icon" aria-hidden="true">🗓️</div>
+        <div><div class="detail-label">When</div><div class="detail-value">Friday, November 27, 2026</div></div>
+      </article>
+      <article class="detail">
+        <div class="detail-icon" aria-hidden="true">📍</div>
+        <div><div class="detail-label">Where</div><div class="detail-value">3110 Summer Bay Dr</div></div>
+      </article>
+      <article class="detail">
+        <div class="detail-icon" aria-hidden="true">🧡</div>
+        <div><div class="detail-label">Why</div><div class="detail-value">To enjoy Thanksgiving!</div></div>
+      </article>
+      <article class="detail">
+        <div class="detail-icon" aria-hidden="true">🎲</div>
+        <div><div class="detail-label">What</div><div class="detail-value">Food, games, and fun!</div></div>
+      </article>
+    </section>
+
+    <section class="menu-area" aria-label="Party menu">
+      <button class="menu-button" id="menuButton" type="button">
+        <span aria-hidden="true">🍽️</span> Explore the Menu <span aria-hidden="true">→</span>
+      </button>
+      <p class="menu-note">A delicious menu is on its way!</p>
+    </section>
+
+    <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
+  </main>
+
+  <div class="modal-backdrop" id="menuModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+    <div class="modal">
+      <div class="modal-icon" aria-hidden="true">🥧</div>
+      <h3 id="modalTitle">The Menu Is Coming!</h3>
+      <p id="modalDescription">We're putting together all the delicious details. Check back soon to see what's being served!</p>
+      <button class="close" id="closeModal" type="button">Sounds good!</button>
+    </div>
+  </div>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const modal = document.getElementById('menuModal');
+    const closeButton = document.getElementById('closeModal');
+
+    function openMenuNotice() {
+      modal.classList.add('open');
+      closeButton.focus();
+    }
+    function closeMenuNotice() {
+      modal.classList.remove('open');
+      menuButton.focus();
+    }
+
+    menuButton.addEventListener('click', openMenuNotice);
+    closeButton.addEventListener('click', closeMenuNotice);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeMenuNotice();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('open')) closeMenuNotice();
+    });
+  </script>
+</body>
+</html>
