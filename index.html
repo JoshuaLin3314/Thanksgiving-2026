@@ -209,7 +209,6 @@
 
     function closeTestingNotice() {
       testingModal.classList.remove('open');
-      try { localStorage.setItem('thanksgivingTestingNoticeSeen', 'yes'); } catch (error) {}
     }
 
     dismissTesting.addEventListener('click', closeTestingNotice);
@@ -217,12 +216,9 @@
       if (event.target === testingModal) closeTestingNotice();
     });
 
-    let testingNoticeSeen = false;
-    try { testingNoticeSeen = localStorage.getItem('thanksgivingTestingNoticeSeen') === 'yes'; } catch (error) {}
-    if (!testingNoticeSeen) {
-      testingModal.classList.add('open');
-      dismissTesting.focus();
-    }
+    // Show the testing notice on every page load, including refreshes.
+    testingModal.classList.add('open');
+    dismissTesting.focus();
 
     menuButton.addEventListener('click', openMenuNotice);
     closeButton.addEventListener('click', closeMenuNotice);
