@@ -411,29 +411,17 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary>
-            <span class="history-version">Version 2026-11-23-21<small>November 23, 2026</small></span>
-            <span class="history-current">Latest Update</span>
-          </summary>
-          <div class="history-content">
-            <ul>
-              <li>Added a button so visitors can open previous website update logs.</li>
-            </ul>
-          </div>
+          <summary><span class="history-version">Version 2026-11-23-26<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Update announcements now keep a complete queue, so visitors can see every update they have not viewed yet.</li><li>Added individual announcement details for each release.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
-          <details class="history-entry">
-            <summary>
-              <span class="history-version">Version 2026-11-23-20<small>November 23, 2026 · 4:12:32 PM CST</small></span>
-            </summary>
-            <div class="history-content">
-              <ul>
-                <li>Added the Website Update History section so visitors can see what's changed.</li>
-                <li>Kept the live update checker running every five seconds.</li>
-              </ul>
-            </div>
-          </details>
+          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-25<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Made live update checks run every 1.5 seconds and prevented overlapping checks.</li></ul></div></details>
+          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-24<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Fixed a remaining JavaScript syntax error that stopped page scripts from running.</li></ul></div></details>
+          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-23<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Corrected the previous update-log button JavaScript formatting.</li></ul></div></details>
+          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-22<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>First attempt to add the previous update-log button; its script formatting needed a follow-up fix.</li></ul></div></details>
+          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-21<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Added a button so visitors can open previous website update logs.</li></ul></div></details>
+          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-20<small>November 23, 2026 · 4:12:32 PM CST</small></span></summary><div class="history-content"><ul><li>Added the Website Update History section so visitors can see what's changed.</li><li>Kept the live update checker running every five seconds.</li></ul></div></details>
         </div>
       </div>
     </section>
@@ -470,7 +458,17 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-25';
+    const updateVersion = '2026-11-23-26';
+    // Keep every published release here in chronological order.
+    const updateAnnouncements = [
+      { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
+      { version: '2026-11-23-21', description: 'Added a button so visitors can open previous website update logs.' },
+      { version: '2026-11-23-22', description: 'Added the first version of the previous update-log button.' },
+      { version: '2026-11-23-23', description: 'Corrected the previous update-log button JavaScript formatting.' },
+      { version: '2026-11-23-24', description: 'Fixed a remaining JavaScript syntax error that stopped page scripts from running.' },
+      { version: '2026-11-23-25', description: 'Made live update checks run every 1.5 seconds and prevented overlapping checks.' },
+      { version: '2026-11-23-26', description: 'Update announcements now queue individually, so visitors can see every update they have not viewed yet.' }
+    ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -550,22 +548,50 @@
       if (event.target === testingModal) closeTestingNotice();
     });
 
-    // Show the update notice once for each newly published code version.
+    // Queue every release this visitor has not acknowledged yet.
     let lastSeenUpdate = '';
-    let pendingUpdateVersion = updateVersion;
     try { lastSeenUpdate = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
-    if (lastSeenUpdate !== updateVersion) {
+    let announcementQueue = [];
+    let announcementIndex = 0;
+    let pendingUpdateVersion = updateVersion;
+
+    function getUnseenAnnouncements(announcements, seenVersion) {
+      if (!Array.isArray(announcements) || announcements.length === 0) return [];
+      const seenIndex = announcements.findIndex(item => item.version === seenVersion);
+      if (!seenVersion || seenIndex === -1) return [announcements[announcements.length - 1]];
+      return announcements.slice(seenIndex + 1);
+    }
+
+    function showAnnouncementAtCurrentIndex() {
+      const announcement = announcementQueue[announcementIndex];
+      if (!announcement) return;
+      document.getElementById('updateTitle').textContent = 'New Update: ' + announcement.version;
+      document.getElementById('updateDescription').textContent = announcement.description;
+      refreshUpdate.textContent = announcementIndex < announcementQueue.length - 1 ? 'Next Update →' : 'Refresh Website ↻';
+    }
+
+    function openAnnouncementQueue(announcements) {
+      let seenVersion = '';
+      try { seenVersion = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
+      const unseen = getUnseenAnnouncements(announcements, seenVersion);
+      if (!unseen.length) return false;
+      announcementQueue = unseen;
+      announcementIndex = 0;
+      pendingUpdateVersion = unseen[unseen.length - 1].version;
+      testingModal.classList.remove('open');
       updateModal.classList.add('open');
+      showAnnouncementAtCurrentIndex();
       refreshUpdate.focus();
-    } else {
-      // Show the testing notice on every page load, including refreshes.
+      return true;
+    }
+
+    if (!openAnnouncementQueue(updateAnnouncements)) {
       testingModal.classList.add('open');
       startTestingCountdown();
       dismissTesting.focus();
     }
 
-    // Check for newly published versions quickly while the page is open.
-    // The request is cache-busted and checks the published page visitors will refresh into.
+    // Read the full published release list, so skipped releases are never lost.
     let updateCheckInProgress = false;
     async function checkForLiveUpdate() {
       if (updateCheckInProgress || updateModal.classList.contains('open')) return;
@@ -573,25 +599,13 @@
       try {
         const pageUrl = new URL(window.location.href);
         pageUrl.searchParams.set('updateCheck', Date.now().toString());
-        const response = await fetch(pageUrl.toString(), {
-          cache: 'no-store',
-          headers: { 'Cache-Control': 'no-cache' }
-        });
+        const response = await fetch(pageUrl.toString(), { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
         if (!response.ok) return;
         const pageHtml = await response.text();
-        const match = pageHtml.match(/const\s+updateVersion\s*=\s*['"]([^'"]+)['"]/);
-        if (!match) return;
-        const publishedVersion = match[1];
-        if (publishedVersion !== updateVersion) {
-          let seenVersion = '';
-          try { seenVersion = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
-          if (seenVersion !== publishedVersion) {
-            pendingUpdateVersion = publishedVersion;
-            testingModal.classList.remove('open');
-            updateModal.classList.add('open');
-            refreshUpdate.focus();
-          }
-        }
+        const listMatch = pageHtml.match(/const\s+updateAnnouncements\s*=\s*(\[[\s\S]*?\]);/);
+        if (!listMatch) return;
+        const publishedAnnouncements = JSON.parse(listMatch[1]);
+        openAnnouncementQueue(publishedAnnouncements);
       } catch (error) {
         // A temporary network failure should not interrupt the invitation page.
       } finally {
@@ -605,6 +619,11 @@
     });
 
     refreshUpdate.addEventListener('click', () => {
+      if (announcementIndex < announcementQueue.length - 1) {
+        announcementIndex += 1;
+        showAnnouncementAtCurrentIndex();
+        return;
+      }
       try { localStorage.setItem(updateStorageKey, pendingUpdateVersion); } catch (error) {}
       window.location.reload();
     });
