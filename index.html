@@ -132,6 +132,16 @@
     .menu-button:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(112,57,36,.25); filter: brightness(1.06); }
     .menu-button:focus-visible, .close:focus-visible { outline: 3px solid #d69a4d; outline-offset: 4px; }
     .menu-note { color: #927966; font-size: .8rem; margin: 12px 0 0; }
+    .upcoming-section { max-width: 900px; margin: 48px auto 0; }
+    .upcoming-heading { text-align: center; margin-bottom: 20px; }
+    .upcoming-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
+    .upcoming-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
+    .upcoming-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .upcoming-card { padding: 22px 18px; text-align: center; border: 1px solid #eadcc9; border-radius: 18px; background: rgba(255,250,242,.88); box-shadow: 0 8px 24px rgba(80,52,33,.045); }
+    .upcoming-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .upcoming-card h3 { font: 600 1.25rem 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
+    .upcoming-card p { color: var(--muted); font-size: .85rem; line-height: 1.55; margin: 0 0 14px; }
+    .coming-soon { display: inline-block; padding: 6px 11px; border-radius: 999px; color: #80512e; background: #f2e2ca; font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
     footer { text-align: center; color: #9b8573; font-size: .78rem; margin-top: 45px; }
     footer span { color: var(--rust); }
     .modal-backdrop {
@@ -169,6 +179,7 @@
       .page { width: min(100% - 24px, 520px); padding-top: 18px; }
       .hero { min-height: 300px; border-radius: 22px; padding: 45px 18px; }
       .details { grid-template-columns: 1fr; gap: 11px; }
+      .upcoming-grid { grid-template-columns: 1fr; }
       .countdown-card { padding: 25px 13px 21px; }
       .countdown-grid { gap: 7px; margin: 20px auto 16px; }
       .countdown-unit { padding: 13px 4px; border-radius: 12px; }
@@ -239,6 +250,33 @@
       <p class="menu-note">Take a look at what's being served! 🍁</p>
     </section>
 
+    <section class="upcoming-section" aria-labelledby="upcoming-title">
+      <div class="upcoming-heading">
+        <h2 id="upcoming-title">More to Come 🍁</h2>
+        <p>We're working on a few more details to make the gathering extra special.</p>
+      </div>
+      <div class="upcoming-grid">
+        <article class="upcoming-card">
+          <div class="upcoming-icon" aria-hidden="true">🌤️</div>
+          <h3>Weather Forecast</h3>
+          <p>Check the forecast before the celebration.</p>
+          <span class="coming-soon">Coming Soon</span>
+        </article>
+        <article class="upcoming-card">
+          <div class="upcoming-icon" aria-hidden="true">🪑</div>
+          <h3>Seating Chart</h3>
+          <p>See where everyone will be sitting.</p>
+          <span class="coming-soon">In Development</span>
+        </article>
+        <article class="upcoming-card">
+          <div class="upcoming-icon" aria-hidden="true">👔</div>
+          <h3>Dress Code</h3>
+          <p>More information about what to wear is on the way.</p>
+          <span class="coming-soon">Coming Soon</span>
+        </article>
+      </div>
+    </section>
+
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
 
@@ -271,7 +309,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-5';
+    const updateVersion = '2026-11-23-6';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
