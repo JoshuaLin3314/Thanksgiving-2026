@@ -309,7 +309,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-7';
+    const updateVersion = '2026-11-23-8';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -382,7 +382,7 @@
         const response = await fetch(pageUrl.toString(), { cache: 'no-store' });
         if (!response.ok) return;
         const pageHtml = await response.text();
-        const match = pageHtml.match(/const\\s+updateVersion\\s*=\\s*['"]([^'"]+)['"]/);
+        const match = pageHtml.match(/const\s+updateVersion\s*=\s*['"]([^'"]+)['"]/);
         if (!match) return;
         const publishedVersion = match[1];
         if (publishedVersion !== updateVersion) {
