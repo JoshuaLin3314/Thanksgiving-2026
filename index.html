@@ -160,6 +160,23 @@
 
     .seating-note { text-align: center; color: var(--muted); font-size: .78rem; margin: 18px 0 0; }
 
+    .attendees-section { max-width: 900px; margin: 38px auto 0; }
+    .attendees-heading { text-align: center; margin-bottom: 18px; }
+    .attendees-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
+    .attendees-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
+    .attendee-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .attendee-tab { border: 1px solid #eadcc9; border-radius: 17px; background: rgba(255,250,242,.92); overflow: hidden; box-shadow: 0 8px 24px rgba(80,52,33,.045); }
+    .attendee-tab summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 19px 20px; color: var(--brown); font-weight: 700; }
+    .attendee-tab summary::-webkit-details-marker { display: none; }
+    .attendee-tab summary::after { content: '+'; font-size: 1.35rem; color: var(--rust); transition: transform .2s ease; }
+    .attendee-tab[open] summary::after { content: '−'; }
+    .attendee-tab summary:focus-visible { outline: 3px solid #d69a4d; outline-offset: -4px; border-radius: 14px; }
+    .attendee-tab-title { display: flex; align-items: center; gap: 11px; }
+    .attendee-tab-icon { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 12px; background: #f1e2ce; font-size: 1.2rem; }
+    .attendee-tab-content { padding: 0 20px 19px 70px; color: var(--muted); }
+    .attendee-name { padding: 7px 0; font-weight: 600; color: var(--ink); }
+    .attendee-name + .attendee-name { border-top: 1px solid #f0e5d7; }
+    @media (max-width: 620px) { .attendee-tabs { grid-template-columns: 1fr; } }
     .upcoming-card { padding: 22px 18px; text-align: center; border: 1px solid #eadcc9; border-radius: 18px; background: rgba(255,250,242,.88); box-shadow: 0 8px 24px rgba(80,52,33,.045); }
     .upcoming-icon { font-size: 1.8rem; margin-bottom: 10px; }
     .upcoming-card h3 { font: 600 1.25rem 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
@@ -295,6 +312,31 @@
       </div>
     </section>
 
+    <section class="attendees-section" aria-labelledby="attendees-title">
+      <div class="attendees-heading">
+        <h2 id="attendees-title">Who's Coming? 👋</h2>
+        <p>Get to know who's helping make Thanksgiving happen!</p>
+      </div>
+      <div class="attendee-tabs">
+        <details class="attendee-tab">
+          <summary><span class="attendee-tab-title"><span class="attendee-tab-icon" aria-hidden="true">👩‍🍳</span><span>The Cooks</span></span></summary>
+          <div class="attendee-tab-content">
+            <div class="attendee-name">Joshua</div>
+            <div class="attendee-name">Alina</div>
+          </div>
+        </details>
+        <details class="attendee-tab">
+          <summary><span class="attendee-tab-title"><span class="attendee-tab-icon" aria-hidden="true">🧡</span><span>The Guests</span></span></summary>
+          <div class="attendee-tab-content">
+            <div class="attendee-name">Lawrence</div>
+            <div class="attendee-name">Alice</div>
+            <div class="attendee-name">Alsa</div>
+            <div class="attendee-name">Henry</div>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <section class="upcoming-section" aria-labelledby="upcoming-title">
       <div class="upcoming-heading">
         <h2 id="upcoming-title">More to Come 🍁</h2>
@@ -348,7 +390,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-15';
+    const updateVersion = '2026-11-23-16';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
