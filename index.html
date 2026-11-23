@@ -192,6 +192,23 @@
       100% { transform: translate3d(calc(var(--drift) * -0.45), 112vh, 0) rotate(390deg); opacity: 0; }
     }
     @media (prefers-reduced-motion: reduce) { .falling-leaf { animation: none; display: none; } }
+
+    .history-section { max-width: 900px; margin: 38px auto 0; }
+    .history-heading { text-align: center; margin-bottom: 18px; }
+    .history-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
+    .history-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
+    .history-list { display: grid; gap: 12px; }
+    .history-entry { border: 1px solid #eadcc9; border-radius: 16px; background: rgba(255,250,242,.9); overflow: hidden; box-shadow: 0 8px 24px rgba(80,52,33,.045); }
+    .history-entry summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 17px 19px; color: var(--brown); font-weight: 700; }
+    .history-entry summary::-webkit-details-marker { display: none; }
+    .history-entry summary::after { content: '+'; color: var(--rust); font-size: 1.3rem; }
+    .history-entry[open] summary::after { content: '−'; }
+    .history-version { display: flex; flex-direction: column; gap: 4px; }
+    .history-version small { color: var(--muted); font-size: .75rem; font-weight: 500; }
+    .history-current { color: #80512e; background: #f2e2ca; border-radius: 999px; padding: 5px 9px; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+    .history-content { padding: 0 20px 17px; color: var(--muted); line-height: 1.65; font-size: .88rem; }
+    .history-content ul { margin: 0; padding-left: 20px; }
+
     footer { text-align: center; color: #9b8573; font-size: .78rem; margin-top: 45px; }
     footer span { color: var(--rust); }
     .modal-backdrop {
@@ -383,6 +400,27 @@
       </div>
     </section>
 
+    <section class="history-section" aria-labelledby="history-title">
+      <div class="history-heading">
+        <h2 id="history-title">Website Update History 📜</h2>
+        <p>A little record of what's new on the Thanksgiving website.</p>
+      </div>
+      <div class="history-list">
+        <details class="history-entry" open>
+          <summary>
+            <span class="history-version">Version 2026-11-23-20<small>November 23, 2026</small></span>
+            <span class="history-current">Latest Update</span>
+          </summary>
+          <div class="history-content">
+            <ul>
+              <li>Added the Website Update History section so visitors can see what's changed.</li>
+              <li>Kept the live update checker running every five seconds.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
 
@@ -415,7 +453,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-19';
+    const updateVersion = '2026-11-23-20';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
