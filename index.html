@@ -173,6 +173,15 @@
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
 
+  <div class="modal-backdrop" id="testingModal" role="dialog" aria-modal="true" aria-labelledby="testingTitle" aria-describedby="testingDescription">
+    <div class="modal">
+      <div class="modal-icon" aria-hidden="true">🛠️</div>
+      <h3 id="testingTitle">Website Still in Testing</h3>
+      <p id="testingDescription">This website is still in testing! Some features and details may change as we get everything ready for Thanksgiving. Thanks for your patience!</p>
+      <button class="close" id="dismissTesting" type="button">Got it!</button>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="menuModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
     <div class="modal">
       <div class="modal-icon" aria-hidden="true">🥧</div>
@@ -183,6 +192,8 @@
   </div>
 
   <script>
+    const testingModal = document.getElementById('testingModal');
+    const dismissTesting = document.getElementById('dismissTesting');
     const menuButton = document.getElementById('menuButton');
     const modal = document.getElementById('menuModal');
     const closeButton = document.getElementById('closeModal');
@@ -194,6 +205,23 @@
     function closeMenuNotice() {
       modal.classList.remove('open');
       menuButton.focus();
+    }
+
+    function closeTestingNotice() {
+      testingModal.classList.remove('open');
+      try { localStorage.setItem('thanksgivingTestingNoticeSeen', 'yes'); } catch (error) {}
+    }
+
+    dismissTesting.addEventListener('click', closeTestingNotice);
+    testingModal.addEventListener('click', (event) => {
+      if (event.target === testingModal) closeTestingNotice();
+    });
+
+    let testingNoticeSeen = false;
+    try { testingNoticeSeen = localStorage.getItem('thanksgivingTestingNoticeSeen') === 'yes'; } catch (error) {}
+    if (!testingNoticeSeen) {
+      testingModal.classList.add('open');
+      dismissTesting.focus();
     }
 
     menuButton.addEventListener('click', openMenuNotice);
