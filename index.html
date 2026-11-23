@@ -173,6 +173,15 @@
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
 
+  <div class="modal-backdrop" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateDescription">
+    <div class="modal">
+      <div class="modal-icon" aria-hidden="true">✨</div>
+      <h3 id="updateTitle">The Creator Just Added a New Update!</h3>
+      <p id="updateDescription">There's something new on the website! Please refresh the website using the button below to see the latest version.</p>
+      <button class="close" id="refreshUpdate" type="button">Refresh Website ↻</button>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="testingModal" role="dialog" aria-modal="true" aria-labelledby="testingTitle" aria-describedby="testingDescription">
     <div class="modal">
       <div class="modal-icon" aria-hidden="true">🛠️</div>
@@ -192,6 +201,10 @@
   </div>
 
   <script>
+    const updateModal = document.getElementById('updateModal');
+    const refreshUpdate = document.getElementById('refreshUpdate');
+    const updateVersion = '2026-11-23-1';
+    const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
     const menuButton = document.getElementById('menuButton');
@@ -216,9 +229,22 @@
       if (event.target === testingModal) closeTestingNotice();
     });
 
-    // Show the testing notice on every page load, including refreshes.
-    testingModal.classList.add('open');
-    dismissTesting.focus();
+    // Show the update notice once for each newly published code version.
+    let lastSeenUpdate = '';
+    try { lastSeenUpdate = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
+    if (lastSeenUpdate !== updateVersion) {
+      updateModal.classList.add('open');
+      refreshUpdate.focus();
+    } else {
+      // Show the testing notice on every page load, including refreshes.
+      testingModal.classList.add('open');
+      dismissTesting.focus();
+    }
+
+    refreshUpdate.addEventListener('click', () => {
+      try { localStorage.setItem(updateStorageKey, updateVersion); } catch (error) {}
+      window.location.reload();
+    });
 
     menuButton.addEventListener('click', openMenuNotice);
     closeButton.addEventListener('click', closeMenuNotice);
