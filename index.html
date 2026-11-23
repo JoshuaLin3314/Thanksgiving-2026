@@ -415,7 +415,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-18';
+    const updateVersion = '2026-11-23-19';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -525,7 +525,8 @@
         // A temporary network failure should not interrupt the invitation page.
       }
     }
-    setInterval(checkForLiveUpdate, 15000);
+    checkForLiveUpdate();
+    setInterval(checkForLiveUpdate, 5000);
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) checkForLiveUpdate();
     });
