@@ -201,7 +201,7 @@
     <section class="details" aria-label="Gathering details">
       <article class="detail">
         <div class="detail-icon" aria-hidden="true">🗓️</div>
-        <div><div class="detail-label">When</div><div class="detail-value">Friday, November 27, 2026</div></div>
+        <div><div class="detail-label">When</div><div class="detail-value">Friday, November 27, 2026 · 5:30 PM</div></div>
       </article>
       <article class="detail">
         <div class="detail-icon" aria-hidden="true">📍</div>
@@ -228,7 +228,7 @@
           <div class="countdown-unit"><span class="countdown-number" id="countMinutes">--</span><span class="countdown-label">Minutes</span></div>
           <div class="countdown-unit"><span class="countdown-number" id="countSeconds">--</span><span class="countdown-label">Seconds</span></div>
         </div>
-        <p class="countdown-date" id="countdownMessage">Friday, November 27, 2026</p>
+        <p class="countdown-date" id="countdownMessage">Friday, November 27, 2026 at 5:30 PM</p>
       </div>
     </section>
 
@@ -271,7 +271,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-3';
+    const updateVersion = '2026-11-23-4';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -280,7 +280,7 @@
     const closeButton = document.getElementById('closeModal');
 
     // Count down to the start of Thanksgiving Day in each visitor's local time zone.
-    const thanksgivingDate = new Date(2026, 10, 27, 0, 0, 0);
+    const thanksgivingDate = new Date(2026, 10, 27, 17, 30, 0);
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
       const remaining = thanksgivingDate.getTime() - Date.now();
