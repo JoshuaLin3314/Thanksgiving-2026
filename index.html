@@ -156,6 +156,8 @@
     .seat-4 { left: 38.5%; bottom: 0; }
     .seat-5 { left: 0; bottom: 22%; }
     .seat-6 { left: 0; top: 22%; }
+    .kitchen-label { position: absolute; right: -2%; bottom: 1%; width: 27%; min-height: 13%; display: grid; place-items: center; padding: 8px; border: 2px solid #d4b18a; border-radius: 10px; background: #ead7bd; color: #633b2b; box-shadow: 0 5px 13px rgba(80,52,33,.1); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+
     .seating-note { text-align: center; color: var(--muted); font-size: .78rem; margin: 18px 0 0; }
 
     .upcoming-card { padding: 22px 18px; text-align: center; border: 1px solid #eadcc9; border-radius: 18px; background: rgba(255,250,242,.88); box-shadow: 0 8px 24px rgba(80,52,33,.045); }
@@ -285,6 +287,7 @@
           <div class="seat seat-4"><span class="seat-icon">🪑</span><strong>Guest 4</strong><small>Seat 4</small></div>
           <div class="seat seat-5"><span class="seat-icon">🪑</span><strong>Guest 5</strong><small>Seat 5</small></div>
           <div class="seat seat-6"><span class="seat-icon">🪑</span><strong>Guest 6</strong><small>Seat 6</small></div>
+          <div class="kitchen-label">To Kitchen</div>
         </div>
         <p class="seating-note">Six seats · One round table · More details coming soon</p>
       </div>
@@ -349,7 +352,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-9';
+    const updateVersion = '2026-11-23-10';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
