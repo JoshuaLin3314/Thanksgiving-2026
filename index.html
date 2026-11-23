@@ -69,6 +69,45 @@
     .intro { text-align: center; max-width: 690px; margin: 42px auto 30px; }
     .intro h2 { font: 600 clamp(1.7rem, 4vw, 2.35rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 12px; }
     .intro p { color: var(--muted); line-height: 1.8; margin: 0; font-size: 1rem; }
+
+    /* Visitor-selectable color themes */
+    .theme-section { max-width: 790px; margin: 28px auto 0; text-align: center; }
+    .theme-card { padding: 21px 18px; border: 1px solid #eadcc9; border-radius: 18px; background: rgba(255,250,242,.9); box-shadow: 0 8px 24px rgba(80,52,33,.045); }
+    .theme-section h2 { font: 600 1.45rem 'Playfair Display', Georgia, serif; margin: 0 0 7px; color: var(--brown); }
+    .theme-section p { color: var(--muted); margin: 0 0 15px; font-size: .86rem; }
+    .theme-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    .theme-choice { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #d9c6af; border-radius: 999px; padding: 10px 15px; background: #fffaf2; color: #493126; font: 700 .85rem 'DM Sans', sans-serif; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .theme-choice:hover { transform: translateY(-2px); box-shadow: 0 5px 13px rgba(80,52,33,.1); }
+    .theme-choice[aria-pressed="true"] { border: 2px solid #8a5739; box-shadow: 0 0 0 3px rgba(138,87,57,.13); }
+    .theme-swatch { width: 17px; height: 17px; border-radius: 50%; border: 1px solid rgba(0,0,0,.12); }
+    .theme-swatch.classic { background: linear-gradient(135deg,#fbf4e9 50%,#633b2b 50%); }
+    .theme-swatch.pumpkin { background: linear-gradient(135deg,#f7e5cb 50%,#d36b32 50%); }
+    .theme-swatch.evening { background: linear-gradient(135deg,#211b1a 50%,#e8bd96 50%); }
+    body[data-theme="pumpkin"] { --cream:#f7e5cb; --paper:#fff3df; --ink:#4b2b1b; --muted:#8a5a3d; --brown:#7b3b22; --rust:#d36b32; --gold:#e4a23f; --sage:#8d784b; }
+    body[data-theme="pumpkin"] { background: radial-gradient(ellipse at 8% 10%,rgba(211,107,50,.16),transparent 30%),radial-gradient(ellipse at 92% 85%,rgba(141,120,75,.13),transparent 28%),var(--cream); }
+    body[data-theme="pumpkin"] .hero { background: linear-gradient(115deg,rgba(77,38,19,.94),rgba(145,69,29,.84)),radial-gradient(circle at 80% 20%,#d18a42,#65351f 65%); }
+    body[data-theme="pumpkin"] .countdown-unit { background:#8c431f; }
+    body[data-theme="pumpkin"] .menu-button { background:linear-gradient(120deg,#c45b25,#873d20); }
+    body[data-theme="pumpkin"] .round-table { background:radial-gradient(circle at 35% 30%,#bd7842,#7b3b22 75%); }
+    body[data-theme="pumpkin"] .detail-icon, body[data-theme="pumpkin"] .attendee-tab-icon { background:#f2d4ae; }
+    body[data-theme="pumpkin"] .theme-card { background:#fff3df; border-color:#e6c49b; }
+    body[data-theme="evening"] { --cream:#211b1a; --paper:#302724; --ink:#f7e9d9; --muted:#c3aa98; --brown:#e8bd96; --rust:#e58b57; --gold:#e7b66d; --sage:#b0b58c; background:radial-gradient(ellipse at 8% 10%,rgba(214,154,77,.10),transparent 30%),#211b1a; }
+    body[data-theme="evening"] .detail, body[data-theme="evening"] .countdown-card, body[data-theme="evening"] .seating-card, body[data-theme="evening"] .attendee-tab, body[data-theme="evening"] .upcoming-card, body[data-theme="evening"] .history-entry, body[data-theme="evening"] .theme-card { background:#302724; border-color:#554239; color:#f7e9d9; }
+    body[data-theme="evening"] .detail-icon, body[data-theme="evening"] .attendee-tab-icon { background:#49382f; color:#f7e9d9; }
+    body[data-theme="evening"] .detail-label, body[data-theme="evening"] .countdown-eyebrow, body[data-theme="evening"] .countdown-date, body[data-theme="evening"] .history-version small { color:#c3aa98; }
+    body[data-theme="evening"] .countdown-unit { background:#6b4938; }
+    body[data-theme="evening"] .menu-button { background:linear-gradient(120deg,#9f5d3c,#704331); }
+    body[data-theme="evening"] .round-table { border-color:#8d6548; }
+    body[data-theme="evening"] .seat { background:#49382f; border-color:#71533e; color:#f7e9d9; }
+    body[data-theme="evening"] .seat small, body[data-theme="evening"] .attendee-tab-content, body[data-theme="evening"] .history-content { color:#c3aa98; }
+    body[data-theme="evening"] .attendee-name { color:#f7e9d9; }
+    body[data-theme="evening"] .attendee-name + .attendee-name { border-color:#554239; }
+    body[data-theme="evening"] .history-entry summary { color:#f7e9d9; }
+    body[data-theme="evening"] .history-current, body[data-theme="evening"] .coming-soon { background:#49382f; color:#f2c18e; }
+    body[data-theme="evening"] .theme-choice { background:#49382f; border-color:#71533e; color:#f7e9d9; }
+    body[data-theme="evening"] .theme-choice[aria-pressed="true"] { border-color:#e8bd96; }
+    body[data-theme="evening"] .history-previous-button, body[data-theme="evening"] .kitchen-label { background:#49382f; color:#f7e9d9; border-color:#71533e; }
+
     .details {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
       max-width: 790px; margin: 0 auto;
@@ -316,6 +355,19 @@
       </article>
     </section>
 
+
+    <section class="theme-section" aria-labelledby="theme-title">
+      <div class="theme-card">
+        <h2 id="theme-title">Choose Your Autumn Theme 🎨</h2>
+        <p>Pick the color palette you like best. Your choice will be remembered on this device.</p>
+        <div class="theme-options" role="group" aria-label="Color theme">
+          <button class="theme-choice" type="button" data-theme-choice="classic" aria-pressed="true"><span class="theme-swatch classic" aria-hidden="true"></span>Classic</button>
+          <button class="theme-choice" type="button" data-theme-choice="pumpkin" aria-pressed="false"><span class="theme-swatch pumpkin" aria-hidden="true"></span>Pumpkin Spice</button>
+          <button class="theme-choice" type="button" data-theme-choice="evening" aria-pressed="false"><span class="theme-swatch evening" aria-hidden="true"></span>Cozy Evening</button>
+        </div>
+      </div>
+    </section>
+
     <section class="countdown-section" aria-label="Countdown to Thanksgiving">
       <div class="countdown-card">
         <div class="countdown-eyebrow">The celebration is getting closer</div>
@@ -411,9 +463,10 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-26<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Update announcements now keep a complete queue, so visitors can see every update they have not viewed yet.</li><li>Added individual announcement details for each release.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-23-27<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes.</li><li>Your selected theme is saved on this device and restored when you return.</li></ul></div>
         </details>
+        <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-26<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Update announcements now keep a complete queue, so visitors can see every update they have not viewed yet.</li><li>Added individual announcement details for each release.</li></ul></div></details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
           <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-25<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Made live update checks run every 1.5 seconds and prevented overlapping checks.</li></ul></div></details>
@@ -458,7 +511,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-26';
+    const updateVersion = '2026-11-23-27';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -467,7 +520,8 @@
       { version: '2026-11-23-23', description: 'Corrected the previous update-log button JavaScript formatting.' },
       { version: '2026-11-23-24', description: 'Fixed a remaining JavaScript syntax error that stopped page scripts from running.' },
       { version: '2026-11-23-25', description: 'Made live update checks run every 1.5 seconds and prevented overlapping checks.' },
-      { version: '2026-11-23-26', description: 'Update announcements now queue individually, so visitors can see every update they have not viewed yet.' }
+      { version: '2026-11-23-26', description: 'Update announcements now queue individually, so visitors can see every update they have not viewed yet.' },
+      { version: '2026-11-23-27', description: 'Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes. Your selection is saved on this device.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -475,6 +529,28 @@
     const menuButton = document.getElementById('menuButton');
     const modal = document.getElementById('menuModal');
     const closeButton = document.getElementById('closeModal');
+
+    // Apply and remember the visitor's preferred autumn theme.
+    const themeStorageKey = 'thanksgivingColorTheme';
+    const themeButtons = document.querySelectorAll('[data-theme-choice]');
+    function applyTheme(theme) {
+      const validTheme = ['classic', 'pumpkin', 'evening'].includes(theme) ? theme : 'classic';
+      if (validTheme === 'classic') document.body.removeAttribute('data-theme');
+      else document.body.setAttribute('data-theme', validTheme);
+      themeButtons.forEach(button => {
+        button.setAttribute('aria-pressed', String(button.dataset.themeChoice === validTheme));
+      });
+    }
+    let savedTheme = 'classic';
+    try { savedTheme = localStorage.getItem(themeStorageKey) || 'classic'; } catch (error) {}
+    applyTheme(savedTheme);
+    themeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const chosenTheme = button.dataset.themeChoice;
+        applyTheme(chosenTheme);
+        try { localStorage.setItem(themeStorageKey, chosenTheme); } catch (error) {}
+      });
+    });
 
     // Expand or collapse the older website update entries.
     const previousUpdatesButton = document.getElementById('previousUpdatesButton');
