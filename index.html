@@ -470,7 +470,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-23';
+    const updateVersion = '2026-11-23-24';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
@@ -487,7 +487,8 @@
       previousUpdates.hidden = isExpanded;
       previousUpdatesButton.textContent = isExpanded ? 'Click here for previous update logs ↓' : 'Hide previous update logs ↑';
     });
-\n    // Count down to the start of Thanksgiving Day in each visitor's local time zone.
+
+    // Count down to the start of Thanksgiving Day in each visitor's local time zone.
     const thanksgivingDate = new Date(2026, 10, 27, 17, 30, 0);
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
