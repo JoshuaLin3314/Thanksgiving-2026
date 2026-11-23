@@ -111,6 +111,22 @@
       box-shadow: 0 25px 70px rgba(0,0,0,.22); animation: rise .22s ease-out;
     }
     .modal-icon { font-size: 2.3rem; }
+    .menu-modal {
+      width: min(760px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      padding: 26px;
+    }
+    .menu-modal h3 { margin: 0 0 18px; }
+    .menu-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: calc(100vh - 150px);
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 0 auto 20px;
+    }
     .modal h3 { font: 600 1.8rem 'Playfair Display', Georgia, serif; margin: 12px 0 9px; }
     .modal p { color: var(--muted); line-height: 1.65; margin: 0 0 22px; }
     .close { border: 0; border-radius: 12px; padding: 12px 22px; background: #6b3e2c; color: white; font: 700 .9rem 'DM Sans', sans-serif; cursor: pointer; }
@@ -167,7 +183,7 @@
       <button class="menu-button" id="menuButton" type="button">
         <span aria-hidden="true">🍽️</span> Explore the Menu <span aria-hidden="true">→</span>
       </button>
-      <p class="menu-note">A delicious menu is on its way!</p>
+      <p class="menu-note">Take a look at what's being served! 🍁</p>
     </section>
 
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
@@ -191,19 +207,18 @@
     </div>
   </div>
 
-  <div class="modal-backdrop" id="menuModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription">
-    <div class="modal">
-      <div class="modal-icon" aria-hidden="true">🥧</div>
-      <h3 id="modalTitle">The Menu Is Coming!</h3>
-      <p id="modalDescription">We're putting together all the delicious details. Check back soon to see what's being served!</p>
-      <button class="close" id="closeModal" type="button">Sounds good!</button>
+  <div class="modal-backdrop" id="menuModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal menu-modal">
+      <h3 id="modalTitle">Our Thanksgiving Menu 🍂</h3>
+      <img class="menu-image" src="IMG_9093.png" alt="Thanksgiving menu showing main dishes, sides, desserts, and drinks">
+      <button class="close" id="closeModal" type="button">Close Menu</button>
     </div>
   </div>
 
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-1';
+    const updateVersion = '2026-11-23-2';
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
