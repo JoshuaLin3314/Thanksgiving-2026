@@ -1461,7 +1461,8 @@
       const displayCheckbox = shoppingChecks.find(display => display.value === item.dataset.shoppingControl);
       if (displayCheckbox) displayCheckbox.checked = item.checked;
       updateShoppingProgress();
-      saveShoppingItem({ value: item.dataset.shoppingControl, checked: item.checked, disabled: false });
+      item.value = item.dataset.shoppingControl;
+      saveShoppingItem(item);
     }));
     document.getElementById('shoppingReset').addEventListener('click', async () => {
       const button = document.getElementById('shoppingReset');
