@@ -568,11 +568,17 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-33<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-34<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Fixed the update history so only the newest release appears in the main section; all older releases are kept under Previous Update Logs.</li></ul></div>
+        </details>
+        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
+        <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-33<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.</li></ul></div>
         </details>
         <details class="history-entry">
-          <summary><span class="history-version">Version 2026-11-23-32<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-32<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -593,17 +599,36 @@
         </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-27<small>November 23, 2026</small></span></summary>
-          <div class="history-content"><ul><li>Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes.</li><li>Your selected theme is saved on this device and restored when you return.</li></ul></div>
+          <div class="history-content"><ul><li>Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes. Your selected theme is saved on this device.</li></ul></div>
         </details>
-        <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-26<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Update announcements now keep a complete queue, so visitors can see every update they have not viewed yet.</li><li>Added individual announcement details for each release.</li></ul></div></details>
-        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
-        <div class="history-previous" id="previousUpdates" hidden>
-          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-25<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Made live update checks run every 1.5 seconds and prevented overlapping checks.</li></ul></div></details>
-          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-24<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Fixed a remaining JavaScript syntax error that stopped page scripts from running.</li></ul></div></details>
-          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-23<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Corrected the previous update-log button JavaScript formatting.</li></ul></div></details>
-          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-22<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>First attempt to add the previous update-log button; its script formatting needed a follow-up fix.</li></ul></div></details>
-          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-21<small>November 23, 2026</small></span></summary><div class="history-content"><ul><li>Added a button so visitors can open previous website update logs.</li></ul></div></details>
-          <details class="history-entry"><summary><span class="history-version">Version 2026-11-23-20<small>November 23, 2026 · 4:12:32 PM CST</small></span></summary><div class="history-content"><ul><li>Added the Website Update History section so visitors can see what's changed.</li><li>Kept the live update checker running every five seconds.</li></ul></div></details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-26<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Update announcements now queue individually, so visitors can see every update they have not viewed yet. Added individual announcement details for each release.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-25<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Made live update checks run every 1.5 seconds and prevented overlapping checks.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-24<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Fixed a remaining JavaScript syntax error that stopped page scripts from running.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-23<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Corrected the previous update-log button JavaScript formatting.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-22<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added the first version of the previous update-log button.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-21<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added a button so visitors can open previous website update logs.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-20<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added the Website Update History section so visitors can see what's changed. Kept the live update checker running every five seconds.</li></ul></div>
+        </details>
         </div>
       </div>
     </section>
@@ -640,7 +665,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-33';
+    const updateVersion = '2026-11-23-34';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -656,7 +681,8 @@
       { version: '2026-11-23-30', description: 'Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.' },
       { version: '2026-11-23-31', description: 'Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.' },
       { version: '2026-11-23-32', description: 'Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.' },
-      { version: '2026-11-23-33', description: 'Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.' }
+      { version: '2026-11-23-33', description: 'Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.' },
+      { version: '2026-11-23-34', description: 'Fixed the update history so only the newest release appears in the main section; older releases are moved under Previous Update Logs.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
