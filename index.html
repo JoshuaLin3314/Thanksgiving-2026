@@ -150,6 +150,7 @@
     .shopping-heading { text-align:center; margin-bottom:18px; }
     .shopping-heading h2 { margin:0 0 7px; color:var(--brown); font:600 clamp(1.7rem,4vw,2.25rem)/1.2 'Playfair Display',Georgia,serif; }
     .shopping-heading p { margin:0; color:var(--muted); font-size:.9rem; }
+    .shopping-sync-status { margin:8px 0 0; color:var(--sage); font-size:.78rem; font-weight:700; text-align:center; min-height:1.2em; }
     .shopping-progress { display:flex; justify-content:space-between; gap:10px; margin-bottom:10px; color:var(--muted); font-size:.82rem; font-weight:700; }
     .shopping-progress-bar { height:9px; margin-bottom:16px; overflow:hidden; border-radius:999px; background:#eadcc9; }
     .shopping-progress-fill { width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,#b87942,#78805b); transition:width .25s ease; }
@@ -641,7 +642,7 @@
 
     <section class="shopping-section" aria-labelledby="shoppingTitle">
       <div class="shopping-card">
-        <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>Check items off as you shop. Your progress is saved on this device.</p></div>
+        <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>Check items off as you shop. Changes sync live across all devices! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
         <div class="shopping-progress"><span id="shoppingProgressText">0 of 14 items collected</span><strong id="shoppingProgressPercent">0%</strong></div>
         <div class="shopping-progress-bar" role="progressbar" aria-label="Shopping list progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="shoppingProgressBar"><div class="shopping-progress-fill" id="shoppingProgressFill"></div></div>
         <div class="shopping-list" id="shoppingList">
@@ -836,6 +837,10 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
+          <summary><span class="history-version">Version 2026-11-24-2<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Connected the Thanksgiving shopping checklist to Supabase for live syncing across devices.</li></ul></div>
+        </details>
+        <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-24-1<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Added an interactive Thanksgiving shopping checklist with saved checkmarks and progress tracking.</li></ul></div>
         </details>
@@ -1292,7 +1297,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-1';
+    const updateVersion = '2026-11-24-2';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1323,7 +1328,8 @@
       { version: '2026-11-23-45', description: 'Added a Thanksgiving Control Center with live guest-arrival and dish-readiness summaries plus quick navigation.' },
       { version: '2026-11-23-46', description: 'Added host-controlled live announcements that appear for all visitors in real time.' },
       { version: '2026-11-23-47', description: 'Made live announcements pulse until each visitor acknowledges the message.' },
-      { version: '2026-11-24-1', description: 'Added a saved, interactive Thanksgiving shopping checklist with progress tracking.' }
+      { version: '2026-11-24-1', description: 'Added a saved, interactive Thanksgiving shopping checklist with progress tracking.' },
+      { version: '2026-11-24-2', description: 'Connected the Thanksgiving shopping checklist to Supabase so checkmarks sync live across devices.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -1332,14 +1338,15 @@
     const modal = document.getElementById('menuModal');
     const closeButton = document.getElementById('closeModal');
 
-    // Save the shopping checklist locally on this device.
-    const shoppingStorageKey = 'thanksgivingShoppingChecklist';
+    // Shared Thanksgiving shopping checklist powered by Supabase Realtime.
     const shoppingList = document.getElementById('shoppingList');
     const shoppingChecks = [...shoppingList.querySelectorAll('input[type="checkbox"]')];
     const shoppingProgressText = document.getElementById('shoppingProgressText');
     const shoppingProgressPercent = document.getElementById('shoppingProgressPercent');
     const shoppingProgressBar = document.getElementById('shoppingProgressBar');
     const shoppingProgressFill = document.getElementById('shoppingProgressFill');
+    const shoppingSyncStatus = document.getElementById('shoppingSyncStatus');
+    let shoppingSaveInProgress = new Set();
     function updateShoppingProgress() {
       const checked = shoppingChecks.filter(item => item.checked).length;
       const percent = Math.round(checked / shoppingChecks.length * 100);
@@ -1347,19 +1354,70 @@
       shoppingProgressPercent.textContent = percent + '%';
       shoppingProgressBar.setAttribute('aria-valuenow', String(checked));
       shoppingProgressFill.style.width = percent + '%';
-      const saved = {};
-      shoppingChecks.forEach(item => { saved[item.value] = item.checked; });
-      try { localStorage.setItem(shoppingStorageKey, JSON.stringify(saved)); } catch (error) {}
     }
-    try {
-      const savedShopping = JSON.parse(localStorage.getItem(shoppingStorageKey) || '{}');
-      shoppingChecks.forEach(item => { item.checked = Boolean(savedShopping[item.value]); });
-    } catch (error) {}
-    shoppingChecks.forEach(item => item.addEventListener('change', updateShoppingProgress));
-    document.getElementById('shoppingReset').addEventListener('click', () => {
+    function applySharedShoppingRows(rows) {
+      rows.forEach(row => {
+        const checkbox = shoppingChecks.find(item => item.value === row.item_name);
+        if (checkbox) checkbox.checked = !!row.is_checked;
+      });
+      updateShoppingProgress();
+    }
+    async function loadSharedShoppingList() {
+      const { data, error } = await supabaseClient.from('shopping_list_items').select('item_name,is_checked');
+      if (error) {
+        shoppingSyncStatus.textContent = 'Could not connect to the shared list. Please refresh to retry.';
+        console.error('Could not load shared shopping list:', error.message);
+        return;
+      }
+      applySharedShoppingRows(data || []);
+      shoppingSyncStatus.textContent = '☁️ Shared list connected — updates sync across devices.';
+    }
+    async function saveShoppingItem(checkbox) {
+      if (shoppingSaveInProgress.has(checkbox.value)) return;
+      shoppingSaveInProgress.add(checkbox.value);
+      checkbox.disabled = true;
+      shoppingSyncStatus.textContent = 'Saving your change…';
+      const { error } = await supabaseClient.from('shopping_list_items')
+        .update({ is_checked: checkbox.checked, updated_at: new Date().toISOString() })
+        .eq('item_name', checkbox.value);
+      checkbox.disabled = false;
+      shoppingSaveInProgress.delete(checkbox.value);
+      if (error) {
+        shoppingSyncStatus.textContent = 'Could not save "' + checkbox.value + '". Please try again.';
+        console.error('Could not save shopping item:', error.message);
+        await loadSharedShoppingList();
+        return;
+      }
+      shoppingSyncStatus.textContent = '☁️ Saved — everyone’s list is up to date!';
+    }
+    shoppingChecks.forEach(item => item.addEventListener('change', () => {
+      updateShoppingProgress();
+      saveShoppingItem(item);
+    }));
+    document.getElementById('shoppingReset').addEventListener('click', async () => {
+      const button = document.getElementById('shoppingReset');
+      button.disabled = true;
+      shoppingSyncStatus.textContent = 'Resetting shared checklist…';
+      const { error } = await supabaseClient.from('shopping_list_items')
+        .update({ is_checked: false, updated_at: new Date().toISOString() });
+      button.disabled = false;
+      if (error) {
+        shoppingSyncStatus.textContent = 'Could not reset the shared list. Please retry.';
+        console.error('Could not reset shared shopping list:', error.message);
+        return;
+      }
       shoppingChecks.forEach(item => { item.checked = false; });
       updateShoppingProgress();
+      shoppingSyncStatus.textContent = 'Shared checklist reset on every device.';
     });
+    supabaseClient.channel('shared-shopping-list')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'shopping_list_items' }, payload => {
+        if (payload.new && payload.new.item_name) applySharedShoppingRows([payload.new]);
+      })
+      .subscribe(status => {
+        if (status === 'SUBSCRIBED') loadSharedShoppingList();
+        else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') shoppingSyncStatus.textContent = 'Live sync disconnected. Reconnecting…';
+      });
     updateShoppingProgress();
 
     // Apply and remember the visitor's preferred autumn theme.
