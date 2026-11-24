@@ -671,9 +671,19 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-40<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-41<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.</li></ul></div>
+        </details>
+        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
+        <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-40<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.</li></ul></div>
+        </details><small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.</li></ul></div>
         </details>
+        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
+        <div class="history-previous" id="previousUpdates" hidden>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-39<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.</li></ul></div>
@@ -690,8 +700,7 @@
           <summary><span class="history-version">Version 2026-11-23-36<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.</li></ul></div>
         </details>
-        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
-        <div class="history-previous" id="previousUpdates" hidden>
+
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-35<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Restored the simple, generic new-update popup without displaying version numbers or update descriptions.</li></ul></div>
@@ -914,7 +923,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-40';
+    const updateVersion = '2026-11-23-41';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -937,7 +946,8 @@
       { version: '2026-11-23-37', description: 'Added an interactive Thanksgiving trivia game with eight questions, score tracking, and replay.' },
       { version: '2026-11-23-38', description: 'Added a host check-in panel with an arrival checklist and live guest count.' },
       { version: '2026-11-23-39', description: 'Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.' },
-      { version: '2026-11-23-40', description: 'Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.' }
+      { version: '2026-11-23-40', description: 'Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.' },
+      { version: '2026-11-23-41', description: 'Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
