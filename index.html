@@ -271,19 +271,10 @@
       letter-spacing: .12em; text-transform: uppercase;
     }
     .countdown-date { color: #8d6b51; font-size: .82rem; margin: 0; font-weight: 600; }
-    .menu-area { text-align: center; margin: 34px auto 0; }
-    .menu-button {
-      appearance: none; border: 0; cursor: pointer; color: #fff8ee;
-      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-      padding: 17px 27px; border-radius: 15px;
-      background: linear-gradient(120deg, #9f4c2f, #713c2b);
-      box-shadow: 0 10px 22px rgba(112,57,36,.2);
-      font: 700 1rem 'DM Sans', sans-serif; letter-spacing: .01em;
-      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
-    }
-    .menu-button:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(112,57,36,.25); filter: brightness(1.06); }
-    .menu-button:focus-visible, .close:focus-visible { outline: 3px solid #d69a4d; outline-offset: 4px; }
-    .menu-note { color: #927966; font-size: .8rem; margin: 12px 0 0; }
+    .menu-area { width: min(760px, calc(100% - 32px)); margin: 38px auto 0; padding: clamp(20px, 4vw, 32px); text-align: center; background: rgba(255,250,242,.94); border: 1px solid #dfc5a8; border-radius: 24px; box-shadow: 0 14px 34px rgba(80,52,33,.09); }
+    .menu-area h2 { color: var(--brown); font: 600 clamp(1.8rem, 4vw, 2.35rem)/1.15 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
+    .menu-note { color: #927966; font-size: .9rem; margin: 0 0 20px; }
+    .menu-image { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 8px 22px rgba(80,52,33,.12); }
     .clothing-section { max-width: 900px; margin: 42px auto 0; }
     .clothing-card { display: flex; align-items: center; gap: clamp(22px, 5vw, 48px); padding: clamp(25px, 5vw, 42px); border: 1px solid #dfc5a8; border-radius: 24px; background: linear-gradient(120deg, rgba(255,250,242,.97), rgba(244,225,201,.94)); box-shadow: 0 14px 34px rgba(80,52,33,.09); overflow: hidden; }
     .clothing-art { flex: 0 0 clamp(100px, 18vw, 165px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 28px; background: linear-gradient(145deg,#f0dfc8,#e5c5a1); font-size: clamp(4rem, 10vw, 7rem); }
@@ -632,11 +623,10 @@
       </div>
     </section>
 
-    <section class="menu-area" aria-label="Party menu">
-      <button class="menu-button" id="menuButton" type="button">
-        <span aria-hidden="true">🍽️</span> Explore the Menu <span aria-hidden="true">→</span>
-      </button>
-      <p class="menu-note">Take a look at what's being served! 🍁</p>
+    <section class="menu-area" aria-labelledby="menuTitle">
+      <h2 id="menuTitle">Our Thanksgiving Menu 🍂</h2>
+      <p class="menu-note">Here's what's being served — just scroll and take a look! 🍁</p>
+      <img class="menu-image" src="IMG_9093.png" alt="Thanksgiving menu showing main dishes, sides, desserts, and drinks" loading="lazy">
     </section>
 
 
@@ -1076,14 +1066,6 @@
     </div>
   </div>
 
-  <div class="modal-backdrop" id="menuModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal menu-modal">
-      <h3 id="modalTitle">Our Thanksgiving Menu 🍂</h3>
-      <img class="menu-image" src="IMG_9093.png" alt="Thanksgiving menu showing main dishes, sides, desserts, and drinks">
-      <button class="close" id="closeModal" type="button">Close Menu</button>
-    </div>
-  </div>
-
   <section id="hostPasswordSetup" class="host-password-setup" aria-labelledby="hostPasswordSetupTitle">
     <div class="host-password-card">
       <div aria-hidden="true" style="font-size:2rem;margin-bottom:10px">🔐</div>
@@ -1357,7 +1339,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-7';
+    const updateVersion = '2026-11-24-8';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1393,15 +1375,12 @@
       { version: '2026-11-24-3', description: 'Added a secure host password reset option for account sign-in recovery.' },
       { version: '2026-11-24-4', description: 'Moved shopping controls into the host panel; the guest shopping view is read-only.' },
       { version: '2026-11-24-5', description: 'Restored the public shopping list with host-only editing and fixed the live update version checker.' },
-      { version: '2026-11-24-7', description: 'Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.' }
+      { version: '2026-11-24-7', description: 'Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.' },
+      { version: '2026-11-24-8', description: 'Put the Thanksgiving menu image directly on the page so everyone can view it while scrolling.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
     const dismissTesting = document.getElementById('dismissTesting');
-    const menuButton = document.getElementById('menuButton');
-    const modal = document.getElementById('menuModal');
-    const closeButton = document.getElementById('closeModal');
-
     // Shared Thanksgiving shopping checklist powered by Supabase Realtime.
     const shoppingList = document.getElementById('shoppingList');
     const shoppingChecks = [...shoppingList.querySelectorAll('input[type="checkbox"]')];
@@ -1626,15 +1605,6 @@
     updateLiveStatus();
     setInterval(updateLiveStatus, 1000);
 
-    function openMenuNotice() {
-      modal.classList.add('open');
-      closeButton.focus();
-    }
-    function closeMenuNotice() {
-      modal.classList.remove('open');
-      menuButton.focus();
-    }
-
     function closeTestingNotice() {
       if (dismissTesting.disabled) return;
       testingModal.classList.remove('open');
@@ -1735,14 +1705,6 @@
       window.location.reload();
     });
 
-    menuButton.addEventListener('click', openMenuNotice);
-    closeButton.addEventListener('click', closeMenuNotice);
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) closeMenuNotice();
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && modal.classList.contains('open')) closeMenuNotice();
-    });
   </script>
 </body>
 </html>
