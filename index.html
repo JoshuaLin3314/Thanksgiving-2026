@@ -1175,7 +1175,7 @@
       }
     });
 
-    // Tapping a falling leaf triggers a tiny burst and a rotating secret message.
+    // Tapping a falling leaf triggers a tiny burst and a shuffled secret message.
     const leafMessages = [
       'You found a little bit of Thanksgiving magic! ✨',
       'A little gratitude goes a long way. 🧡',
@@ -1185,7 +1185,23 @@
       'You are one leaf closer to Thanksgiving! 🦃',
       'Good food, great company, and cozy memories. 🍁'
     ];
-    let leafMessageIndex = 0;
+    let shuffledLeafMessages = [];
+    let lastLeafMessage = '';
+    function nextLeafMessage() {
+      if (!shuffledLeafMessages.length) {
+        shuffledLeafMessages = [...leafMessages];
+        for (let i = shuffledLeafMessages.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledLeafMessages[i], shuffledLeafMessages[j]] = [shuffledLeafMessages[j], shuffledLeafMessages[i]];
+        }
+        // Avoid repeating the previous message when a new shuffled round begins.
+        if (shuffledLeafMessages.length > 1 && shuffledLeafMessages[shuffledLeafMessages.length - 1] === lastLeafMessage) {
+          [shuffledLeafMessages[0], shuffledLeafMessages[shuffledLeafMessages.length - 1]] = [shuffledLeafMessages[shuffledLeafMessages.length - 1], shuffledLeafMessages[0]];
+        }
+      }
+      lastLeafMessage = shuffledLeafMessages.pop();
+      return lastLeafMessage;
+    }
     let leafToastTimer;
     const leafToast = document.createElement('div');
     leafToast.className = 'leaf-surprise';
@@ -1216,8 +1232,7 @@
           document.body.appendChild(particle);
           particle.addEventListener('animationend', () => particle.remove(), { once: true });
         });
-        leafToast.textContent = leafMessages[leafMessageIndex % leafMessages.length];
-        leafMessageIndex++;
+        leafToast.textContent = nextLeafMessage();
         leafToast.classList.add('show');
         clearTimeout(leafToastTimer);
         leafToastTimer = setTimeout(() => leafToast.classList.remove('show'), 2400);
