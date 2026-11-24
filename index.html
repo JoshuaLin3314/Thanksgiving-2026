@@ -891,7 +891,11 @@
         const pageHtml = await response.text();
         const listMatch = pageHtml.match(/const\s+updateAnnouncements\s*=\s*(\[[\s\S]*?\]);/);
         if (!listMatch) return;
-        const publishedAnnouncements = JSON.parse(listMatch[1]);
+        // updateAnnouncements is JavaScript (single-quoted strings), not JSON.
+        // Extract version fields directly so parsing cannot fail on its JS syntax.
+        const publishedVersions = [...listMatch[1].matchAll(/version:\s*'([^']+)'/g)].map(match => match[1]);
+        if (publishedVersions.length === 0) return;
+        const publishedAnnouncements = publishedVersions.map(version => ({ version }));
         const latestPublished = publishedAnnouncements[publishedAnnouncements.length - 1];
         // If this already-open page is older than the published page, announce the release
         // even if this browser previously acknowledged an earlier version.
