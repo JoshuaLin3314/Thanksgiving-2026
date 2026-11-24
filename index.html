@@ -289,6 +289,8 @@
     .falling-leaves { position: fixed; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
     .falling-leaf { position: absolute; top: -50px; left: var(--left); font-size: var(--size); opacity: 0; animation: leaf-fall var(--duration) linear var(--delay) infinite; filter: drop-shadow(0 2px 2px rgba(56,37,29,.12)); pointer-events: auto; cursor: pointer; touch-action: manipulation; user-select: none; transition: filter .2s ease; }
     .falling-leaf:hover, .falling-leaf:focus-visible { filter: drop-shadow(0 0 8px rgba(190,112,49,.8)); outline: none; }
+    .leaf-tap-hint { width: fit-content; max-width: calc(100% - 28px); margin: 10px auto 0; padding: 8px 15px; border: 1px solid #e8d4b9; border-radius: 999px; background: rgba(255,250,242,.88); color: #80512e; font-size: .78rem; font-weight: 700; text-align: center; box-shadow: 0 4px 14px rgba(80,52,33,.06); }
+    body[data-theme="evening"] .leaf-tap-hint { background: #33261f; color: #f2c18e; border-color: #71533e; }
     .leaf-burst { position: fixed; z-index: 30; pointer-events: none; font-size: 19px; animation: leaf-pop .85s ease-out forwards; }
     @keyframes leaf-pop { 0% { opacity: 1; transform: translate(-50%,-50%) scale(.6) rotate(0deg); } 100% { opacity: 0; transform: translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.25) rotate(var(--spin)); } }
     .leaf-surprise { position: fixed; z-index: 31; left: 50%; bottom: 28px; transform: translate(-50%, 18px); width: max-content; max-width: min(90vw, 420px); padding: 13px 19px; border: 1px solid #d9b78f; border-radius: 999px; background: #fff8ed; color: #633b2b; box-shadow: 0 10px 30px rgba(56,37,29,.2); font: 700 .88rem 'DM Sans', sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
@@ -444,6 +446,7 @@
 
   <main class="page">
     <div class="topline">Gather • Give Thanks • Celebrate</div>
+    <div class="leaf-tap-hint" aria-label="Interactive falling leaves hint">🍂 Psst... tap a falling leaf for a little surprise! ✨</div>
 
     <header class="hero">
       <div class="hero-inner">
@@ -668,7 +671,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-39<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-40<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-39<small>November 23, 2026</small></span></summary><small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -685,6 +692,14 @@
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-35<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Restored the simple, generic new-update popup without displaying version numbers or update descriptions.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-34<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Fixed the update history so only the newest release appears in the main section; older releases are moved under Previous Update Logs.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-33<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.</li></ul></div>
@@ -899,7 +914,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-39';
+    const updateVersion = '2026-11-23-40';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -921,7 +936,8 @@
       { version: '2026-11-23-36', description: 'Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.' },
       { version: '2026-11-23-37', description: 'Added an interactive Thanksgiving trivia game with eight questions, score tracking, and replay.' },
       { version: '2026-11-23-38', description: 'Added a host check-in panel with an arrival checklist and live guest count.' },
-      { version: '2026-11-23-39', description: 'Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.' }
+      { version: '2026-11-23-39', description: 'Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.' },
+      { version: '2026-11-23-40', description: 'Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
