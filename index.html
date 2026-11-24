@@ -190,6 +190,43 @@
     body[data-theme="evening"] .clothing-art { background:linear-gradient(145deg,#49382f,#654a3a); }
     body[data-theme="evening"] .clothing-details span { background:#49382f; border-color:#71533e; }
     @media (max-width: 620px) { .clothing-card { flex-direction: column; text-align: center; } .clothing-details { justify-content: center; } }
+    .schedule-section { max-width: 900px; margin: 48px auto 0; }
+    .schedule-heading { text-align: center; margin-bottom: 22px; }
+    .schedule-eyebrow { color: var(--rust); font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+    .schedule-heading h2 { font: 600 clamp(1.8rem, 4.5vw, 2.55rem)/1.2 'Playfair Display', Georgia, serif; margin: 8px 0; color: var(--brown); }
+    .schedule-heading p { color: var(--muted); margin: 0; font-size: .94rem; }
+    .schedule-card { padding: clamp(20px, 4vw, 36px); border: 1px solid #eadcc9; border-radius: 24px; background: rgba(255,250,242,.9); box-shadow: 0 12px 32px rgba(80,52,33,.07); }
+    .schedule-timeline { max-width: 690px; margin: 0 auto; }
+    .schedule-item { display: grid; grid-template-columns: 92px 42px minmax(0,1fr); align-items: center; gap: 15px; min-height: 88px; position: relative; }
+    .schedule-item:not(:last-child)::after { content: ''; position: absolute; left: 112px; top: calc(50% + 19px); bottom: calc(-50% + 19px); width: 2px; background: linear-gradient(#d8b58e,#eadcc9); }
+    .schedule-time { text-align: right; color: var(--brown); font: 700 1.18rem 'Playfair Display', Georgia, serif; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .schedule-time span { display: block; color: var(--muted); font: 700 .62rem 'DM Sans',sans-serif; letter-spacing: .12em; margin-top: 2px; }
+    .schedule-marker { z-index: 1; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: #f1e2ce; border: 2px solid #e4c9a8; font-size: 1.15rem; }
+    .schedule-detail { padding: 14px 17px; border: 1px solid #eee1d1; border-radius: 15px; background: rgba(255,255,255,.58); }
+    .schedule-detail h3 { margin: 0 0 4px; color: var(--brown); font: 600 1.08rem 'Playfair Display', Georgia, serif; }
+    .schedule-detail p { margin: 0; color: var(--muted); font-size: .83rem; line-height: 1.5; }
+    .schedule-highlight .schedule-marker { background: #f4d9bb; border-color: #d7a46d; }
+    .schedule-highlight .schedule-detail { background: linear-gradient(110deg,rgba(245,226,202,.65),rgba(255,250,242,.8)); border-color: #e5c9a8; }
+    .schedule-final .schedule-detail { border-color: #d8c5a8; }
+    body[data-theme="pumpkin"] .schedule-card { background: rgba(255,243,223,.94); border-color: #e6c49b; }
+    body[data-theme="pumpkin"] .schedule-marker { background: #f2d4ae; border-color: #dfb17e; }
+    body[data-theme="pumpkin"] .schedule-detail { background: rgba(255,250,242,.72); border-color: #e8cfb0; }
+    body[data-theme="evening"] .schedule-card { background: #302724; border-color: #554239; }
+    body[data-theme="evening"] .schedule-detail { background: #49382f; border-color: #71533e; }
+    body[data-theme="evening"] .schedule-highlight .schedule-detail { background: linear-gradient(110deg,#594333,#49382f); border-color: #8a6246; }
+    body[data-theme="evening"] .schedule-marker { background: #49382f; border-color: #8a6246; }
+    body[data-theme="evening"] .schedule-time, body[data-theme="evening"] .schedule-detail h3 { color: #f7e9d9; }
+    @media (max-width: 540px) {
+      .schedule-card { padding: 17px 12px; }
+      .schedule-item { grid-template-columns: 62px 34px minmax(0,1fr); gap: 9px; min-height: 83px; }
+      .schedule-item:not(:last-child)::after { left: 79px; }
+      .schedule-time { font-size: 1rem; }
+      .schedule-time span { font-size: .58rem; }
+      .schedule-marker { width: 34px; height: 34px; font-size: 1rem; }
+      .schedule-detail { padding: 12px 11px; }
+      .schedule-detail h3 { font-size: .96rem; }
+      .schedule-detail p { font-size: .76rem; }
+    }
     .upcoming-section { max-width: 900px; margin: 48px auto 0; }
     .upcoming-heading { text-align: center; margin-bottom: 20px; }
     .upcoming-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
@@ -472,18 +509,55 @@
       </div>
     </section>
 
-    <section class="upcoming-section" aria-labelledby="upcoming-title">
-      <div class="upcoming-heading">
-        <h2 id="upcoming-title">More to Come 🍁</h2>
-        <p>We're working on a few more details to make the gathering extra special.</p>
+    <section class="schedule-section" aria-labelledby="schedule-title">
+      <div class="schedule-heading">
+        <div class="schedule-eyebrow">A day full of gratitude</div>
+        <h2 id="schedule-title">Thanksgiving Day Schedule 🍂</h2>
+        <p>Here's how we'll spend our time together!</p>
       </div>
-      <div class="upcoming-grid">
-        <article class="upcoming-card">
-          <div class="upcoming-icon" aria-hidden="true">🕒</div>
-          <h3>Event Schedule</h3>
-          <p>See what's planned throughout the Thanksgiving celebration.</p>
-          <span class="coming-soon">Coming Soon</span>
-        </article>
+      <div class="schedule-card">
+        <div class="schedule-timeline">
+          <article class="schedule-item">
+            <div class="schedule-time">5:00 <span>PM</span></div>
+            <div class="schedule-marker">👋</div>
+            <div class="schedule-detail"><h3>Check-In &amp; Roll Call</h3><p>Party does check in and role call</p></div>
+          </article>
+          <article class="schedule-item schedule-highlight">
+            <div class="schedule-time">5:30 <span>PM</span></div>
+            <div class="schedule-marker">🍽️</div>
+            <div class="schedule-detail"><h3>Dinner Begins</h3><p>Dinner starts</p></div>
+          </article>
+          <article class="schedule-item">
+            <div class="schedule-time">7:00 <span>PM</span></div>
+            <div class="schedule-marker">🍂</div>
+            <div class="schedule-detail"><h3>Main Dinner Ends</h3><p>Main dinner ends</p></div>
+          </article>
+          <article class="schedule-item">
+            <div class="schedule-time">7:30 <span>PM</span></div>
+            <div class="schedule-marker">🧹</div>
+            <div class="schedule-detail"><h3>Table Reset</h3><p>Table cleaning and set up for dessert</p></div>
+          </article>
+          <article class="schedule-item schedule-highlight">
+            <div class="schedule-time">8:00 <span>PM</span></div>
+            <div class="schedule-marker">🍰</div>
+            <div class="schedule-detail"><h3>Dessert Time</h3><p>Dessert</p></div>
+          </article>
+          <article class="schedule-item">
+            <div class="schedule-time">8:30 <span>PM</span></div>
+            <div class="schedule-marker">🃏</div>
+            <div class="schedule-detail"><h3>Card Games</h3><p>Time for card games!</p></div>
+          </article>
+          <article class="schedule-item schedule-highlight">
+            <div class="schedule-time">9:00 <span>PM</span></div>
+            <div class="schedule-marker">🚶</div>
+            <div class="schedule-detail"><h3>Walk to MTea</h3><p>We'll head out for a walk to MTea.</p></div>
+          </article>
+          <article class="schedule-item schedule-final">
+            <div class="schedule-time">10:00 <span>PM</span></div>
+            <div class="schedule-marker">🧡</div>
+            <div class="schedule-detail"><h3>Party Ends</h3><p>Thank you for celebrating with us!</p></div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -494,7 +568,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-31<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-32<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-31<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -558,7 +636,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-31';
+    const updateVersion = '2026-11-23-32';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -572,7 +650,8 @@
       { version: '2026-11-23-28', description: 'Simplified update announcements: visitors now see only the latest update, even if they missed several releases.' },
       { version: '2026-11-23-29', description: 'Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.' },
       { version: '2026-11-23-30', description: 'Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.' },
-      { version: '2026-11-23-31', description: 'Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.' }
+      { version: '2026-11-23-31', description: 'Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.' },
+      { version: '2026-11-23-32', description: 'Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
