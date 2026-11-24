@@ -126,6 +126,12 @@
     .announcement-section { max-width:790px; margin:26px auto 0; }
     .announcement-card { display:none; padding:18px 20px; border:1px solid #dfc5a8; border-radius:18px; background:linear-gradient(120deg,rgba(255,250,242,.97),rgba(244,225,201,.94)); box-shadow:0 10px 25px rgba(80,52,33,.07); }
     .announcement-card.show { display:block; }
+    .announcement-card.needs-acknowledgment { animation:announcement-pulse 1.2s ease-in-out infinite; border:3px solid #b64d2d; }
+    @keyframes announcement-pulse { 0%,100% { box-shadow:0 0 0 0 rgba(182,77,45,.18); transform:scale(1); } 50% { box-shadow:0 0 0 8px rgba(182,77,45,.24),0 12px 30px rgba(80,52,33,.2); transform:scale(1.012); } }
+    .announcement-ack { margin-top:14px; border:0; border-radius:999px; padding:11px 18px; background:#8d3826; color:#fffaf2; font:800 .85rem 'DM Sans',sans-serif; cursor:pointer; box-shadow:0 3px 0 rgba(75,35,24,.2); }
+    .announcement-ack:focus-visible { outline:3px solid #d99a42; outline-offset:3px; }
+    .announcement-card.acknowledged { animation:none; border-width:1px; transform:none; }
+    @media(prefers-reduced-motion:reduce) { .announcement-card.needs-acknowledgment { animation:none; outline:3px solid #b64d2d; } }
     .announcement-eyebrow { color:var(--rust); font-size:.68rem; font-weight:800; letter-spacing:.17em; text-transform:uppercase; }
     .announcement-card h2 { margin:7px 0; color:var(--brown); font:600 1.45rem 'Playfair Display',Georgia,serif; }
     .announcement-message { margin:0; line-height:1.65; overflow-wrap:anywhere; }
@@ -563,6 +569,7 @@
         <h2>Live Announcement</h2>
         <p class="announcement-message" id="liveAnnouncementMessage"></p>
         <time class="announcement-time" id="liveAnnouncementTime"></time>
+        <button class="announcement-ack" id="announcementAcknowledge" type="button">I Understand — Stop the Flashing ✓</button>
       </article>
     </section>
 
@@ -1032,13 +1039,22 @@
       document.getElementById('foodAllReady').classList.toggle('show',readyCount===foodStatusNames.length);
     }
     // Host-controlled announcements are stored in Supabase and shown to every visitor live.
+    let activeAnnouncementKey='';
     function renderLiveAnnouncement(row){
-      const card=document.getElementById('liveAnnouncementCard'),message=document.getElementById('liveAnnouncementMessage'),time=document.getElementById('liveAnnouncementTime');
+      const card=document.getElementById('liveAnnouncementCard'),message=document.getElementById('liveAnnouncementMessage'),time=document.getElementById('liveAnnouncementTime'),ack=document.getElementById('announcementAcknowledge');
       const textValue=row&&typeof row.message==='string'?row.message.trim():'';
-      card.classList.toggle('show',!!textValue);message.textContent=textValue;
+      activeAnnouncementKey=textValue?(row.updated_at||textValue):'';
+      const acknowledged=!!activeAnnouncementKey&&localStorage.getItem('acknowledgedAnnouncement')===activeAnnouncementKey;
+      card.classList.toggle('show',!!textValue);card.classList.toggle('needs-acknowledgment',!!textValue&&!acknowledged);card.classList.toggle('acknowledged',!!textValue&&acknowledged);
+      message.textContent=textValue;ack.hidden=!textValue;ack.textContent=acknowledged?'Announcement Acknowledged ✓':'I Understand — Stop the Flashing ✓';
       if(textValue&&row.updated_at){const date=new Date(row.updated_at);time.textContent='Updated '+date.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}else time.textContent='';
       const input=document.getElementById('announcementInput');if(input&&!input.matches(':focus'))input.value=textValue;
     }
+    document.getElementById('announcementAcknowledge').addEventListener('click',()=>{
+      if(!activeAnnouncementKey)return;localStorage.setItem('acknowledgedAnnouncement',activeAnnouncementKey);
+      const card=document.getElementById('liveAnnouncementCard');card.classList.remove('needs-acknowledgment');card.classList.add('acknowledged');
+      document.getElementById('announcementAcknowledge').textContent='Announcement Acknowledged ✓';
+    });
     async function loadLiveAnnouncement(){
       const {data,error}=await supabaseClient.from('live_announcements').select('message,updated_at').eq('id',1).maybeSingle();
       if(error){console.error('Could not load live announcement:',error.message);return;}renderLiveAnnouncement(data);
@@ -1161,7 +1177,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-46';
+    const updateVersion = '2026-11-23-47';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1190,7 +1206,8 @@
       { version: '2026-11-23-43', description: 'Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.' },
       { version: '2026-11-23-44', description: 'Connected the food tracker to Supabase so dish statuses sync live across devices, with host-only editing.' },
       { version: '2026-11-23-45', description: 'Added a Thanksgiving Control Center with live guest-arrival and dish-readiness summaries plus quick navigation.' },
-      { version: '2026-11-23-46', description: 'Added host-controlled live announcements that appear for all visitors in real time.' }
+      { version: '2026-11-23-46', description: 'Added host-controlled live announcements that appear for all visitors in real time.' },
+      { version: '2026-11-23-47', description: 'Made live announcements pulse until each visitor acknowledges the message.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
