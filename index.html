@@ -166,6 +166,40 @@
     body[data-theme="evening"] .shopping-reset { background:#49382f; color:#f7e9d9; border-color:#71533e; }
     @media(max-width:560px) { .shopping-card { padding:19px 14px; } .shopping-list { grid-template-columns:1fr; } }
 
+    .public-checkin-section{max-width:790px;margin:38px auto 0}
+    .public-checkin-card{padding:25px;border:1px solid #e7d5bd;border-radius:22px;background:rgba(255,250,242,.95);box-shadow:0 12px 30px rgba(80,52,33,.07)}
+    .public-checkin-heading{text-align:center;margin-bottom:20px}
+    .public-checkin-eyebrow{color:var(--rust);font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+    .public-checkin-heading h2{margin:7px 0;color:var(--brown);font:600 clamp(1.7rem,4vw,2.25rem)/1.2 'Playfair Display',Georgia,serif}
+    .public-checkin-heading p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.6}
+    .public-checkin-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;padding:16px 18px;border:1px solid #eadcc9;border-radius:15px;background:linear-gradient(120deg,rgba(214,154,77,.13),rgba(120,128,91,.09))}
+    .public-checkin-summary div{display:grid;gap:3px}
+    .public-checkin-summary div strong{color:var(--brown);font:600 2rem 'Playfair Display',Georgia,serif}
+    .public-checkin-summary div span{color:var(--muted);font-size:.75rem;font-weight:700}
+    .public-checkin-percent{color:var(--sage);font-size:1.1rem}
+    .public-checkin-progress{height:10px;margin:0 0 17px;overflow:hidden;border-radius:999px;background:#eadcc9}
+    .public-checkin-progress span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#b87942,#78805b);transition:width .3s ease}
+    .public-checkin-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .public-checkin-person{display:flex;align-items:center;gap:10px;min-width:0;padding:12px;border:1px solid #eadcc9;border-radius:13px;background:rgba(255,255,255,.48)}
+    .public-checkin-mark{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:#eee5d8;color:#8a7766;font-weight:900}
+    .public-checkin-copy{display:grid;gap:2px;min-width:0;flex:1}
+    .public-checkin-copy strong{font-size:.86rem}
+    .public-checkin-copy small{color:var(--muted);font-size:.7rem}
+    .public-checkin-badge{padding:5px 8px;border-radius:999px;background:#f0e9df;color:#806b58;font-size:.65rem;font-weight:800;white-space:nowrap}
+    .public-checkin-person.arrived{border-color:#a9b58f;background:rgba(120,128,91,.09)}
+    .public-checkin-person.arrived .public-checkin-mark{background:#78805b;color:white}
+    .public-checkin-person.arrived .public-checkin-badge{background:#e5ecd9;color:#53633f}
+    .public-checkin-live{text-align:center;min-height:1.2em;margin:15px 0 0;color:var(--sage);font-size:.78rem;font-weight:700}
+    .public-checkin-note{text-align:center;margin:8px 0 0;color:var(--muted);font-size:.7rem}
+    body[data-theme="evening"] .public-checkin-card{background:#302724;border-color:#554239}
+    body[data-theme="evening"] .public-checkin-summary{background:#49382f;border-color:#71533e}
+    body[data-theme="evening"] .public-checkin-summary div strong,body[data-theme="evening"] .public-checkin-copy strong{color:#f7e9d9}
+    body[data-theme="evening"] .public-checkin-person{background:rgba(255,255,255,.035);border-color:#554239}
+    body[data-theme="evening"] .public-checkin-person.arrived{background:rgba(120,128,91,.14);border-color:#82966e}
+    body[data-theme="evening"] .public-checkin-badge{background:#49382f;color:#e8bd96}
+    body[data-theme="evening"] .public-checkin-person.arrived .public-checkin-badge{background:#40503a;color:#f0f5e9}
+    @media(max-width:560px){.public-checkin-card{padding:19px 14px}.public-checkin-list{grid-template-columns:1fr}}
+    
     .food-tracker-section { max-width: 790px; margin: 38px auto 0; }
     .food-tracker-card { padding: 25px; border: 1px solid #e7d5bd; border-radius: 22px; background: rgba(255,250,242,.94); box-shadow: 0 12px 30px rgba(80,52,33,.07); }
     .food-tracker-heading { text-align:center; margin-bottom:20px; }
@@ -761,6 +795,24 @@
       </div>
     </section>
 
+    <section class="public-checkin-section" aria-labelledby="publicCheckinTitle">
+      <div class="public-checkin-card">
+        <div class="public-checkin-heading">
+          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
+          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
+          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
+        </div>
+        <div class="public-checkin-summary">
+          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
+          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
+        </div>
+        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
+        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
+        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
+        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
+      </div>
+    </section>
+
     <section class="clothing-section" aria-labelledby="clothing-title">
       <div class="clothing-card">
         <div class="clothing-art" aria-hidden="true">👕</div>
@@ -906,6 +958,10 @@
 
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-24-17<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a public live guest check-in dashboard with host-only editing and real-time arrival updates.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-24-5<small>November 24, 2026</small></span></summary>
           <div class="history-content"><ul><li>Restored the public shopping list with host-only editing and fixed the live update version checker.</li></ul></div>
@@ -1160,39 +1216,112 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
 
-    // Organizer check-in: tap the footer five times to open the panel.
+    // Shared guest check-in: hosts edit; every visitor can view live arrivals.
     const hostCheckinModal = document.getElementById('hostCheckinModal');
     const hostCheckinList = document.getElementById('hostCheckinList');
     const hostCheckinCount = document.getElementById('hostCheckinCount');
     const hostCheckinStatus = document.getElementById('hostCheckinStatus');
-    const hostCheckinStorageKey = 'thanksgivingHostCheckins';
+    const checkinGuestNames = ['Joshua','Lawrence','Alice','Alina','Alsa','Henry'];
     let hostCheckins = {};
-    try { hostCheckins = JSON.parse(localStorage.getItem(hostCheckinStorageKey) || '{}'); } catch (error) { hostCheckins = {}; }
+    let checkinSaveBusy = new Set();
+    const publicCheckinList = document.getElementById('publicCheckinList');
+    const publicCheckinCount = document.getElementById('publicCheckinCount');
+    const publicCheckinStatus = document.getElementById('publicCheckinStatus');
+    const publicCheckinFill = document.getElementById('publicCheckinFill');
+    const publicCheckinPercent = document.getElementById('publicCheckinPercent');
     function renderHostCheckins() {
+      const checked = checkinGuestNames.filter(name => hostCheckins[name]).length;
       const dashboardGuestCount = document.getElementById('dashboardGuestCount');
-      if (dashboardGuestCount) dashboardGuestCount.textContent = Object.values(hostCheckins).filter(Boolean).length + ' / 6';
+      if (dashboardGuestCount) dashboardGuestCount.textContent = checked + ' / 6';
       const boxes = [...hostCheckinList.querySelectorAll('input[type="checkbox"]')];
-      let checked = 0;
       boxes.forEach(box => {
         box.checked = Boolean(hostCheckins[box.value]);
         box.closest('.host-checkin-person').classList.toggle('checked', box.checked);
-        if (box.checked) checked++;
       });
-      hostCheckinCount.textContent = checked + ' / ' + boxes.length;
-      hostCheckinStatus.textContent = checked === boxes.length ? "Everyone's here! 🎉" : checked === 0 ? 'Nobody checked in yet' : checked + (checked === 1 ? ' person has' : ' people have') + ' arrived';
-      try { localStorage.setItem(hostCheckinStorageKey, JSON.stringify(hostCheckins)); } catch (error) {}
+      hostCheckinCount.textContent = checked + ' / ' + checkinGuestNames.length;
+      hostCheckinStatus.textContent = checked === checkinGuestNames.length ? "Everyone's here! 🎉" : checked === 0 ? 'Nobody checked in yet' : checked + (checked === 1 ? ' person has' : ' people have') + ' arrived';
+      publicCheckinCount.textContent = checked + ' / ' + checkinGuestNames.length;
+      publicCheckinPercent.textContent = Math.round(checked / checkinGuestNames.length * 100) + '%';
+      publicCheckinFill.style.width = (checked / checkinGuestNames.length * 100) + '%';
+      document.getElementById('publicCheckinProgress').setAttribute('aria-valuenow', String(checked));
+      publicCheckinStatus.textContent = checked === checkinGuestNames.length ? 'Everyone has arrived — let the gathering begin! 🎉' : checked === 0 ? 'We’re ready to welcome everyone!' : checked + (checked === 1 ? ' guest has' : ' guests have') + ' arrived so far';
+      publicCheckinList.innerHTML = '';
+      checkinGuestNames.forEach(name => {
+        const arrived = Boolean(hostCheckins[name]);
+        const card = document.createElement('div');
+        card.className = 'public-checkin-person' + (arrived ? ' arrived' : '');
+        const mark = document.createElement('span');
+        mark.className = 'public-checkin-mark';
+        mark.textContent = arrived ? '✓' : '·';
+        const copy = document.createElement('span');
+        copy.className = 'public-checkin-copy';
+        const person = document.createElement('strong');
+        person.textContent = name;
+        const state = document.createElement('small');
+        state.textContent = arrived ? 'Checked in' : 'Not here yet';
+        copy.append(person, state);
+        const badge = document.createElement('span');
+        badge.className = 'public-checkin-badge';
+        badge.textContent = arrived ? 'Arrived' : 'Expected';
+        card.append(mark, copy, badge);
+        publicCheckinList.appendChild(card);
+      });
     }
-    hostCheckinList.addEventListener('change', event => {
-      if (event.target.matches('input[type="checkbox"]')) {
-        hostCheckins[event.target.value] = event.target.checked;
+    async function loadSharedGuestCheckins() {
+      const { data, error } = await supabaseClient.from('guest_checkins').select('guest_name,is_checked_in');
+      if (error) {
+        publicCheckinStatus.textContent = 'Guest check-in is temporarily unavailable. Please refresh to retry.';
+        console.error('Could not load shared guest check-ins:', error.message);
+        return;
+      }
+      hostCheckins = {};
+      (data || []).forEach(row => { hostCheckins[row.guest_name] = !!row.is_checked_in; });
+      renderHostCheckins();
+      publicCheckinStatus.textContent = Object.values(hostCheckins).filter(Boolean).length === 6 ? 'Everyone has arrived — let the gathering begin! 🎉' : 'Live arrival board · Updates appear automatically';
+    }
+    hostCheckinList.addEventListener('change', async event => {
+      const box = event.target;
+      if (!box.matches('input[type="checkbox"]') || !hostIsSignedIn || checkinSaveBusy.has(box.value)) return;
+      const guestName = box.value;
+      checkinSaveBusy.add(guestName);
+      box.disabled = true;
+      const { error } = await supabaseClient.from('guest_checkins').update({ is_checked_in: box.checked, updated_at: new Date().toISOString() }).eq('guest_name', guestName);
+      box.disabled = !hostIsSignedIn;
+      checkinSaveBusy.delete(guestName);
+      if (error) {
+        publicCheckinStatus.textContent = 'Could not save ' + guestName + '’s check-in. Please try again.';
+        console.error('Could not save guest check-in:', error.message);
+        await loadSharedGuestCheckins();
+        return;
+      }
+      hostCheckins[guestName] = box.checked;
+      renderHostCheckins();
+      publicCheckinStatus.textContent = '☁️ Check-in saved — everyone’s dashboard is up to date!';
+    });
+    document.getElementById('hostCheckinReset').addEventListener('click', async () => {
+      if (!hostIsSignedIn || !window.confirm('Reset all Thanksgiving check-ins?')) return;
+      const button = document.getElementById('hostCheckinReset');
+      button.disabled = true;
+      const { error } = await supabaseClient.from('guest_checkins').update({ is_checked_in: false, updated_at: new Date().toISOString() });
+      button.disabled = false;
+      if (error) {
+        publicCheckinStatus.textContent = 'Could not reset check-ins. Please try again.';
+        console.error('Could not reset guest check-ins:', error.message);
+        return;
+      }
+      await loadSharedGuestCheckins();
+      publicCheckinStatus.textContent = 'Check-ins reset for everyone.';
+    });
+    supabaseClient.channel('shared-guest-checkins').on('postgres_changes', { event: '*', schema: 'public', table: 'guest_checkins' }, payload => {
+      if (payload.new && payload.new.guest_name) {
+        hostCheckins[payload.new.guest_name] = !!payload.new.is_checked_in;
         renderHostCheckins();
       }
+    }).subscribe(status => {
+      if (status === 'SUBSCRIBED') loadSharedGuestCheckins();
+      else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') publicCheckinStatus.textContent = 'Live sync reconnecting…';
     });
-    document.getElementById('hostCheckinReset').addEventListener('click', () => {
-      if (!window.confirm('Reset all Thanksgiving check-ins?')) return;
-      hostCheckins = {};
-      renderHostCheckins();
-    });
+    loadSharedGuestCheckins();
     document.getElementById('hostCheckinClose').addEventListener('click', () => hostCheckinModal.classList.remove('open'));
     document.getElementById('dashboardGoGuests').addEventListener('click',()=>document.getElementById('hostCheckinCount').scrollIntoView({behavior:'smooth',block:'center'}));
     document.getElementById('dashboardGoFood').addEventListener('click',()=>document.querySelector('.food-admin').scrollIntoView({behavior:'smooth',block:'center'}));
@@ -1313,7 +1442,7 @@
     supabaseClient.channel('shared-event-day-mode').on('postgres_changes',{event:'*',schema:'public',table:'event_settings',filter:'id=eq.1'},payload=>renderEventDayMode(payload.new.event_day_mode)).subscribe();
     loadEventDayMode();
     function setHostSignedIn(user){
-      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingAdminChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;
+      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingAdminChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;hostCheckinList.querySelectorAll('input[type="checkbox"]').forEach(item=>{item.disabled=!hostIsSignedIn;});
       eventModeToggle.disabled=!hostIsSignedIn;
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
     }
@@ -1453,7 +1582,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-16';
+    const updateVersion = '2026-11-24-17';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1498,6 +1627,7 @@
       { version: '2026-11-24-14', description: 'Fixed the update announcement loop by keeping the live version and newest published announcement in sync.' },
       { version: '2026-11-24-15', description: 'Renamed the cookbook main section to Main Dishes.' },
       { version: '2026-11-24-16', description: 'Added a host-only shared Event Day Mode switch for all website visitors.' }
+      { version: '2026-11-24-17', description: 'Added a public live guest check-in dashboard with host-only editing and real-time arrival updates.' },
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
