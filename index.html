@@ -814,8 +814,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-24-4<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Moved the shared Thanksgiving shopping checklist into the host-only control panel.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-24-5<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Restored the public shopping list with host-only editing and fixed the live update version checker.</li></ul></div>
+        </details>
+          <summary><span class="history-version">Version 2026-11-24-4<small>November 24, 2026</small></span><span class="history-current">Previous Update</span></summary>
+          <div class="history-content"><ul><li>Moved shopping controls into the host panel; the guest shopping view is read-only.</li></ul></div>
         </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-24-3<small>November 24, 2026</small></span><span class="history-current">Previous Update</span></summary>
@@ -935,6 +938,31 @@
       </div>
     </section>
 
+      <section class="shopping-section" aria-labelledby="shoppingTitle">
+        <div class="shopping-card">
+          <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>Guests can view shopping progress. Hosts can check items off and changes sync live! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
+          <div class="shopping-progress"><span id="shoppingProgressText">0 of 14 items collected</span><strong id="shoppingProgressPercent">0%</strong></div>
+          <div class="shopping-progress-bar" role="progressbar" aria-label="Shopping list progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="shoppingProgressBar"><div class="shopping-progress-fill" id="shoppingProgressFill"></div></div>
+          <div class="shopping-list" id="shoppingList">
+            <label class="shopping-item"><input type="checkbox" disabled value="Corkscrew pasta"><span>Corkscrew pasta</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Mozzarella cheese"><span>Mozzarella cheese</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Evaporated milk"><span>Evaporated milk</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Heavy cream"><span>Heavy cream</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Potatoes"><span>Potatoes</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Zucchini"><span>Zucchini</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Carrot"><span>Carrot</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Chips"><span>Chips</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Avocado"><span>Avocado</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Lime"><span>Lime</span></label>
+            <label class="shopping-item"><input type="checkbox" value="One tomato"><span>One tomato</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Sweet potato"><span>Sweet potato</span></label>
+            <label class="shopping-item"><input type="checkbox" value="Whipped cream"><span>Whipped cream</span></label>
+            <label class="shopping-item"><input type="checkbox" value="H-E-B already made chicken"><span>H-E-B already made chicken</span></label>
+          </div>
+          <button class="shopping-reset" id="shoppingReset" type="button" hidden>Reset checklist ↻</button>
+        </div>
+      </section>
+
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
 
@@ -957,30 +985,7 @@
           <button type="button" id="dashboardGoFood">Food Controls ↓</button>
         </div>
       </section>
-      <section class="shopping-section" aria-labelledby="shoppingTitle">
-        <div class="shopping-card">
-          <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>Check items off as you shop. Changes sync live across all devices! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
-          <div class="shopping-progress"><span id="shoppingProgressText">0 of 14 items collected</span><strong id="shoppingProgressPercent">0%</strong></div>
-          <div class="shopping-progress-bar" role="progressbar" aria-label="Shopping list progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="shoppingProgressBar"><div class="shopping-progress-fill" id="shoppingProgressFill"></div></div>
-          <div class="shopping-list" id="shoppingList">
-            <label class="shopping-item"><input type="checkbox" value="Corkscrew pasta"><span>Corkscrew pasta</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Mozzarella cheese"><span>Mozzarella cheese</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Evaporated milk"><span>Evaporated milk</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Heavy cream"><span>Heavy cream</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Potatoes"><span>Potatoes</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Zucchini"><span>Zucchini</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Carrot"><span>Carrot</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Chips"><span>Chips</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Avocado"><span>Avocado</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Lime"><span>Lime</span></label>
-            <label class="shopping-item"><input type="checkbox" value="One tomato"><span>One tomato</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Sweet potato"><span>Sweet potato</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Whipped cream"><span>Whipped cream</span></label>
-            <label class="shopping-item"><input type="checkbox" value="H-E-B already made chicken"><span>H-E-B already made chicken</span></label>
-          </div>
-          <button class="shopping-reset" id="shoppingReset" type="button">Reset checklist ↻</button>
-        </div>
-      </section>
+
       <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
       <div class="host-checkin-list" id="hostCheckinList">
         <label class="host-checkin-person"><input type="checkbox" value="Joshua"><span>Joshua</span><small>Host</small></label>
@@ -1197,7 +1202,7 @@
       foodStatuses={};data.forEach(row=>{const i=foodStatusNames.indexOf(row.dish);if(i!==-1&&foodStatusOptions.includes(row.status))foodStatuses[i]=row.status;});renderFoodStatuses();
     }
     function setHostSignedIn(user){
-      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;
+      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;document.querySelector('.shopping-heading p').textContent=hostIsSignedIn?'You can check items off as you shop. Changes sync live across all devices! ☁️':'Guests can view shopping progress. Hosts can check items off and changes sync live! ☁️';
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
     }
     hostLoginForm.addEventListener('submit',async event=>{
@@ -1322,7 +1327,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-2';
+    const updateVersion = '2026-11-24-5';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1354,7 +1359,10 @@
       { version: '2026-11-23-46', description: 'Added host-controlled live announcements that appear for all visitors in real time.' },
       { version: '2026-11-23-47', description: 'Made live announcements pulse until each visitor acknowledges the message.' },
       { version: '2026-11-24-1', description: 'Added a saved, interactive Thanksgiving shopping checklist with progress tracking.' },
-      { version: '2026-11-24-2', description: 'Connected the Thanksgiving shopping checklist to Supabase so checkmarks sync live across devices.' }
+      { version: '2026-11-24-2', description: 'Connected the Thanksgiving shopping checklist to Supabase so checkmarks sync live across devices.' },
+      { version: '2026-11-24-3', description: 'Added a secure host password reset option for account sign-in recovery.' },
+      { version: '2026-11-24-4', description: 'Moved shopping controls into the host panel; the guest shopping view is read-only.' },
+      { version: '2026-11-24-5', description: 'Restored the public shopping list with host-only editing and fixed the live update version checker.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
