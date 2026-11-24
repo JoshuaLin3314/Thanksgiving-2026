@@ -200,6 +200,13 @@
     body[data-theme="evening"] .public-checkin-person.arrived .public-checkin-badge{background:#40503a;color:#f0f5e9}
     @media(max-width:560px){.public-checkin-card{padding:19px 14px}.public-checkin-list{grid-template-columns:1fr}}
     
+    .bring-note-section { max-width:790px; margin:38px auto 0; padding:0 16px; }
+    .bring-note-card { padding:24px 26px; border:1px solid #e7d5bd; border-radius:22px; background:linear-gradient(135deg,#fffaf2,#f3e5d2); box-shadow:0 12px 30px rgba(80,52,33,.07); }
+    .bring-note-card h2 { margin:0 0 8px; color:var(--brown); font:600 clamp(1.55rem,4vw,2rem)/1.2 'Playfair Display',Georgia,serif; }
+    .bring-note-card p { margin:0 0 13px; color:var(--muted); }
+    .bring-note-list { margin:0; padding-left:22px; color:var(--brown); line-height:1.9; font-weight:600; }
+    body[data-theme="evening"] .bring-note-card { background:linear-gradient(135deg,#302724,#49382f); border-color:#71533e; }
+    body[data-theme="evening"] .bring-note-list { color:#f3e5d2; }
     .food-tracker-section { max-width: 790px; margin: 38px auto 0; }
     .food-tracker-card { padding: 25px; border: 1px solid #e7d5bd; border-radius: 22px; background: rgba(255,250,242,.94); box-shadow: 0 12px 30px rgba(80,52,33,.07); }
     .food-tracker-heading { text-align:center; margin-bottom:20px; }
@@ -731,6 +738,18 @@
 
 
       </div>      <p class="cookbook-footnote">Recipe links open the original creators' websites. All recipe details and full instructions belong to their authors.</p>
+    </section>
+
+    <section class="bring-note-section" aria-labelledby="bringNoteTitle">
+      <div class="bring-note-card">
+        <h2 id="bringNoteTitle">A Little Reminder 📝</h2>
+        <p>Joshua needs to bring:</p>
+        <ul class="bring-note-list">
+          <li>Italian seasoning</li>
+          <li>Vanilla extract</li>
+          <li>The oven</li>
+        </ul>
+      </div>
     </section>
 
     <section class="food-tracker-section" aria-labelledby="foodTrackerTitle">
