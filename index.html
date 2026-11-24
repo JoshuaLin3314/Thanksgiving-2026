@@ -168,6 +168,17 @@
     .food-all-ready.show { display:block; animation:foodPop .35s ease both; }
     @keyframes foodPop { from { opacity:0; transform:scale(.96); } to { opacity:1; transform:scale(1); } }
     .food-tracker-note { text-align:center; color:var(--muted); font-size:.72rem; margin:14px 0 0; }
+    .host-password-setup { position:fixed; inset:0; z-index:10000; display:none; place-items:center; padding:20px; background:rgba(35,23,18,.78); backdrop-filter:blur(8px); }
+    .host-password-setup.show { display:grid; }
+    .host-password-card { width:min(460px,100%); padding:30px 24px; border:1px solid #e7d5bd; border-radius:22px; background:var(--paper); color:var(--ink); box-shadow:0 24px 70px rgba(0,0,0,.28); }
+    .host-password-card h1 { margin:0 0 8px; color:var(--brown); font:600 2rem/1.15 'Playfair Display',Georgia,serif; }
+    .host-password-card p { color:var(--muted); line-height:1.6; }
+    .host-password-card form { display:grid; gap:10px; }
+    .host-password-card label { color:var(--brown); font-size:.82rem; font-weight:700; }
+    .host-password-card input { width:100%; padding:12px; border:1px solid #d7c3aa; border-radius:10px; background:#fffaf2; color:#493126; font:inherit; }
+    .host-password-card button { border:0; border-radius:999px; padding:12px 18px; background:#75452f; color:#fff8ee; font:700 .9rem 'DM Sans',sans-serif; cursor:pointer; }
+    #hostPasswordSetupMessage { min-height:1.3em; margin:3px 0 0; font-size:.8rem; }
+    body[data-theme="evening"] .host-password-card input { background:#49382f; color:#f7e9d9; border-color:#71533e; }
     .host-auth-panel { margin:0 0 18px; padding:15px; border:1px solid #eadcc9; border-radius:14px; background:rgba(255,255,255,.35); }
     .host-auth-panel form { display:grid; gap:8px; }
     .host-auth-panel label { font-size:.78rem; font-weight:700; color:var(--brown); }
@@ -975,6 +986,21 @@
     </div>
   </div>
 
+  <section id="hostPasswordSetup" class="host-password-setup" aria-labelledby="hostPasswordSetupTitle">
+    <div class="host-password-card">
+      <div aria-hidden="true" style="font-size:2rem;margin-bottom:10px">🔐</div>
+      <h1 id="hostPasswordSetupTitle">Set Your Host Password</h1>
+      <p>Welcome to the Thanksgiving host team! Create a password for your own host account to finish accepting the invitation.</p>
+      <form id="hostPasswordSetupForm">
+        <label for="newHostPassword">New password</label>
+        <input id="newHostPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters">
+        <label for="confirmHostPassword">Confirm password</label>
+        <input id="confirmHostPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Enter it again">
+        <button id="saveHostPasswordButton" type="submit">Save Password & Continue</button>
+        <p id="hostPasswordSetupMessage" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
 
@@ -1024,6 +1050,31 @@
     const supabaseClient=window.supabase.createClient('https://synxtczbhikhyfpzpumc.supabase.co','sb_publishable_SlRYesPwC-dPKyhb7A9g-w_RDj57rAl');
     let foodStatuses={};let hostIsSignedIn=false;
     const hostAuthMessage=document.getElementById('hostAuthMessage'),hostLoginForm=document.getElementById('hostLoginForm'),hostSignedIn=document.getElementById('hostSignedIn'),hostProtectedControls=document.getElementById('hostProtectedControls');
+    const hostPasswordSetup=document.getElementById('hostPasswordSetup');
+    const hostPasswordSetupForm=document.getElementById('hostPasswordSetupForm');
+    const hostPasswordSetupMessage=document.getElementById('hostPasswordSetupMessage');
+    const isHostPasswordSetup=new URLSearchParams(window.location.search).has('setup-host-password');
+    if(isHostPasswordSetup)hostPasswordSetup.classList.add('show');
+    hostPasswordSetupForm.addEventListener('submit',async event=>{
+      event.preventDefault();
+      const password=document.getElementById('newHostPassword').value;
+      const confirmation=document.getElementById('confirmHostPassword').value;
+      const button=document.getElementById('saveHostPasswordButton');
+      if(password.length<8){hostPasswordSetupMessage.textContent='Please use at least 8 characters.';return;}
+      if(password!==confirmation){hostPasswordSetupMessage.textContent='Those passwords do not match. Try again.';return;}
+      button.disabled=true;hostPasswordSetupMessage.textContent='Saving your password…';
+      const {data:{session}}=await supabaseClient.auth.getSession();
+      if(!session){button.disabled=false;hostPasswordSetupMessage.textContent='This invitation link is missing or expired. Ask the host to send a new invitation.';return;}
+      const {error}=await supabaseClient.auth.updateUser({password});
+      button.disabled=false;
+      if(error){hostPasswordSetupMessage.textContent='Could not save your password: '+error.message;return;}
+      hostPasswordSetupMessage.textContent='Password saved! Your host account is ready. ✓';
+      document.getElementById('newHostPassword').value='';
+      document.getElementById('confirmHostPassword').value='';
+      window.history.replaceState({},document.title,window.location.pathname);
+      setTimeout(()=>hostPasswordSetup.classList.remove('show'),1200);
+    });
+
     function renderFoodStatuses(){
       const readyCount=foodStatusNames.filter((name,index)=>foodStatuses[index]==='Ready!').length;
       foodStatusNames.forEach((name,index)=>{
