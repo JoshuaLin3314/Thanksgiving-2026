@@ -814,12 +814,14 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
+          <summary><span class="history-version">Version 2026-11-24-6<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.</li></ul></div>
+        </details>
           <summary><span class="history-version">Version 2026-11-24-5<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Restored the public shopping list with host-only editing and fixed the live update version checker.</li></ul></div>
         </details>
-          <summary><span class="history-version">Version 2026-11-24-4<small>November 24, 2026</small></span><span class="history-current">Previous Update</span></summary>
-          <div class="history-content"><ul><li>Moved shopping controls into the host panel; the guest shopping view is read-only.</li></ul></div>
-        </details>
+        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
+        <div class="history-previous" id="previousUpdates" hidden>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-24-3<small>November 24, 2026</small></span><span class="history-current">Previous Update</span></summary>
           <div class="history-content"><ul><li>Added a secure host password reset option for account sign-in recovery.</li></ul></div>
@@ -840,8 +842,6 @@
           <summary><span class="history-version">Version 2026-11-23-43<small>November 23, 2026</small></span>
           <div class="history-content"><ul><li>Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.</li></ul></div>
         </details>
-        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
-        <div class="history-previous" id="previousUpdates" hidden>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-42<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.</li></ul></div>
@@ -934,8 +934,12 @@
           <summary><span class="history-version">Version 2026-11-23-20<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added the Website Update History section and kept the live update checker running.</li></ul></div>
         </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-24-4<small>November 24, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Moved shopping controls into the host panel; the guest shopping view is read-only.</li></ul></div>
+        </details>
         </div>
-      </div>
+            </div>
     </section>
 
       <section class="shopping-section" aria-labelledby="shoppingTitle">
@@ -1327,7 +1331,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-5';
+    const updateVersion = '2026-11-24-6';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1362,7 +1366,8 @@
       { version: '2026-11-24-2', description: 'Connected the Thanksgiving shopping checklist to Supabase so checkmarks sync live across devices.' },
       { version: '2026-11-24-3', description: 'Added a secure host password reset option for account sign-in recovery.' },
       { version: '2026-11-24-4', description: 'Moved shopping controls into the host panel; the guest shopping view is read-only.' },
-      { version: '2026-11-24-5', description: 'Restored the public shopping list with host-only editing and fixed the live update version checker.' }
+      { version: '2026-11-24-5', description: 'Restored the public shopping list with host-only editing and fixed the live update version checker.' },
+      { version: '2026-11-24-6', description: 'Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
