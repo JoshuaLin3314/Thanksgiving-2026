@@ -494,7 +494,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-30<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-31<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-30<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -554,7 +558,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-30';
+    const updateVersion = '2026-11-23-31';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -567,7 +571,8 @@
       { version: '2026-11-23-27', description: 'Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes. Your selection is saved on this device.' },
       { version: '2026-11-23-28', description: 'Simplified update announcements: visitors now see only the latest update, even if they missed several releases.' },
       { version: '2026-11-23-29', description: 'Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.' },
-      { version: '2026-11-23-30', description: 'Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.' }
+      { version: '2026-11-23-30', description: 'Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.' },
+      { version: '2026-11-23-31', description: 'Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -675,12 +680,12 @@
     try { lastSeenUpdate = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
     let pendingUpdateVersion = updateVersion;
 
-    function openLatestAnnouncement(announcements) {
+    function openLatestAnnouncement(announcements, force = false) {
       if (!Array.isArray(announcements) || announcements.length === 0) return false;
       const latest = announcements[announcements.length - 1];
       let seenVersion = '';
       try { seenVersion = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
-      if (latest.version === seenVersion) return false;
+      if (!force && latest.version === seenVersion) return false;
 
       pendingUpdateVersion = latest.version;
       document.getElementById('updateTitle').textContent = 'New Update: ' + latest.version;
@@ -704,15 +709,20 @@
       if (updateCheckInProgress || updateModal.classList.contains('open')) return;
       updateCheckInProgress = true;
       try {
-        const pageUrl = new URL(window.location.href);
+        const pageUrl = new URL(window.location.pathname, window.location.origin);
         pageUrl.searchParams.set('updateCheck', Date.now().toString());
-        const response = await fetch(pageUrl.toString(), { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
+        const response = await fetch(pageUrl.toString(), { cache: 'no-store', credentials: 'same-origin', headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' } });
         if (!response.ok) return;
         const pageHtml = await response.text();
         const listMatch = pageHtml.match(/const\s+updateAnnouncements\s*=\s*(\[[\s\S]*?\]);/);
         if (!listMatch) return;
         const publishedAnnouncements = JSON.parse(listMatch[1]);
-        openLatestAnnouncement(publishedAnnouncements);
+        const latestPublished = publishedAnnouncements[publishedAnnouncements.length - 1];
+        // If this already-open page is older than the published page, announce the release
+        // even if this browser previously acknowledged an earlier version.
+        if (latestPublished && latestPublished.version !== updateVersion) {
+          openLatestAnnouncement(publishedAnnouncements, true);
+        }
       } catch (error) {
         // A temporary network failure should not interrupt the invitation page.
       } finally {
