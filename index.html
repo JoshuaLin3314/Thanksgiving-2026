@@ -366,6 +366,38 @@
       footer { margin-top: 35px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+    .trivia-section { max-width:900px; margin:48px auto 0; }
+    .trivia-heading { text-align:center; margin-bottom:20px; }
+    .trivia-heading h2 { font:600 clamp(1.8rem,4.5vw,2.55rem)/1.2 'Playfair Display',Georgia,serif; color:var(--brown); margin:8px 0; }
+    .trivia-heading p { color:var(--muted); margin:0; }
+    .trivia-card { max-width:760px; margin:0 auto; padding:clamp(20px,4vw,34px); border:1px solid #eadcc9; border-radius:22px; background:rgba(255,250,242,.92); box-shadow:0 12px 32px rgba(80,52,33,.07); }
+    .trivia-topline { display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:.78rem; font-weight:700; }
+    .trivia-progress { height:8px; margin:13px 0 24px; border-radius:99px; overflow:hidden; background:#eadcc9; }
+    .trivia-progress-fill { width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,#b85c35,#d69a4d); transition:width .25s ease; }
+    .trivia-question { font:600 clamp(1.25rem,3vw,1.65rem)/1.35 'Playfair Display',Georgia,serif; color:var(--brown); margin:0 0 18px; }
+    .trivia-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+    .trivia-choice { border:1px solid #e4d2bd; border-radius:13px; padding:14px 15px; background:rgba(255,255,255,.65); color:var(--ink); text-align:left; font:600 .92rem 'DM Sans',sans-serif; cursor:pointer; transition:transform .16s ease,border-color .16s ease; }
+    .trivia-choice:hover:not(:disabled) { transform:translateY(-2px); border-color:#b87950; }
+    .trivia-choice:focus-visible,.trivia-next:focus-visible { outline:3px solid #d69a4d; outline-offset:3px; }
+    .trivia-choice:disabled { cursor:default; opacity:1; }
+    .trivia-choice.correct { background:#e5efdf; border-color:#82966e; color:#34472c; }
+    .trivia-choice.incorrect { background:#f6e2d8; border-color:#c47a5d; color:#713b2b; }
+    .trivia-feedback { min-height:28px; margin:15px 0 0; color:var(--muted); font-weight:600; font-size:.9rem; }
+    .trivia-actions { display:flex; justify-content:flex-end; margin-top:12px; }
+    .trivia-next { border:0; border-radius:12px; padding:12px 19px; color:#fff8ee; background:linear-gradient(120deg,#9f4c2f,#713c2b); font:700 .9rem 'DM Sans',sans-serif; cursor:pointer; }
+    .trivia-next:disabled { opacity:.45; cursor:not-allowed; }
+    .trivia-result { text-align:center; padding:10px 0 2px; }
+    .trivia-score { font:600 clamp(2.6rem,8vw,4rem)/1.1 'Playfair Display',Georgia,serif; color:var(--rust); margin:12px 0; }
+    .trivia-result p { color:var(--muted); line-height:1.6; }
+    body[data-theme="pumpkin"] .trivia-card { background:rgba(255,243,223,.95); border-color:#e6c49b; }
+    body[data-theme="pumpkin"] .trivia-choice { background:rgba(255,250,242,.75); border-color:#e8cfb0; }
+    body[data-theme="evening"] .trivia-card { background:#302724; border-color:#554239; }
+    body[data-theme="evening"] .trivia-choice { background:#49382f; border-color:#71533e; color:#f7e9d9; }
+    body[data-theme="evening"] .trivia-choice.correct { background:#40503a; border-color:#82966e; color:#f0f5e9; }
+    body[data-theme="evening"] .trivia-choice.incorrect { background:#654136; border-color:#c47a5d; color:#fff0e8; }
+    body[data-theme="evening"] .trivia-progress { background:#554239; }
+    @media(max-width:540px) { .trivia-choices { grid-template-columns:1fr; } .trivia-choice { padding:13px 14px; } }
   </style>
 </head>
 <body>
@@ -578,6 +610,31 @@
       </div>
     </section>
 
+
+    <section class="trivia-section" aria-labelledby="trivia-title">
+      <div class="trivia-heading">
+        <div class="schedule-eyebrow">A little fun before the feast</div>
+        <h2 id="trivia-title">Thanksgiving Trivia 🧠</h2>
+        <p>Think you know the plans? Test your Thanksgiving gathering knowledge!</p>
+      </div>
+      <div class="trivia-card" id="triviaCard">
+        <div class="trivia-topline"><span id="triviaProgressText">Question 1 of 8</span><span id="triviaScoreText">Score: 0</span></div>
+        <div class="trivia-progress" role="progressbar" aria-label="Trivia progress" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="triviaProgress"><div class="trivia-progress-fill" id="triviaProgressFill"></div></div>
+        <div id="triviaPlay">
+          <h3 class="trivia-question" id="triviaQuestion"></h3>
+          <div class="trivia-choices" id="triviaChoices"></div>
+          <p class="trivia-feedback" id="triviaFeedback" aria-live="polite">Choose your answer!</p>
+          <div class="trivia-actions"><button class="trivia-next" id="triviaNext" type="button" disabled>Next Question →</button></div>
+        </div>
+        <div class="trivia-result" id="triviaResult" hidden>
+          <div class="modal-icon" aria-hidden="true">🎉</div>
+          <h3 class="trivia-question">You finished the Thanksgiving Trivia!</h3>
+          <div class="trivia-score" id="triviaFinalScore">0 / 8</div>
+          <p id="triviaFinalMessage"></p>
+          <button class="trivia-next" id="triviaRestart" type="button">Play Again ↻</button>
+        </div>
+      </div>
+    </section>
     <section class="history-section" aria-labelledby="history-title">
       <div class="history-heading">
         <h2 id="history-title">Website Update History 📜</h2>
@@ -585,7 +642,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-36<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-37<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added an interactive Thanksgiving trivia game with eight questions, score tracking, and replay.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-36<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
@@ -682,7 +743,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-36';
+    const updateVersion = '2026-11-23-37';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -701,7 +762,8 @@
       { version: '2026-11-23-33', description: 'Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.' },
       { version: '2026-11-23-34', description: 'Fixed the update history so only the newest release appears in the main section; older releases are moved under Previous Update Logs.' },
       { version: '2026-11-23-35', description: 'Restored the simple, generic new-update popup without displaying version numbers or update descriptions.' },
-      { version: '2026-11-23-36', description: 'Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.' }
+      { version: '2026-11-23-36', description: 'Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.' },
+      { version: '2026-11-23-37', description: 'Added an interactive Thanksgiving trivia game with eight questions, score tracking, and replay.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -766,6 +828,38 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+
+    const triviaQuestions = [
+      { question:'What date is the 2026 Thanksgiving gathering?', choices:['November 26','November 27','November 28','December 1'], answer:1, fact:'The gathering is Friday, November 27, 2026!' },
+      { question:'What time does check-in and roll call begin?', choices:['4:30 PM','5:00 PM','5:30 PM','6:00 PM'], answer:1, fact:'Check-in and roll call begin at 5:00 PM.' },
+      { question:'When does dinner begin?', choices:['5:00 PM','5:15 PM','5:30 PM','6:00 PM'], answer:2, fact:'Dinner begins at 5:30 PM.' },
+      { question:'How many seats are shown around the Thanksgiving table?', choices:['Four','Five','Six','Eight'], answer:2, fact:'There are six seats around the table.' },
+      { question:'Which colors are suggested for the Thanksgiving shirt?', choices:['Blue, green, or purple','Orange, brown, or red','Black, white, or gray','Pink, yellow, or teal'], answer:1, fact:'The suggested shirt colors are orange, brown, or red.' },
+      { question:'What is planned for 8:00 PM?', choices:['Dinner','Dessert','Card games','Check-in'], answer:1, fact:'Dessert is scheduled for 8:00 PM.' },
+      { question:'What starts at 8:30 PM?', choices:['Card games','The walk to MTea','Dinner','Roll call'], answer:0, fact:'Card games begin at 8:30 PM.' },
+      { question:'What time is the planned walk to MTea?', choices:['7:30 PM','8:00 PM','8:30 PM','9:00 PM'], answer:3, fact:'The walk to MTea is scheduled for 9:00 PM.' }
+    ];
+    let triviaIndex=0, triviaScore=0, triviaAnswered=false;
+    const triviaQuestion=document.getElementById('triviaQuestion'), triviaChoices=document.getElementById('triviaChoices'), triviaFeedback=document.getElementById('triviaFeedback'), triviaNext=document.getElementById('triviaNext'), triviaProgress=document.getElementById('triviaProgress'), triviaProgressFill=document.getElementById('triviaProgressFill'), triviaProgressText=document.getElementById('triviaProgressText'), triviaScoreText=document.getElementById('triviaScoreText'), triviaPlay=document.getElementById('triviaPlay'), triviaResult=document.getElementById('triviaResult');
+    function renderTriviaQuestion(){
+      const item=triviaQuestions[triviaIndex]; triviaAnswered=false; triviaQuestion.textContent=item.question; triviaChoices.innerHTML='';
+      item.choices.forEach((choice,index)=>{const button=document.createElement('button');button.type='button';button.className='trivia-choice';button.textContent=choice;button.addEventListener('click',()=>answerTrivia(index));triviaChoices.appendChild(button);});
+      triviaFeedback.textContent='Choose your answer!';triviaNext.disabled=true;triviaNext.textContent=triviaIndex===triviaQuestions.length-1?'See My Score →':'Next Question →';triviaProgressText.textContent='Question '+(triviaIndex+1)+' of '+triviaQuestions.length;triviaScoreText.textContent='Score: '+triviaScore;triviaProgress.setAttribute('aria-valuenow',String(triviaIndex));triviaProgressFill.style.width=(triviaIndex/triviaQuestions.length*100)+'%';
+    }
+    function answerTrivia(selectedIndex){
+      if(triviaAnswered)return;triviaAnswered=true;const item=triviaQuestions[triviaIndex];const buttons=[...triviaChoices.querySelectorAll('button')];
+      buttons.forEach((button,index)=>{button.disabled=true;if(index===item.answer)button.classList.add('correct');else if(index===selectedIndex)button.classList.add('incorrect');});
+      if(selectedIndex===item.answer){triviaScore++;triviaFeedback.textContent='Correct! 🎉 '+item.fact;}else{triviaFeedback.textContent='Not quite! '+item.fact;}
+      triviaScoreText.textContent='Score: '+triviaScore;triviaNext.disabled=false;
+    }
+    function finishTrivia(){
+      triviaPlay.hidden=true;triviaResult.hidden=false;triviaProgressText.textContent='Trivia complete!';triviaProgress.setAttribute('aria-valuenow',String(triviaQuestions.length));triviaProgressFill.style.width='100%';document.getElementById('triviaFinalScore').textContent=triviaScore+' / '+triviaQuestions.length;
+      document.getElementById('triviaFinalMessage').textContent=triviaScore===triviaQuestions.length?'Perfect score! You know this gathering inside and out! 🍁':triviaScore>=5?'Great job! You are ready for Thanksgiving! 🧡':'Nice try! Take another look at the schedule and give it another go!';triviaScoreText.textContent='Score: '+triviaScore;
+    }
+    triviaNext.addEventListener('click',()=>{if(!triviaAnswered)return;if(triviaIndex===triviaQuestions.length-1)finishTrivia();else{triviaIndex++;renderTriviaQuestion();}});
+    document.getElementById('triviaRestart').addEventListener('click',()=>{triviaIndex=0;triviaScore=0;triviaPlay.hidden=false;triviaResult.hidden=true;renderTriviaQuestion();});
+    renderTriviaQuestion();
 
     // Show a live event status. On Thanksgiving before 5 PM, rotate the cooking list once per second.
     const liveStatusTitle = document.getElementById('live-status-title');
