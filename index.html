@@ -227,6 +227,15 @@
       .schedule-detail h3 { font-size: .96rem; }
       .schedule-detail p { font-size: .76rem; }
     }
+    .live-status-section { max-width: 790px; margin: 30px auto 0; }
+    .live-status-card { text-align: center; padding: 25px 20px; border: 1px solid #e7d5bd; border-radius: 21px; background: linear-gradient(135deg,rgba(255,250,242,.96),rgba(245,231,211,.92)); box-shadow: 0 12px 30px rgba(80,52,33,.07); }
+    .live-status-eyebrow { color: #9a7659; font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+    .live-status-card h2 { color: var(--brown); font: 600 clamp(1.5rem,4vw,2rem)/1.25 'Playfair Display',Georgia,serif; margin: 9px 0 5px; }
+    .live-status-card p { color: var(--muted); margin: 0; font-size: .92rem; }
+    .live-status-food { display: inline-block; min-width: 8ch; color: var(--rust); font-weight: 700; transition: opacity .18s ease; }
+    body[data-theme="pumpkin"] .live-status-card { background: rgba(255,243,223,.95); border-color: #e6c49b; }
+    body[data-theme="evening"] .live-status-card { background: #302724; border-color: #554239; }
+    body[data-theme="evening"] .live-status-eyebrow { color: #c3aa98; }
     .upcoming-section { max-width: 900px; margin: 48px auto 0; }
     .upcoming-heading { text-align: center; margin-bottom: 20px; }
     .upcoming-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
@@ -509,6 +518,14 @@
       </div>
     </section>
 
+    <section class="live-status-section" aria-labelledby="live-status-title">
+      <div class="live-status-card">
+        <div class="live-status-eyebrow">Happening on Thanksgiving Day</div>
+        <h2 id="live-status-title">Getting Ready for Thanksgiving 🍂</h2>
+        <p id="live-status-message" aria-live="off">The celebration is getting closer!</p>
+      </div>
+    </section>
+
     <section class="schedule-section" aria-labelledby="schedule-title">
       <div class="schedule-heading">
         <div class="schedule-eyebrow">A day full of gratitude</div>
@@ -568,8 +585,8 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-35<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Restored the simple, generic new-update popup without displaying version numbers or update descriptions.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-23-36<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -665,7 +682,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-35';
+    const updateVersion = '2026-11-23-36';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -683,7 +700,8 @@
       { version: '2026-11-23-32', description: 'Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.' },
       { version: '2026-11-23-33', description: 'Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.' },
       { version: '2026-11-23-34', description: 'Fixed the update history so only the newest release appears in the main section; older releases are moved under Previous Update Logs.' },
-      { version: '2026-11-23-35', description: 'Restored the simple, generic new-update popup without displaying version numbers or update descriptions.' }
+      { version: '2026-11-23-35', description: 'Restored the simple, generic new-update popup without displaying version numbers or update descriptions.' },
+      { version: '2026-11-23-36', description: 'Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -748,6 +766,52 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Show a live event status. On Thanksgiving before 5 PM, rotate the cooking list once per second.
+    const liveStatusTitle = document.getElementById('live-status-title');
+    const liveStatusMessage = document.getElementById('live-status-message');
+    const cookingItems = ['Mac & Cheese', 'Potatoes', 'Veggies', 'Garlic Bread', 'Sweet Potatoes', 'BTS'];
+    const eventDayStart = new Date(2026, 10, 27, 0, 0, 0);
+    const eventStart = new Date(2026, 10, 27, 17, 0, 0);
+    const eventEnd = new Date(2026, 10, 27, 22, 0, 0);
+    const eventMilestones = [
+      { time: 17 * 60, title: 'Check-In & Roll Call 👋', message: 'Everyone is arriving and checking in!' },
+      { time: 17 * 60 + 30, title: 'Dinner Time 🍽️', message: 'Dinner is now underway!' },
+      { time: 19 * 60, title: 'Main Dinner Complete 🍂', message: 'Time to get ready for the next part of the evening.' },
+      { time: 19 * 60 + 30, title: 'Table Reset 🧹', message: 'Cleaning up and setting the table for dessert.' },
+      { time: 20 * 60, title: 'Dessert Time 🍰', message: 'Time to enjoy dessert!' },
+      { time: 20 * 60 + 30, title: 'Card Games 🃏', message: 'Let the games begin!' },
+      { time: 21 * 60, title: 'Walk to MTea 🧋', message: 'Time for our walk to MTea!' },
+      { time: 22 * 60, title: 'Thanksgiving Celebration Complete! 🧡', message: 'Thanks for celebrating together!' }
+    ];
+    function updateLiveStatus() {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      if (today < eventDayStart) {
+        liveStatusTitle.textContent = 'Getting Ready for Thanksgiving 🍂';
+        liveStatusMessage.textContent = 'The celebration is getting closer!';
+        return;
+      }
+      if (today.getTime() > eventDayStart.getTime()) {
+        liveStatusTitle.textContent = 'Thanksgiving Celebration Complete! 🧡';
+        liveStatusMessage.textContent = 'Thanks for celebrating together!';
+        return;
+      }
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+      if (now < eventStart) {
+        const item = cookingItems[Math.floor(Date.now() / 1000) % cookingItems.length];
+        liveStatusTitle.textContent = 'Cooking ' + item + ' in progress! 👩‍🍳';
+        liveStatusMessage.textContent = 'The kitchen is getting ready for everyone!';
+        return;
+      }
+      const milestone = [...eventMilestones].reverse().find(item => currentMinutes >= item.time);
+      if (milestone) {
+        liveStatusTitle.textContent = milestone.title;
+        liveStatusMessage.textContent = milestone.message;
+      }
+    }
+    updateLiveStatus();
+    setInterval(updateLiveStatus, 1000);
 
     function openMenuNotice() {
       modal.classList.add('open');
