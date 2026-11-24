@@ -568,6 +568,10 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
+          <summary><span class="history-version">Version 2026-11-23-33<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.</li></ul></div>
+        </details>
+        <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-32<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.</li></ul></div>
         </details>
@@ -636,7 +640,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-32';
+    const updateVersion = '2026-11-23-33';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -651,7 +655,8 @@
       { version: '2026-11-23-29', description: 'Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.' },
       { version: '2026-11-23-30', description: 'Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.' },
       { version: '2026-11-23-31', description: 'Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.' },
-      { version: '2026-11-23-32', description: 'Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.' }
+      { version: '2026-11-23-32', description: 'Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.' },
+      { version: '2026-11-23-33', description: 'Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -809,10 +814,13 @@
       }
     }
     checkForLiveUpdate();
-    setInterval(checkForLiveUpdate, 1500);
+    setInterval(checkForLiveUpdate, 2000);
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) checkForLiveUpdate();
+      if (document.visibilityState === 'visible') checkForLiveUpdate();
     });
+    window.addEventListener('focus', checkForLiveUpdate);
+    window.addEventListener('pageshow', checkForLiveUpdate);
+    window.addEventListener('online', checkForLiveUpdate);
 
     refreshUpdate.addEventListener('click', () => {
       try { localStorage.setItem(updateStorageKey, pendingUpdateVersion); } catch (error) {}
