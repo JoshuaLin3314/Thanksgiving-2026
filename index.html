@@ -398,6 +398,26 @@
     body[data-theme="evening"] .trivia-choice.incorrect { background:#654136; border-color:#c47a5d; color:#fff0e8; }
     body[data-theme="evening"] .trivia-progress { background:#554239; }
     @media(max-width:540px) { .trivia-choices { grid-template-columns:1fr; } .trivia-choice { padding:13px 14px; } }
+  
+    /* Host-only check-in panel (opened by tapping the footer five times). */
+    .host-checkin-trigger { cursor: pointer; }
+    .host-checkin-modal .modal { max-width: 520px; max-height: 88vh; overflow-y: auto; text-align: left; }
+    .host-checkin-modal h3 { text-align: center; }
+    .host-checkin-intro { text-align: center; color: var(--muted, #76685b); margin: 0 0 18px; }
+    .host-checkin-count { background: rgba(166, 91, 48, .12); border-radius: 14px; padding: 15px; text-align: center; margin-bottom: 16px; }
+    .host-checkin-count strong { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent, #9a5738); }
+    .host-checkin-list { display: grid; gap: 9px; margin: 0 0 16px; }
+    .host-checkin-person { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(130, 100, 75, .2); border-radius: 12px; background: rgba(255,255,255,.38); cursor: pointer; }
+    .host-checkin-person input { width: 19px; height: 19px; accent-color: #9a5738; }
+    .host-checkin-person.checked { background: rgba(111, 139, 91, .13); border-color: rgba(111, 139, 91, .45); }
+    .host-checkin-person span { flex: 1; font-weight: 600; }
+    .host-checkin-person small { color: var(--muted, #76685b); }
+    .host-checkin-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .host-checkin-actions button { border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer; font: inherit; font-weight: 600; }
+    .host-checkin-reset { background: rgba(130, 100, 75, .13); color: inherit; }
+    .host-checkin-close { background: #76503b; color: white; }
+    [data-theme="evening"] .host-checkin-person { background: rgba(255,255,255,.04); }
+
   </style>
 </head>
 <body>
@@ -642,7 +662,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-37<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-38<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a host check-in panel with an arrival checklist and live guest count.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-37<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added an interactive Thanksgiving trivia game with eight questions, score tracking, and replay.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -714,6 +738,28 @@
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
 
+
+  <div class="modal-backdrop host-checkin-modal" id="hostCheckinModal" role="dialog" aria-modal="true" aria-labelledby="hostCheckinTitle" hidden>
+    <div class="modal">
+      <div class="modal-icon" aria-hidden="true">🔒</div>
+      <h3 id="hostCheckinTitle">Host Check-In 👋</h3>
+      <p class="host-checkin-intro">Your organizer checklist. Check a name when they arrive!</p>
+      <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
+      <div class="host-checkin-list" id="hostCheckinList">
+        <label class="host-checkin-person"><input type="checkbox" value="Joshua"><span>Joshua</span><small>Host</small></label>
+        <label class="host-checkin-person"><input type="checkbox" value="Lawrence"><span>Lawrence</span></label>
+        <label class="host-checkin-person"><input type="checkbox" value="Alice"><span>Alice</span></label>
+        <label class="host-checkin-person"><input type="checkbox" value="Alina"><span>Alina</span></label>
+        <label class="host-checkin-person"><input type="checkbox" value="Alsa"><span>Alsa</span></label>
+        <label class="host-checkin-person"><input type="checkbox" value="Henry"><span>Henry</span></label>
+      </div>
+      <div class="host-checkin-actions">
+        <button class="host-checkin-reset" id="hostCheckinReset" type="button">Reset Check-Ins ↻</button>
+        <button class="host-checkin-close" id="hostCheckinClose" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-backdrop" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateDescription">
     <div class="modal">
       <div class="modal-icon" aria-hidden="true">✨</div>
@@ -741,9 +787,58 @@
   </div>
 
   <script>
+
+    // Organizer check-in: tap the footer five times to open the panel.
+    const hostCheckinModal = document.getElementById('hostCheckinModal');
+    const hostCheckinList = document.getElementById('hostCheckinList');
+    const hostCheckinCount = document.getElementById('hostCheckinCount');
+    const hostCheckinStatus = document.getElementById('hostCheckinStatus');
+    const hostCheckinStorageKey = 'thanksgivingHostCheckins';
+    let hostCheckins = {};
+    try { hostCheckins = JSON.parse(localStorage.getItem(hostCheckinStorageKey) || '{}'); } catch (error) { hostCheckins = {}; }
+    function renderHostCheckins() {
+      const boxes = [...hostCheckinList.querySelectorAll('input[type="checkbox"]')];
+      let checked = 0;
+      boxes.forEach(box => {
+        box.checked = Boolean(hostCheckins[box.value]);
+        box.closest('.host-checkin-person').classList.toggle('checked', box.checked);
+        if (box.checked) checked++;
+      });
+      hostCheckinCount.textContent = checked + ' / ' + boxes.length;
+      hostCheckinStatus.textContent = checked === boxes.length ? "Everyone's here! 🎉" : checked === 0 ? 'Nobody checked in yet' : checked + (checked === 1 ? ' person has' : ' people have') + ' arrived';
+      try { localStorage.setItem(hostCheckinStorageKey, JSON.stringify(hostCheckins)); } catch (error) {}
+    }
+    hostCheckinList.addEventListener('change', event => {
+      if (event.target.matches('input[type="checkbox"]')) {
+        hostCheckins[event.target.value] = event.target.checked;
+        renderHostCheckins();
+      }
+    });
+    document.getElementById('hostCheckinReset').addEventListener('click', () => {
+      if (!window.confirm('Reset all Thanksgiving check-ins?')) return;
+      hostCheckins = {};
+      renderHostCheckins();
+    });
+    document.getElementById('hostCheckinClose').addEventListener('click', () => hostCheckinModal.classList.remove('open'));
+    hostCheckinModal.addEventListener('click', event => {
+      if (event.target === hostCheckinModal) hostCheckinModal.classList.remove('open');
+    });
+    let footerTapCount = 0;
+    let footerTapTimer;
+    document.querySelector('footer').addEventListener('click', () => {
+      footerTapCount++;
+      clearTimeout(footerTapTimer);
+      footerTapTimer = setTimeout(() => { footerTapCount = 0; }, 1800);
+      if (footerTapCount >= 5) {
+        footerTapCount = 0;
+        renderHostCheckins();
+        hostCheckinModal.classList.add('open');
+      }
+    });
+
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-37';
+    const updateVersion = '2026-11-23-38';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
