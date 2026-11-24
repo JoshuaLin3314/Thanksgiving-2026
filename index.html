@@ -315,15 +315,29 @@
     .menu-area { width: min(760px, calc(100% - 32px)); margin: 38px auto 0; padding: clamp(20px, 4vw, 32px); text-align: center; background: rgba(255,250,242,.94); border: 1px solid #dfc5a8; border-radius: 24px; box-shadow: 0 14px 34px rgba(80,52,33,.09); }
     .menu-area h2 { color: var(--brown); font: 600 clamp(1.8rem, 4vw, 2.35rem)/1.15 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
     .menu-note { color: #927966; font-size: .9rem; margin: 0 0 20px; }
-    .menu-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; text-align:left; }
-    .menu-category-heading { grid-column:1 / -1; margin:9px 2px 0; padding:10px 12px; border-bottom:1px solid #d9bea0; color:var(--brown); font:600 1.18rem 'Playfair Display',Georgia,serif; }
-    .menu-dish .cookbook-art { min-height:82px; font-size:2.6rem; }
-    .menu-dish .cookbook-copy { padding:14px; gap:6px; }
-    .menu-dish .cookbook-copy h3 { font-size:1.12rem; }
-    .menu-dish .cookbook-copy p { font-size:.83rem; }
-    body[data-theme="evening"] .menu-dish { background:#302724; border-color:#71533e; }
-    body[data-theme="evening"] .menu-dish .cookbook-art { background:linear-gradient(135deg,#49382f,#654a3a); }
-    @media (max-width:620px) { .menu-grid { grid-template-columns:1fr; } }
+    .menu-area { width:min(900px,calc(100% - 32px)); margin:48px auto 0; }
+    .menu-heading { text-align:center; margin-bottom:22px; }
+    .menu-eyebrow { color:var(--rust); font-size:.7rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; }
+    .menu-heading h2 { color:var(--brown); font:600 clamp(1.9rem,4.5vw,2.65rem)/1.2 'Playfair Display',Georgia,serif; margin:8px 0; }
+    .menu-heading p { color:var(--muted); margin:0; font-size:.94rem; }
+    .menu-card { max-width:760px; margin:0 auto; padding:clamp(22px,4vw,38px); border:1px solid #eadcc9; border-radius:24px; background:rgba(255,250,242,.92); box-shadow:0 12px 32px rgba(80,52,33,.07); }
+    .menu-course + .menu-course { margin-top:24px; padding-top:22px; border-top:1px solid #e8d8c4; }
+    .menu-course-heading { display:flex; align-items:baseline; gap:13px; margin-bottom:9px; }
+    .menu-course-heading span { color:#b17b4d; font:700 .72rem 'DM Sans',sans-serif; letter-spacing:.12em; }
+    .menu-course-heading h3 { margin:0; color:var(--brown); font:600 1.25rem 'Playfair Display',Georgia,serif; }
+    .menu-item { display:grid; grid-template-columns:22px minmax(0,1fr); gap:12px; align-items:start; padding:13px 0 13px 8px; position:relative; }
+    .menu-item:not(:last-child)::after { content:''; position:absolute; left:18px; top:34px; bottom:-2px; width:1px; background:linear-gradient(#d8b58e,#eadcc9); }
+    .menu-marker { z-index:1; display:grid; place-items:center; width:22px; height:22px; color:#b17b4d; font-size:.72rem; background:#f7ecdd; border:1px solid #e8d2b7; border-radius:50%; }
+    .menu-detail h4 { margin:0 0 4px; color:var(--brown); font:600 1.08rem 'Playfair Display',Georgia,serif; }
+    .menu-detail p { margin:0; color:var(--muted); font-size:.85rem; line-height:1.55; }
+    .menu-byob { display:inline-block; margin-top:7px; color:var(--rust); font-size:.63rem; font-weight:800; letter-spacing:.14em; }
+    .menu-footer { margin-top:24px; padding-top:17px; border-top:1px solid #e8d8c4; color:#a17d60; text-align:center; font:italic .95rem 'Playfair Display',Georgia,serif; }
+    body[data-theme="pumpkin"] .menu-card { background:rgba(255,243,223,.94); border-color:#e6c49b; }
+    body[data-theme="evening"] .menu-card { background:#302724; border-color:#554239; }
+    body[data-theme="evening"] .menu-course + .menu-course, body[data-theme="evening"] .menu-footer { border-color:#554239; }
+    body[data-theme="evening"] .menu-course-heading h3, body[data-theme="evening"] .menu-detail h4 { color:#f7e9d9; }
+    body[data-theme="evening"] .menu-marker { background:#49382f; border-color:#71533e; color:#e8bd96; }
+    @media (max-width:540px) { .menu-card { padding:20px 17px; } .menu-course-heading h3 { font-size:1.12rem; } }
     .cookbook-section { width: min(980px, calc(100% - 32px)); margin: 46px auto 0; }
     .cookbook-cover { padding: clamp(24px, 5vw, 42px); text-align: center; color: #fff4e6; background: linear-gradient(135deg,#75452f,#9b6040 58%,#5d392b); border: 1px solid #9c7156; border-radius: 24px 24px 10px 10px; box-shadow: 0 14px 34px rgba(80,52,33,.14); }
     .cookbook-kicker { color: #f3d6b5; font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
@@ -702,60 +716,36 @@
     </section>
 
     <section class="menu-area" aria-labelledby="menuTitle">
-      <h2 id="menuTitle">Our Thanksgiving Menu 🍂</h2>
-      <p class="menu-note">A little something for everyone at the table 🍁</p>
-      <div class="menu-grid">
-        <div class="menu-category-heading">🥖 Appetizers</div>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🥖</div>
-          <div class="cookbook-copy"><h3>Garlic Bread</h3><p>Warm, toasty bread with a savory garlic flavor and a deliciously buttery finish.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🥑</div>
-          <div class="cookbook-copy"><h3>Chips &amp; Guac</h3><p>Crispy tortilla chips served with fresh, creamy guacamole for dipping.</p></div>
-        </article>
-
-        <div class="menu-category-heading">🍽️ Main</div>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🧀</div>
-          <div class="cookbook-copy"><h3>Mac &amp; Cheese</h3><p>Creamy, cheesy pasta baked into a comforting Thanksgiving favorite.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🥔</div>
-          <div class="cookbook-copy"><h3>Potato Gratin</h3><p>Tender layers of potato baked together in a rich, creamy, golden dish.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🥦</div>
-          <div class="cookbook-copy"><h3>Veggie Mix</h3><p>A colorful mix of vegetables bringing a fresh, savory bite to the meal.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🍗</div>
-          <div class="cookbook-copy"><h3>Roasted Chicken</h3><p>Oven-roasted chicken with a savory, golden finish and hearty flavor.</p></div>
-        </article>
-
-        <div class="menu-category-heading">🍰 Dessert</div>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🍠</div>
-          <div class="cookbook-copy"><h3>Sweet Potato Casserole</h3><p>A smooth, warmly flavored sweet potato bake topped with a sweet finish.</p></div>
-        </article>
-
-        <div class="menu-category-heading">🥤 Drinks</div>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🍒</div>
-          <div class="cookbook-copy"><h3>Cranberry Ginger Brew</h3><p>A bright, bubbly cranberry drink with a gentle ginger kick.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🍷</div>
-          <div class="cookbook-copy"><h3>Pomegranate Juice</h3><p>A fruity, refreshing juice with a sweet-tart pomegranate flavor.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🥥</div>
-          <div class="cookbook-copy"><h3>Yuzu Coconut Water</h3><p>A light, refreshing blend of citrusy yuzu and hydrating coconut water.</p></div>
-        </article>
-        <article class="cookbook-card menu-dish">
-          <div class="cookbook-art" aria-hidden="true">🥂</div>
-          <div class="cookbook-copy"><h3>Alcoholic Drinks</h3><p>Guests who would like alcoholic beverages should bring their own.</p><span class="cookbook-category">Bring your own</span></div>
-        </article>
+      <div class="menu-heading">
+        <div class="menu-eyebrow">A Thanksgiving dining experience</div>
+        <h2 id="menuTitle">The Thanksgiving Menu</h2>
+        <p>Thoughtfully prepared, happily shared.</p>
+      </div>
+      <div class="menu-card">
+        <div class="menu-course">
+          <div class="menu-course-heading"><span>01</span><h3>To Begin · Appetizers</h3></div>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Garlic Bread</h4><p>Warm, golden bread with fragrant garlic and a rich, buttery finish.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Chips &amp; Guac</h4><p>Crisp tortilla chips accompanied by freshly prepared, creamy guacamole.</p></div></article>
+        </div>
+        <div class="menu-course">
+          <div class="menu-course-heading"><span>02</span><h3>From the Kitchen · Main</h3></div>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Mac &amp; Cheese</h4><p>A comforting classic of tender pasta enveloped in a creamy, savory cheese sauce.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Potato Gratin</h4><p>Delicate layers of potato baked until tender in a luscious, golden finish.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Veggie Mix</h4><p>A colorful medley of vegetables, bringing a fresh and savory note to the table.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Roasted Chicken</h4><p>Tender chicken, oven-roasted to a beautifully golden finish with savory flavor.</p></div></article>
+        </div>
+        <div class="menu-course">
+          <div class="menu-course-heading"><span>03</span><h3>A Sweet Finish · Dessert</h3></div>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Sweet Potato Casserole</h4><p>A smooth, gently spiced sweet potato casserole finished with a sweet, golden topping.</p></div></article>
+        </div>
+        <div class="menu-course">
+          <div class="menu-course-heading"><span>04</span><h3>To Sip · Drinks</h3></div>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Cranberry Ginger Brew</h4><p>A sparkling cranberry refreshment with a bright touch of warming ginger.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Pomegranate Juice</h4><p>Refreshing pomegranate juice with a naturally sweet-tart character.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Yuzu Coconut Water</h4><p>Light coconut water paired with the delicate, citrusy brightness of yuzu.</p></div></article>
+          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Alcoholic Drinks</h4><p>Please bring your own alcoholic beverages.</p><span class="menu-byob">BRING YOUR OWN</span></div></article>
+        </div>
+        <div class="menu-footer">Made to be enjoyed together · Happy Thanksgiving</div>
       </div>
     </section>
 
