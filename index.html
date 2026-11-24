@@ -959,6 +959,10 @@
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
         <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-24-18<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Fixed Supabase initialization order so the countdown, trivia, host panel, and other page scripts can run.</li></ul></div>
+        </details>
+        <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-24-17<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Added a public live guest check-in dashboard with host-only editing and real-time arrival updates.</li></ul></div>
         </details>
@@ -1215,6 +1219,7 @@
   </section>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const supabaseClient=window.supabase.createClient('https://synxtczbhikhyfpzpumc.supabase.co','sb_publishable_SlRYesPwC-dPKyhb7A9g-w_RDj57rAl');
 
     // Shared guest check-in: hosts edit; every visitor can view live arrivals.
     const hostCheckinModal = document.getElementById('hostCheckinModal');
@@ -1332,7 +1337,6 @@
     // Shared Thanksgiving food tracker powered by Supabase.
     const foodStatusNames=["Mac & Cheese","Mashed Potato Gratin (1/2 Scalloped, ½ mashed)","Veggie Mix","HEB Chicken","Garlic Bread","Chips and Guac","Marshmallow Sweet Potato Cassarole"];
     const foodStatusOptions=['Not Started','In Progress','Ready!'];
-    const supabaseClient=window.supabase.createClient('https://synxtczbhikhyfpzpumc.supabase.co','sb_publishable_SlRYesPwC-dPKyhb7A9g-w_RDj57rAl');
     let foodStatuses={};let hostIsSignedIn=false;
     const hostAuthMessage=document.getElementById('hostAuthMessage'),hostLoginForm=document.getElementById('hostLoginForm'),hostSignedIn=document.getElementById('hostSignedIn'),hostProtectedControls=document.getElementById('hostProtectedControls');
     const hostPasswordSetup=document.getElementById('hostPasswordSetup');
@@ -1582,7 +1586,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-17';
+    const updateVersion = '2026-11-24-18';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1628,6 +1632,7 @@
       { version: '2026-11-24-15', description: 'Renamed the cookbook main section to Main Dishes.' },
       { version: '2026-11-24-16', description: 'Added a host-only shared Event Day Mode switch for all website visitors.' }
       { version: '2026-11-24-17', description: 'Added a public live guest check-in dashboard with host-only editing and real-time arrival updates.' },
+      { version: '2026-11-24-18', description: 'Fixed Supabase initialization order so the countdown, trivia, host panel, and other page scripts can run.' },
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
