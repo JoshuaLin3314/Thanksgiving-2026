@@ -837,7 +837,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-24-2<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-24-3<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a secure host password reset option for account sign-in recovery.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-24-2<small>November 24, 2026</small></span><span class="history-current">Previous Update</span></summary>
           <div class="history-content"><ul><li>Connected the Thanksgiving shopping checklist to Supabase for live syncing across devices.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -958,7 +962,7 @@
     <div class="modal">
       <div class="modal-icon" aria-hidden="true">🔒</div>
       <h3 id="hostCheckinTitle">Host Check-In 👋</h3>
-      <p class="host-checkin-intro">Sign in to access your host checklist and food controls.</p><div id="hostAuthPanel" class="host-auth-panel"><form id="hostLoginForm"><label for="hostEmail">Host email</label><input id="hostEmail" type="email" autocomplete="username" required placeholder="Your email address"><label for="hostPassword">Password</label><input id="hostPassword" type="password" autocomplete="current-password" required placeholder="Your password"><button class="host-checkin-close" type="submit" id="hostLoginButton">Sign In</button><p id="hostAuthMessage" role="status" aria-live="polite"></p></form><div id="hostSignedIn" hidden><p>Signed in as <strong id="hostSignedInEmail"></strong></p><button class="host-checkin-reset" id="hostLogoutButton" type="button">Sign Out</button></div></div>
+      <p class="host-checkin-intro">Sign in to access your host checklist and food controls.</p><div id="hostAuthPanel" class="host-auth-panel"><form id="hostLoginForm"><label for="hostEmail">Host email</label><input id="hostEmail" type="email" autocomplete="username" required placeholder="Your email address"><label for="hostPassword">Password</label><input id="hostPassword" type="password" autocomplete="current-password" required placeholder="Your password"><button class="host-checkin-close" type="submit" id="hostLoginButton">Sign In</button><button type="button" id="forgotHostPasswordButton" class="host-checkin-reset" style="margin-top:2px">Forgot password?</button><p id="hostAuthMessage" role="status" aria-live="polite"></p></form><div id="hostSignedIn" hidden><p>Signed in as <strong id="hostSignedInEmail"></strong></p><button class="host-checkin-reset" id="hostLogoutButton" type="button">Sign Out</button></div></div>
       <div id="hostProtectedControls" hidden>
       <section class="host-dashboard" aria-labelledby="hostDashboardTitle">
         <h4 id="hostDashboardTitle">Thanksgiving Control Center 🍂</h4>
@@ -1044,7 +1048,7 @@
     <div class="host-password-card">
       <div aria-hidden="true" style="font-size:2rem;margin-bottom:10px">🔐</div>
       <h1 id="hostPasswordSetupTitle">Set Your Host Password</h1>
-      <p>Welcome to the Thanksgiving host team! Create a password for your own host account to finish accepting the invitation.</p>
+      <p id="hostPasswordSetupIntro">Create a new password for your Thanksgiving host account.</p>
       <form id="hostPasswordSetupForm">
         <label for="newHostPassword">New password</label>
         <input id="newHostPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters">
@@ -1198,7 +1202,23 @@
       document.getElementById('hostPassword').value='';setHostSignedIn(data.user);await loadFoodStatuses();
     });
     document.getElementById('hostLogoutButton').addEventListener('click',async()=>{await supabaseClient.auth.signOut();setHostSignedIn(null);});
-    supabaseClient.auth.onAuthStateChange((_event,session)=>setHostSignedIn(session?session.user:null));
+    document.getElementById('forgotHostPasswordButton').addEventListener('click',async()=>{
+      const email=document.getElementById('hostEmail').value.trim();
+      if(!email){hostAuthMessage.textContent='Enter your host email above first.';document.getElementById('hostEmail').focus();return;}
+      const button=document.getElementById('forgotHostPasswordButton');button.disabled=true;hostAuthMessage.textContent='Sending a secure reset link…';
+      const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:'https://joshualin3314.github.io/Thanksgiving-2026/?setup-host-password=1'});
+      button.disabled=false;
+      hostAuthMessage.textContent=error?'Could not send the reset email. Please try again in a moment.':'If that email belongs to a host account, a password reset link is on its way. Check your inbox.';
+    });
+    supabaseClient.auth.onAuthStateChange((event,session)=>{
+      setHostSignedIn(session?session.user:null);
+      if(event==='PASSWORD_RECOVERY'){
+        document.getElementById('hostPasswordSetupTitle').textContent='Reset Your Host Password';
+        document.getElementById('hostPasswordSetupIntro').textContent='Choose a new password for your Thanksgiving host account.';
+        hostPasswordSetupMessage.textContent='Your reset link is verified. Enter a new password below.';
+        hostPasswordSetup.classList.add('show');
+      }
+    });
     document.getElementById('foodAdminList').addEventListener('change',async event=>{
       if(!event.target.matches('[data-food-status]')||!hostIsSignedIn)return;
       const i=Number(event.target.dataset.foodStatus),next=event.target.value,previous=foodStatuses[i]||'Not Started';
