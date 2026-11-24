@@ -171,6 +171,25 @@
     .menu-button:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(112,57,36,.25); filter: brightness(1.06); }
     .menu-button:focus-visible, .close:focus-visible { outline: 3px solid #d69a4d; outline-offset: 4px; }
     .menu-note { color: #927966; font-size: .8rem; margin: 12px 0 0; }
+    .clothing-section { max-width: 900px; margin: 42px auto 0; }
+    .clothing-card { display: flex; align-items: center; gap: clamp(22px, 5vw, 48px); padding: clamp(25px, 5vw, 42px); border: 1px solid #dfc5a8; border-radius: 24px; background: linear-gradient(120deg, rgba(255,250,242,.97), rgba(244,225,201,.94)); box-shadow: 0 14px 34px rgba(80,52,33,.09); overflow: hidden; }
+    .clothing-art { flex: 0 0 clamp(100px, 18vw, 165px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 28px; background: linear-gradient(145deg,#f0dfc8,#e5c5a1); font-size: clamp(4rem, 10vw, 7rem); }
+    .clothing-copy { flex: 1; min-width: 0; }
+    .clothing-eyebrow { color: #a16b43; font-size: .7rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+    .clothing-copy h2 { font: 600 clamp(1.8rem, 4.5vw, 2.65rem)/1.15 'Playfair Display', Georgia, serif; color: var(--brown); margin: 8px 0; }
+    .clothing-copy > p { color: var(--muted); margin: 0 0 18px; }
+    .clothing-details { display: flex; flex-wrap: wrap; gap: 10px; }
+    .clothing-details span { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border: 1px solid #e5d2bb; border-radius: 999px; background: rgba(255,255,255,.58); color: var(--ink); font-size: .84rem; font-weight: 700; }
+    .color-dot { width: 15px; height: 15px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,.12); }
+    .color-dot.orange { background: #d97832; }
+    .color-dot.brown { background: #75452f; }
+    .color-dot.red { background: #a83c32; }
+    .jeans-icon { font-style: normal; font-size: 1rem; }
+    .clothing-note { margin-top: 17px; color: var(--muted); font-size: .86rem; }
+    body[data-theme="evening"] .clothing-card { background: linear-gradient(120deg,#302724,#49382f); border-color:#71533e; }
+    body[data-theme="evening"] .clothing-art { background:linear-gradient(145deg,#49382f,#654a3a); }
+    body[data-theme="evening"] .clothing-details span { background:#49382f; border-color:#71533e; }
+    @media (max-width: 620px) { .clothing-card { flex-direction: column; text-align: center; } .clothing-details { justify-content: center; } }
     .upcoming-section { max-width: 900px; margin: 48px auto 0; }
     .upcoming-heading { text-align: center; margin-bottom: 20px; }
     .upcoming-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
@@ -435,6 +454,24 @@
       </div>
     </section>
 
+    <section class="clothing-section" aria-labelledby="clothing-title">
+      <div class="clothing-card">
+        <div class="clothing-art" aria-hidden="true">👕</div>
+        <div class="clothing-copy">
+          <div class="clothing-eyebrow">A little Thanksgiving style</div>
+          <h2 id="clothing-title">What to Wear 🍂</h2>
+          <p>Show up in the colors of the season!</p>
+          <div class="clothing-details">
+            <span><i class="color-dot orange"></i> Orange shirt</span>
+            <span><i class="color-dot brown"></i> Brown shirt</span>
+            <span><i class="color-dot red"></i> Red shirt</span>
+            <span><i class="jeans-icon">👖</i> Jeans</span>
+          </div>
+          <div class="clothing-note">Choose an orange, brown, or red fall-color shirt with jeans. 🍁</div>
+        </div>
+      </div>
+    </section>
+
     <section class="upcoming-section" aria-labelledby="upcoming-title">
       <div class="upcoming-heading">
         <h2 id="upcoming-title">More to Come 🍁</h2>
@@ -447,12 +484,6 @@
           <p>See what's planned throughout the Thanksgiving celebration.</p>
           <span class="coming-soon">Coming Soon</span>
         </article>
-        <article class="upcoming-card">
-          <div class="upcoming-icon" aria-hidden="true">👔</div>
-          <h3>Dress Code</h3>
-          <p>Wear an orange, brown, or red fall-color shirt with jeans. 🍂</p>
-          <span class="coming-soon">Fall Colors</span>
-        </article>
       </div>
     </section>
 
@@ -463,7 +494,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-29<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-30<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-29<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -519,7 +554,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-29';
+    const updateVersion = '2026-11-23-30';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -531,7 +566,8 @@
       { version: '2026-11-23-26', description: 'Update announcements now queue individually, so visitors can see every update they have not viewed yet.' },
       { version: '2026-11-23-27', description: 'Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes. Your selection is saved on this device.' },
       { version: '2026-11-23-28', description: 'Simplified update announcements: visitors now see only the latest update, even if they missed several releases.' },
-      { version: '2026-11-23-29', description: 'Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.' }
+      { version: '2026-11-23-29', description: 'Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.' },
+      { version: '2026-11-23-30', description: 'Gave the Thanksgiving clothing guidelines their own prominent section and removed them from More to Come.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
