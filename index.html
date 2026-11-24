@@ -287,7 +287,13 @@
     .upcoming-card p { color: var(--muted); font-size: .85rem; line-height: 1.55; margin: 0 0 14px; }
     .coming-soon { display: inline-block; padding: 6px 11px; border-radius: 999px; color: #80512e; background: #f2e2ca; font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
     .falling-leaves { position: fixed; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
-    .falling-leaf { position: absolute; top: -50px; left: var(--left); font-size: var(--size); opacity: 0; animation: leaf-fall var(--duration) linear var(--delay) infinite; filter: drop-shadow(0 2px 2px rgba(56,37,29,.12)); }
+    .falling-leaf { position: absolute; top: -50px; left: var(--left); font-size: var(--size); opacity: 0; animation: leaf-fall var(--duration) linear var(--delay) infinite; filter: drop-shadow(0 2px 2px rgba(56,37,29,.12)); pointer-events: auto; cursor: pointer; touch-action: manipulation; user-select: none; transition: filter .2s ease; }
+    .falling-leaf:hover, .falling-leaf:focus-visible { filter: drop-shadow(0 0 8px rgba(190,112,49,.8)); outline: none; }
+    .leaf-burst { position: fixed; z-index: 30; pointer-events: none; font-size: 19px; animation: leaf-pop .85s ease-out forwards; }
+    @keyframes leaf-pop { 0% { opacity: 1; transform: translate(-50%,-50%) scale(.6) rotate(0deg); } 100% { opacity: 0; transform: translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.25) rotate(var(--spin)); } }
+    .leaf-surprise { position: fixed; z-index: 31; left: 50%; bottom: 28px; transform: translate(-50%, 18px); width: max-content; max-width: min(90vw, 420px); padding: 13px 19px; border: 1px solid #d9b78f; border-radius: 999px; background: #fff8ed; color: #633b2b; box-shadow: 0 10px 30px rgba(56,37,29,.2); font: 700 .88rem 'DM Sans', sans-serif; text-align: center; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+    .leaf-surprise.show { opacity: 1; transform: translate(-50%, 0); }
+    [data-theme="evening"] .leaf-surprise { background: #33261f; color: #fff0dc; border-color: #8f694d; }
     @keyframes leaf-fall {
       0% { transform: translate3d(0, -8vh, 0) rotate(0deg); opacity: 0; }
       10% { opacity: .78; }
@@ -421,7 +427,7 @@
   </style>
 </head>
 <body>
-  <div class="falling-leaves" id="fallingLeaves" aria-hidden="true">
+  <div class="falling-leaves" id="fallingLeaves">
     <span class="falling-leaf" style="--left: 4%; --size: 18px; --duration: 11s; --delay: -1s; --drift: 34px;">🍂</span>
     <span class="falling-leaf" style="--left: 12%; --size: 22px; --duration: 13s; --delay: -7s; --drift: -42px;">🍁</span>
     <span class="falling-leaf" style="--left: 20%; --size: 17px; --duration: 10s; --delay: -4s; --drift: 38px;">🍂</span>
@@ -662,7 +668,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-38<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-39<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-38<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added a host check-in panel with an arrival checklist and live guest count.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -836,9 +846,60 @@
       }
     });
 
+    // Tapping a falling leaf triggers a tiny burst and a rotating secret message.
+    const leafMessages = [
+      'You found a little bit of Thanksgiving magic! ✨',
+      'A little gratitude goes a long way. 🧡',
+      'Secret leaf unlocked: extra dessert for everyone! 🥧',
+      'The best part of Thanksgiving is being together. 🍂',
+      'BTS has officially been invited to dinner. 💜',
+      'You are one leaf closer to Thanksgiving! 🦃',
+      'Good food, great company, and cozy memories. 🍁'
+    ];
+    let leafMessageIndex = 0;
+    let leafToastTimer;
+    const leafToast = document.createElement('div');
+    leafToast.className = 'leaf-surprise';
+    leafToast.setAttribute('role', 'status');
+    leafToast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(leafToast);
+    document.querySelectorAll('.falling-leaf').forEach(leaf => {
+      leaf.setAttribute('role', 'button');
+      leaf.setAttribute('tabindex', '0');
+      leaf.setAttribute('aria-label', 'Tap for a Thanksgiving surprise');
+      const revealLeaf = event => {
+        if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') return;
+        if (event.type === 'keydown') event.preventDefault();
+        const rect = leaf.getBoundingClientRect();
+        const x = event.clientX || rect.left + rect.width / 2;
+        const y = event.clientY || rect.top + rect.height / 2;
+        ['🍂','🍁','✨','🧡','🍃','✨','🍁','🍂'].forEach((symbol, particleIndex) => {
+          const particle = document.createElement('span');
+          particle.className = 'leaf-burst';
+          particle.textContent = symbol;
+          const angle = (Math.PI * 2 * particleIndex) / 8;
+          const distance = 42 + (particleIndex % 3) * 15;
+          particle.style.left = x + 'px';
+          particle.style.top = y + 'px';
+          particle.style.setProperty('--x', Math.cos(angle) * distance + 'px');
+          particle.style.setProperty('--y', Math.sin(angle) * distance + 'px');
+          particle.style.setProperty('--spin', (particleIndex % 2 ? 150 : -150) + 'deg');
+          document.body.appendChild(particle);
+          particle.addEventListener('animationend', () => particle.remove(), { once: true });
+        });
+        leafToast.textContent = leafMessages[leafMessageIndex % leafMessages.length];
+        leafMessageIndex++;
+        leafToast.classList.add('show');
+        clearTimeout(leafToastTimer);
+        leafToastTimer = setTimeout(() => leafToast.classList.remove('show'), 2400);
+      };
+      leaf.addEventListener('click', revealLeaf);
+      leaf.addEventListener('keydown', revealLeaf);
+    });
+
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-38';
+    const updateVersion = '2026-11-23-39';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -859,7 +920,8 @@
       { version: '2026-11-23-35', description: 'Restored the simple, generic new-update popup without displaying version numbers or update descriptions.' },
       { version: '2026-11-23-36', description: 'Added a live Thanksgiving Day status that rotates through the cooking list every second before 5 PM, then follows the event schedule.' },
       { version: '2026-11-23-37', description: 'Added an interactive Thanksgiving trivia game with eight questions, score tracking, and replay.' },
-      { version: '2026-11-23-38', description: 'Added a host check-in panel with an arrival checklist and live guest count.' }
+      { version: '2026-11-23-38', description: 'Added a host check-in panel with an arrival checklist and live guest count.' },
+      { version: '2026-11-23-39', description: 'Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
