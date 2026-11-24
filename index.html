@@ -497,7 +497,7 @@
     <section class="countdown-section" aria-label="Countdown to Thanksgiving">
       <div class="countdown-card">
         <div class="countdown-eyebrow">The celebration is getting closer</div>
-        <h2>Countdown to Thanksgiving 🍂</h2>
+        <h2>Countdown to 5:00 PM 👀</h2>
         <p class="countdown-subtitle">We're saving you a seat!</p>
         <div class="countdown-grid" id="countdown" aria-live="off">
           <div class="countdown-unit"><span class="countdown-number" id="countDays">--</span><span class="countdown-label">Days</span></div>
@@ -505,7 +505,7 @@
           <div class="countdown-unit"><span class="countdown-number" id="countMinutes">--</span><span class="countdown-label">Minutes</span></div>
           <div class="countdown-unit"><span class="countdown-number" id="countSeconds">--</span><span class="countdown-label">Seconds</span></div>
         </div>
-        <p class="countdown-date" id="countdownMessage">Friday, November 27, 2026 at 5:30 PM</p>
+        <p class="countdown-date" id="countdownMessage">Friday, November 27, 2026 at 5:00 PM</p>
       </div>
     </section>
 
@@ -671,11 +671,15 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-41<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-23-42<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-41<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-40<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.</li></ul></div>
@@ -918,7 +922,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-41';
+    const updateVersion = '2026-11-23-42';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -942,7 +946,8 @@
       { version: '2026-11-23-38', description: 'Added a host check-in panel with an arrival checklist and live guest count.' },
       { version: '2026-11-23-39', description: 'Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.' },
       { version: '2026-11-23-40', description: 'Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.' },
-      { version: '2026-11-23-41', description: 'Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.' }
+      { version: '2026-11-23-41', description: 'Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.' },
+      { version: '2026-11-23-42', description: 'Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -984,7 +989,7 @@
     });
 
     // Count down to the start of Thanksgiving Day in each visitor's local time zone.
-    const thanksgivingDate = new Date(2026, 10, 27, 17, 30, 0);
+    const thanksgivingDate = new Date(2026, 10, 27, 17, 0, 0);
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
       const remaining = thanksgivingDate.getTime() - Date.now();
@@ -993,7 +998,7 @@
         document.getElementById('countHours').textContent = '00';
         document.getElementById('countMinutes').textContent = '00';
         document.getElementById('countSeconds').textContent = '00';
-        countdownMessage.textContent = 'Happy Thanksgiving! 🦃';
+        countdownMessage.textContent = 'Starting 👀';
         return;
       }
       const days = Math.floor(remaining / 86400000);
