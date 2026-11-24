@@ -548,6 +548,14 @@
     .host-checkin-reset { background: rgba(130, 100, 75, .13); color: inherit; }
     .host-checkin-close { background: #76503b; color: white; }
     [data-theme="evening"] .host-checkin-person { background: rgba(255,255,255,.04); }
+    .event-mode-admin{margin:16px 0;padding:17px;border:1px solid rgba(166,91,48,.28);border-radius:16px;background:rgba(166,91,48,.09)}
+    .event-mode-admin h4{margin:0 0 6px}.event-mode-admin p{margin:0 0 12px;color:var(--muted,#76685b);font-size:.92rem}
+    .event-mode-toggle{border:0;border-radius:999px;padding:12px 18px;background:#76503b;color:#fff;font:inherit;font-weight:700;cursor:pointer}.event-mode-toggle:disabled{opacity:.55;cursor:wait}
+    .event-mode-banner{display:none;margin:22px auto;max-width:1000px;padding:clamp(20px,4vw,34px);border-radius:22px;color:#fff8ed;background:linear-gradient(130deg,#75452f,#a85e38 60%,#c17a45);box-shadow:0 14px 35px rgba(91,53,34,.18);text-align:center}
+    body.event-day-mode .event-mode-banner{display:block}.event-mode-banner .event-mode-kicker{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:800}
+    .event-mode-banner h2{margin:8px 0;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem)}.event-mode-banner p{margin:6px 0}
+    .event-mode-next{display:inline-block;margin-top:12px;padding:10px 16px;border:1px solid rgba(255,255,255,.35);border-radius:14px;background:rgba(255,255,255,.13);font-weight:700}
+    body.event-day-mode .live-status-section{display:none}body.event-day-mode .schedule-item.event-current{outline:3px solid #b86b3e;outline-offset:3px;border-radius:14px;background:rgba(184,107,62,.13)}body.event-day-mode .schedule-item.event-complete{opacity:.58}
 
   </style>
 </head>
@@ -771,6 +779,10 @@
       </div>
     </section>
 
+    <section class="event-mode-banner" id="eventModeBanner" aria-live="polite">
+      <div class="event-mode-kicker">🍂 Thanksgiving Event Day Mode</div><h2 id="eventModeHeadline">The celebration is underway!</h2>
+      <p id="eventModeSubline">Welcome to our family gathering.</p><div class="event-mode-next" id="eventModeNext">Loading today's schedule…</div>
+    </section>
     <section class="live-status-section" aria-labelledby="live-status-title">
       <div class="live-status-card">
         <div class="live-status-eyebrow">Happening on Thanksgiving Day</div>
@@ -1043,6 +1055,11 @@
         </div>
       </section>
 
+      <section class="event-mode-admin" aria-labelledby="eventModeAdminTitle">
+        <h4 id="eventModeAdminTitle">Event Day Mode 🎉</h4><p>Turn on the Thanksgiving live layout for everyone visiting the website. You can switch it off again after the gathering.</p>
+        <button type="button" class="event-mode-toggle" id="eventModeToggle" disabled>Loading event mode…</button>
+        <p id="eventModeAdminMessage" role="status" aria-live="polite" style="margin-top:10px">Only signed-in hosts can change this setting.</p>
+      </section>
       <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
       <div class="host-checkin-list" id="hostCheckinList">
         <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Joshua"><span>Joshua</span><small>Host</small></label>
@@ -1272,10 +1289,48 @@
       if(error){console.error('Could not load shared food statuses:',error.message);return;}
       foodStatuses={};data.forEach(row=>{const i=foodStatusNames.indexOf(row.dish);if(i!==-1&&foodStatusOptions.includes(row.status))foodStatuses[i]=row.status;});renderFoodStatuses();
     }
+    let eventDayModeEnabled=false;
+    const eventModeToggle=document.getElementById('eventModeToggle');
+    const eventModeAdminMessage=document.getElementById('eventModeAdminMessage');
+    function renderEventDayMode(enabled){
+      eventDayModeEnabled=!!enabled;document.body.classList.toggle('event-day-mode',eventDayModeEnabled);
+      eventModeToggle.textContent=eventDayModeEnabled?'Turn Event Day Mode Off':'Activate Event Day Mode';
+      eventModeAdminMessage.textContent=eventDayModeEnabled?'Event Day Mode is LIVE for all visitors. ✓':'Event Day Mode is currently off for everyone.';
+      updateEventDayDisplay();
+    }
+    async function loadEventDayMode(){
+      const {data,error}=await supabaseClient.from('event_settings').select('event_day_mode').eq('id',1).maybeSingle();
+      if(error){eventModeAdminMessage.textContent='Could not load the shared setting. Refresh and try again.';return;}
+      renderEventDayMode(data?.event_day_mode??false);eventModeToggle.disabled=!hostIsSignedIn;
+    }
+    eventModeToggle.addEventListener('click',async()=>{
+      if(!hostIsSignedIn)return;eventModeToggle.disabled=true;eventModeAdminMessage.textContent='Saving shared setting…';
+      const next=!eventDayModeEnabled;
+      const {data,error}=await supabaseClient.from('event_settings').update({event_day_mode:next,updated_at:new Date().toISOString()}).eq('id',1).select('event_day_mode').single();
+      eventModeToggle.disabled=!hostIsSignedIn;
+      if(error){eventModeAdminMessage.textContent='Could not save Event Day Mode. Please try again.';return;}renderEventDayMode(data.event_day_mode);
+    });
+    supabaseClient.channel('shared-event-day-mode').on('postgres_changes',{event:'*',schema:'public',table:'event_settings',filter:'id=eq.1'},payload=>renderEventDayMode(payload.new.event_day_mode)).subscribe();
+    loadEventDayMode();
     function setHostSignedIn(user){
       hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingAdminChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;
+      eventModeToggle.disabled=!hostIsSignedIn;
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
     }
+    const eventModeSchedule=[{minute:1020,label:'Check-In & Roll Call',emoji:'👋'},{minute:1050,label:'Dinner Begins',emoji:'🍽️'},{minute:1140,label:'Main Dinner Ends',emoji:'🍂'},{minute:1170,label:'Table Reset',emoji:'🧹'},{minute:1200,label:'Dessert',emoji:'🍰'},{minute:1230,label:'Card Games',emoji:'🃏'},{minute:1260,label:'Walk to MTea',emoji:'🧋'},{minute:1320,label:'Party Ends',emoji:'🧡'}];
+    function updateEventDayDisplay(){
+      if(!eventDayModeEnabled)return;const now=new Date(),today=now.getFullYear()===2026&&now.getMonth()===10&&now.getDate()===27;
+      const items=[...document.querySelectorAll('.schedule-item')];items.forEach(item=>item.classList.remove('event-current','event-complete'));
+      if(!today){document.getElementById('eventModeHeadline').textContent='Event Day Mode is on! 🍁';document.getElementById('eventModeSubline').textContent='The live schedule will follow the event on Friday, November 27.';document.getElementById('eventModeNext').textContent='Thanksgiving · 5:00 PM – 10:00 PM';return;}
+      const minutes=now.getHours()*60+now.getMinutes();let active=-1;for(let i=0;i<eventModeSchedule.length;i++)if(minutes>=eventModeSchedule[i].minute)active=i;
+      if(active>=0&&items[active])items[active].classList.add('event-current');items.forEach((item,index)=>{if(index<active)item.classList.add('event-complete');});
+      if(minutes>=1320){document.getElementById('eventModeHeadline').textContent='Thanksgiving Celebration Complete! 🧡';document.getElementById('eventModeSubline').textContent='Thank you for celebrating together!';document.getElementById('eventModeNext').textContent='That’s a wrap — see you next time!';return;}
+      const nextIndex=eventModeSchedule.findIndex(item=>item.minute>minutes),current=active>=0?eventModeSchedule[active]:null,next=eventModeSchedule[nextIndex];
+      document.getElementById('eventModeHeadline').textContent=current?current.emoji+' '+current.label:'Getting ready for the celebration! 🍂';
+      document.getElementById('eventModeSubline').textContent=current?'This is what’s happening right now.':'The gathering begins at 5:00 PM.';
+      if(next){const left=next.minute-minutes;document.getElementById('eventModeNext').textContent='Next: '+next.label+' · in '+Math.floor(left/60)+'h '+String(left%60).padStart(2,'0')+'m';}
+    }
+    setInterval(updateEventDayDisplay,15000);
     hostLoginForm.addEventListener('submit',async event=>{
       event.preventDefault();const button=document.getElementById('hostLoginButton');button.disabled=true;hostAuthMessage.textContent='Signing in…';
       const {data,error}=await supabaseClient.auth.signInWithPassword({email:document.getElementById('hostEmail').value.trim(),password:document.getElementById('hostPassword').value});
@@ -1398,7 +1453,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-15';
+    const updateVersion = '2026-11-24-16';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1441,7 +1496,8 @@
       { version: '2026-11-24-12', description: 'Updated the Thanksgiving menu categories.' },
       { version: '2026-11-24-13', description: 'Moved sweet potato casserole into the dessert section.' },
       { version: '2026-11-24-14', description: 'Fixed the update announcement loop by keeping the live version and newest published announcement in sync.' },
-      { version: '2026-11-24-15', description: 'Renamed the cookbook main section to Main Dishes.' }
+      { version: '2026-11-24-15', description: 'Renamed the cookbook main section to Main Dishes.' },
+      { version: '2026-11-24-16', description: 'Added a host-only shared Event Day Mode switch for all website visitors.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
