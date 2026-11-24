@@ -108,6 +108,43 @@
     body[data-theme="evening"] .theme-choice[aria-pressed="true"] { border-color:#e8bd96; }
     body[data-theme="evening"] .history-previous-button, body[data-theme="evening"] .kitchen-label { background:#49382f; color:#f7e9d9; border-color:#71533e; }
 
+
+    .food-tracker-section { max-width: 790px; margin: 38px auto 0; }
+    .food-tracker-card { padding: 25px; border: 1px solid #e7d5bd; border-radius: 22px; background: rgba(255,250,242,.94); box-shadow: 0 12px 30px rgba(80,52,33,.07); }
+    .food-tracker-heading { text-align:center; margin-bottom:20px; }
+    .food-tracker-heading h2 { font:600 clamp(1.7rem,4vw,2.25rem)/1.2 'Playfair Display',Georgia,serif; color:var(--brown); margin:0 0 7px; }
+    .food-tracker-heading p { color:var(--muted); margin:0; font-size:.9rem; }
+    .food-tracker-progress { display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:.82rem; font-weight:700; margin:0 0 9px; }
+    .food-tracker-bar { height:10px; border-radius:999px; overflow:hidden; background:#eadcc9; margin-bottom:18px; }
+    .food-tracker-fill { height:100%; width:0; border-radius:inherit; background:linear-gradient(90deg,#b87942,#78805b); transition:width .3s ease; }
+    .food-status-list { display:grid; gap:9px; }
+    .food-status-item { display:flex; align-items:center; gap:12px; padding:13px 14px; border:1px solid #eadcc9; border-radius:14px; background:rgba(255,255,255,.48); }
+    .food-status-emoji { font-size:1.45rem; width:30px; text-align:center; }
+    .food-status-copy { min-width:0; flex:1; display:grid; gap:3px; }
+    .food-status-copy strong { font-size:.91rem; line-height:1.35; }
+    .food-status-label { color:var(--muted); font-size:.78rem; }
+    .food-status-dot { font-size:1.25rem; color:#a18c79; }
+    .food-status-item[data-status="In Progress"] { border-color:#d7a45e; background:rgba(214,154,77,.09); }
+    .food-status-item[data-status="In Progress"] .food-status-dot { color:#b87942; }
+    .food-status-item[data-status="Ready!"] { border-color:#9aaa7b; background:rgba(120,128,91,.10); }
+    .food-status-item[data-status="Ready!"] .food-status-label,.food-status-item[data-status="Ready!"] .food-status-dot { color:#64764a; }
+    .food-all-ready { display:none; text-align:center; margin:17px 0 0; padding:14px; border-radius:14px; background:#edf1e4; color:#52643d; font-weight:800; }
+    .food-all-ready.show { display:block; animation:foodPop .35s ease both; }
+    @keyframes foodPop { from { opacity:0; transform:scale(.96); } to { opacity:1; transform:scale(1); } }
+    .food-tracker-note { text-align:center; color:var(--muted); font-size:.72rem; margin:14px 0 0; }
+    .food-admin { margin-top:22px; padding-top:18px; border-top:1px solid #eadcc9; }
+    .food-admin h4 { margin:0 0 6px; font:600 1.15rem 'Playfair Display',Georgia,serif; color:var(--brown); }
+    .food-admin-intro { margin:0 0 13px; color:var(--muted); font-size:.8rem; }
+    .food-admin-list { display:grid; gap:8px; }
+    .food-admin-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid #eadcc9; border-radius:12px; font-size:.83rem; }
+    .food-admin-row span { min-width:0; line-height:1.35; }
+    .food-admin-row select { max-width:145px; border:1px solid #d7c3aa; border-radius:9px; padding:8px; background:#fffaf2; color:#493126; font:600 .78rem 'DM Sans',sans-serif; }
+    body[data-theme="evening"] .food-tracker-card { background:#302724; border-color:#554239; }
+    body[data-theme="evening"] .food-status-item,body[data-theme="evening"] .food-admin-row { background:rgba(255,255,255,.035); border-color:#554239; }
+    body[data-theme="evening"] .food-tracker-bar { background:#554239; }
+    body[data-theme="evening"] .food-admin-row select { background:#49382f; color:#f7e9d9; border-color:#71533e; }
+    @media(max-width:560px) { .food-tracker-card { padding:19px 14px; } .food-admin-row { align-items:flex-start; flex-direction:column; } .food-admin-row select { max-width:none; width:100%; } }
+
     .details {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
       max-width: 790px; margin: 0 auto;
@@ -516,6 +553,24 @@
       <p class="menu-note">Take a look at what's being served! 🍁</p>
     </section>
 
+
+    <section class="food-tracker-section" aria-labelledby="foodTrackerTitle">
+      <div class="food-tracker-card">
+        <div class="food-tracker-heading"><h2 id="foodTrackerTitle">What's Cooking? 👀</h2><p>Follow every dish on our Thanksgiving menu!</p></div>
+        <div class="food-tracker-progress"><span id="foodProgressText">0 of 7 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
+        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
+        <div class="food-status-list" id="foodStatusList"><article class="food-status-item" data-food-item="0"><span class="food-status-emoji" aria-hidden="true">🧀</span><div class="food-status-copy"><strong>Mac &amp; Cheese</strong><span class="food-status-label" id="foodStatusLabel0">Not Started</span></div><span class="food-status-dot" id="foodStatusDot0" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="1"><span class="food-status-emoji" aria-hidden="true">🥔</span><div class="food-status-copy"><strong>Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</strong><span class="food-status-label" id="foodStatusLabel1">Not Started</span></div><span class="food-status-dot" id="foodStatusDot1" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="2"><span class="food-status-emoji" aria-hidden="true">🥦</span><div class="food-status-copy"><strong>Veggie Mix</strong><span class="food-status-label" id="foodStatusLabel2">Not Started</span></div><span class="food-status-dot" id="foodStatusDot2" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="3"><span class="food-status-emoji" aria-hidden="true">🍗</span><div class="food-status-copy"><strong>HEB Chicken</strong><span class="food-status-label" id="foodStatusLabel3">Not Started</span></div><span class="food-status-dot" id="foodStatusDot3" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="4"><span class="food-status-emoji" aria-hidden="true">🥖</span><div class="food-status-copy"><strong>Garlic Bread</strong><span class="food-status-label" id="foodStatusLabel4">Not Started</span></div><span class="food-status-dot" id="foodStatusDot4" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article></div>
+        <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
+        <p class="food-tracker-note">Statuses are updated by the host in the hidden Host Check-In panel.</p>
+      </div>
+    </section>
+
     <section class="seating-section" aria-labelledby="seating-title">
       <div class="seating-heading">
         <h2 id="seating-title">Thanksgiving Seating Chart 🪑</h2>
@@ -671,11 +726,15 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-42<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-23-43<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-42<small>November 23, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-23-41<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.</li></ul></div>
@@ -786,6 +845,20 @@
         <label class="host-checkin-person"><input type="checkbox" value="Alsa"><span>Alsa</span></label>
         <label class="host-checkin-person"><input type="checkbox" value="Henry"><span>Henry</span></label>
       </div>
+
+      <div class="food-admin">
+        <h4>Food Status Controls 🍽️</h4>
+        <p class="food-admin-intro">Update each dish as it gets prepared. The public tracker will reflect your changes on this device.</p>
+        <div class="food-admin-list" id="foodAdminList"><label class="food-admin-row"><span>🧀 Mac &amp; Cheese</span><select data-food-status="0" aria-label="Status for Mac &amp; Cheese"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🥔 Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</span><select data-food-status="1" aria-label="Status for Mashed Potato Gratin (1/2 Scalloped, ½ mashed)"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🥦 Veggie Mix</span><select data-food-status="2" aria-label="Status for Veggie Mix"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🍗 HEB Chicken</span><select data-food-status="3" aria-label="Status for HEB Chicken"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🥖 Garlic Bread</span><select data-food-status="4" aria-label="Status for Garlic Bread"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🥑 Chips and Guac</span><select data-food-status="5" aria-label="Status for Chips and Guac"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🍠 Marshmallow Sweet Potato Cassarole</span><select data-food-status="6" aria-label="Status for Marshmallow Sweet Potato Cassarole"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label></div>
+        <button class="host-checkin-reset" id="foodStatusReset" type="button" style="margin-top:12px">Reset Food Statuses ↻</button>
+      </div>
+
       <div class="host-checkin-actions">
         <button class="host-checkin-reset" id="hostCheckinReset" type="button">Reset Check-Ins ↻</button>
         <button class="host-checkin-close" id="hostCheckinClose" type="button">Done</button>
@@ -856,6 +929,46 @@
     hostCheckinModal.addEventListener('click', event => {
       if (event.target === hostCheckinModal) hostCheckinModal.classList.remove('open');
     });
+
+    // Thanksgiving food tracker: seven exact menu dishes, controlled by the host.
+    const foodStatusStorageKey = 'thanksgivingFoodStatuses';
+    const foodStatusNames = ["Mac & Cheese","Mashed Potato Gratin (1/2 Scalloped, ½ mashed)","Veggie Mix","HEB Chicken","Garlic Bread","Chips and Guac","Marshmallow Sweet Potato Cassarole"];
+    const foodStatusOptions = ['Not Started', 'In Progress', 'Ready!'];
+    let foodStatuses = {};
+    try { foodStatuses = JSON.parse(localStorage.getItem(foodStatusStorageKey) || '{}'); } catch (error) { foodStatuses = {}; }
+    function renderFoodStatuses() {
+      const readyCount = foodStatusNames.filter((name, index) => foodStatuses[index] === 'Ready!').length;
+      foodStatusNames.forEach((name, index) => {
+        const status = foodStatusOptions.includes(foodStatuses[index]) ? foodStatuses[index] : 'Not Started';
+        const item = document.querySelector('[data-food-item="' + index + '"]');
+        const label = document.getElementById('foodStatusLabel' + index);
+        const dot = document.getElementById('foodStatusDot' + index);
+        if (item) item.dataset.status = status;
+        if (label) label.textContent = status;
+        if (dot) dot.textContent = status === 'Ready!' ? '✓' : status === 'In Progress' ? '◷' : '○';
+        const control = document.querySelector('[data-food-status="' + index + '"]');
+        if (control) control.value = status;
+      });
+      document.getElementById('foodProgressText').textContent = readyCount + ' of ' + foodStatusNames.length + ' dishes ready';
+      document.getElementById('foodProgressPercent').textContent = Math.round(readyCount / foodStatusNames.length * 100) + '%';
+      document.getElementById('foodProgressFill').style.width = (readyCount / foodStatusNames.length * 100) + '%';
+      document.getElementById('foodProgressBar').setAttribute('aria-valuenow', readyCount);
+      document.getElementById('foodAllReady').classList.toggle('show', readyCount === foodStatusNames.length);
+      try { localStorage.setItem(foodStatusStorageKey, JSON.stringify(foodStatuses)); } catch (error) {}
+    }
+    document.getElementById('foodAdminList').addEventListener('change', event => {
+      if (event.target.matches('[data-food-status]')) {
+        foodStatuses[event.target.dataset.foodStatus] = event.target.value;
+        renderFoodStatuses();
+      }
+    });
+    document.getElementById('foodStatusReset').addEventListener('click', () => {
+      if (!window.confirm('Reset all seven food statuses?')) return;
+      foodStatuses = {};
+      renderFoodStatuses();
+    });
+    renderFoodStatuses();
+
     let footerTapCount = 0;
     let footerTapTimer;
     document.querySelector('footer').addEventListener('click', () => {
@@ -922,7 +1035,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-42';
+    const updateVersion = '2026-11-23-43';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -947,7 +1060,8 @@
       { version: '2026-11-23-39', description: 'Made the falling leaves interactive: tap one for a little leaf burst and a hidden Thanksgiving message.' },
       { version: '2026-11-23-40', description: 'Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.' },
       { version: '2026-11-23-41', description: 'Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.' },
-      { version: '2026-11-23-42', description: 'Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.' }
+      { version: '2026-11-23-42', description: 'Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.' },
+      { version: '2026-11-23-43', description: 'Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
