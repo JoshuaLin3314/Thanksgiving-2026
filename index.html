@@ -109,6 +109,20 @@
     body[data-theme="evening"] .history-previous-button, body[data-theme="evening"] .kitchen-label { background:#49382f; color:#f7e9d9; border-color:#71533e; }
 
 
+    .host-dashboard { margin:0 0 20px; padding:17px; border:1px solid #e7d5bd; border-radius:16px; background:linear-gradient(135deg,rgba(245,231,211,.72),rgba(255,250,242,.85)); }
+    .host-dashboard h4 { margin:0 0 5px; color:var(--brown); font:600 1.25rem 'Playfair Display',Georgia,serif; }
+    .host-dashboard-intro { margin:0 0 13px; color:var(--muted); font-size:.78rem; }
+    .host-dashboard-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+    .host-dashboard-stat { padding:12px; border:1px solid #eadcc9; border-radius:12px; background:rgba(255,255,255,.62); }
+    .host-dashboard-stat strong { display:block; color:var(--brown); font:600 1.55rem 'Playfair Display',Georgia,serif; }
+    .host-dashboard-stat span { color:var(--muted); font-size:.72rem; font-weight:700; }
+    .host-dashboard-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .host-dashboard-actions button { border:1px solid #d7c3aa; border-radius:999px; padding:8px 12px; background:#fffaf2; color:#633b2b; font:700 .75rem 'DM Sans',sans-serif; cursor:pointer; }
+    body[data-theme="evening"] .host-dashboard { background:#302724; border-color:#554239; }
+    body[data-theme="evening"] .host-dashboard-stat { background:#49382f; border-color:#71533e; }
+    body[data-theme="evening"] .host-dashboard-actions button { background:#49382f; color:#f7e9d9; border-color:#71533e; }
+    @media(max-width:420px) { .host-dashboard-grid { grid-template-columns:1fr 1fr; } }
+
     .food-tracker-section { max-width: 790px; margin: 38px auto 0; }
     .food-tracker-card { padding: 25px; border: 1px solid #e7d5bd; border-radius: 22px; background: rgba(255,250,242,.94); box-shadow: 0 12px 30px rgba(80,52,33,.07); }
     .food-tracker-heading { text-align:center; margin-bottom:20px; }
@@ -734,7 +748,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-43<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-45<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a Thanksgiving Control Center with live guest-arrival and dish-readiness summaries plus quick navigation.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-43<small>November 23, 2026</small></span>
           <div class="history-content"><ul><li>Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
@@ -844,7 +862,20 @@
       <div class="modal-icon" aria-hidden="true">🔒</div>
       <h3 id="hostCheckinTitle">Host Check-In 👋</h3>
       <p class="host-checkin-intro">Sign in to access your host checklist and food controls.</p><div id="hostAuthPanel" class="host-auth-panel"><form id="hostLoginForm"><label for="hostEmail">Host email</label><input id="hostEmail" type="email" autocomplete="username" required placeholder="Your email address"><label for="hostPassword">Password</label><input id="hostPassword" type="password" autocomplete="current-password" required placeholder="Your password"><button class="host-checkin-close" type="submit" id="hostLoginButton">Sign In</button><p id="hostAuthMessage" role="status" aria-live="polite"></p></form><div id="hostSignedIn" hidden><p>Signed in as <strong id="hostSignedInEmail"></strong></p><button class="host-checkin-reset" id="hostLogoutButton" type="button">Sign Out</button></div></div>
-      <div id="hostProtectedControls" hidden><div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
+      <div id="hostProtectedControls" hidden>
+      <section class="host-dashboard" aria-labelledby="hostDashboardTitle">
+        <h4 id="hostDashboardTitle">Thanksgiving Control Center 🍂</h4>
+        <p class="host-dashboard-intro">Your quick overview for the gathering.</p>
+        <div class="host-dashboard-grid">
+          <div class="host-dashboard-stat"><strong id="dashboardGuestCount">0 / 6</strong><span>GUESTS ARRIVED</span></div>
+          <div class="host-dashboard-stat"><strong id="dashboardFoodCount">0 / 7</strong><span>DISHES READY</span></div>
+        </div>
+        <div class="host-dashboard-actions">
+          <button type="button" id="dashboardGoGuests">Guest Check-In ↓</button>
+          <button type="button" id="dashboardGoFood">Food Controls ↓</button>
+        </div>
+      </section>
+      <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
       <div class="host-checkin-list" id="hostCheckinList">
         <label class="host-checkin-person"><input type="checkbox" value="Joshua"><span>Joshua</span><small>Host</small></label>
         <label class="host-checkin-person"><input type="checkbox" value="Lawrence"><span>Lawrence</span></label>
@@ -912,6 +943,8 @@
     let hostCheckins = {};
     try { hostCheckins = JSON.parse(localStorage.getItem(hostCheckinStorageKey) || '{}'); } catch (error) { hostCheckins = {}; }
     function renderHostCheckins() {
+      const dashboardGuestCount = document.getElementById('dashboardGuestCount');
+      if (dashboardGuestCount) dashboardGuestCount.textContent = Object.values(hostCheckins).filter(Boolean).length + ' / 6';
       const boxes = [...hostCheckinList.querySelectorAll('input[type="checkbox"]')];
       let checked = 0;
       boxes.forEach(box => {
@@ -935,6 +968,8 @@
       renderHostCheckins();
     });
     document.getElementById('hostCheckinClose').addEventListener('click', () => hostCheckinModal.classList.remove('open'));
+    document.getElementById('dashboardGoGuests').addEventListener('click',()=>document.getElementById('hostCheckinCount').scrollIntoView({behavior:'smooth',block:'center'}));
+    document.getElementById('dashboardGoFood').addEventListener('click',()=>document.querySelector('.food-admin').scrollIntoView({behavior:'smooth',block:'center'}));
     hostCheckinModal.addEventListener('click', event => {
       if (event.target === hostCheckinModal) hostCheckinModal.classList.remove('open');
     });
@@ -952,6 +987,7 @@
         const item=document.querySelector('[data-food-item="'+index+'"]'),label=document.getElementById('foodStatusLabel'+index),dot=document.getElementById('foodStatusDot'+index),control=document.querySelector('[data-food-status="'+index+'"]');
         if(item)item.dataset.status=status;if(label)label.textContent=status;if(dot)dot.textContent=status==='Ready!'?'✓':status==='In Progress'?'◷':'○';if(control)control.value=status;
       });
+      const dashboardFoodCount=document.getElementById('dashboardFoodCount');if(dashboardFoodCount)dashboardFoodCount.textContent=readyCount+' / '+foodStatusNames.length;
       document.getElementById('foodProgressText').textContent=readyCount+' of '+foodStatusNames.length+' dishes ready';
       document.getElementById('foodProgressPercent').textContent=Math.round(readyCount/foodStatusNames.length*100)+'%';
       document.getElementById('foodProgressFill').style.width=(readyCount/foodStatusNames.length*100)+'%';
@@ -1058,7 +1094,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-44';
+    const updateVersion = '2026-11-23-45';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1085,7 +1121,8 @@
       { version: '2026-11-23-41', description: 'Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.' },
       { version: '2026-11-23-42', description: 'Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.' },
       { version: '2026-11-23-43', description: 'Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.' },
-      { version: '2026-11-23-44', description: 'Connected the food tracker to Supabase so dish statuses sync live across devices, with host-only editing.' }
+      { version: '2026-11-23-44', description: 'Connected the food tracker to Supabase so dish statuses sync live across devices, with host-only editing.' },
+      { version: '2026-11-23-45', description: 'Added a Thanksgiving Control Center with live guest-arrival and dish-readiness summaries plus quick navigation.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
