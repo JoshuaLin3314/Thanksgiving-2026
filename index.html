@@ -450,8 +450,8 @@
         <article class="upcoming-card">
           <div class="upcoming-icon" aria-hidden="true">👔</div>
           <h3>Dress Code</h3>
-          <p>More information about what to wear is on the way.</p>
-          <span class="coming-soon">Coming Soon</span>
+          <p>Wear an orange, brown, or red fall-color shirt with jeans. 🍂</p>
+          <span class="coming-soon">Fall Colors</span>
         </article>
       </div>
     </section>
@@ -463,7 +463,11 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-28<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-23-29<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-23-28<small>November 23, 2026</small></span></summary>
           <div class="history-content"><ul><li>Simplified update announcements so visitors see only the latest update, even if they missed several releases.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -515,7 +519,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-28';
+    const updateVersion = '2026-11-23-29';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -526,7 +530,8 @@
       { version: '2026-11-23-25', description: 'Made live update checks run every 1.5 seconds and prevented overlapping checks.' },
       { version: '2026-11-23-26', description: 'Update announcements now queue individually, so visitors can see every update they have not viewed yet.' },
       { version: '2026-11-23-27', description: 'Added a theme switcher with Classic, Pumpkin Spice, and Cozy Evening color palettes. Your selection is saved on this device.' },
-      { version: '2026-11-23-28', description: 'Simplified update announcements: visitors now see only the latest update, even if they missed several releases.' }
+      { version: '2026-11-23-28', description: 'Simplified update announcements: visitors now see only the latest update, even if they missed several releases.' },
+      { version: '2026-11-23-29', description: 'Added the Thanksgiving dress code: an orange, brown, or red fall-color shirt with jeans.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
