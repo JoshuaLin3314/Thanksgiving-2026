@@ -1446,7 +1446,7 @@
     supabaseClient.channel('shared-event-day-mode').on('postgres_changes',{event:'*',schema:'public',table:'event_settings',filter:'id=eq.1'},payload=>renderEventDayMode(payload.new.event_day_mode)).subscribe();
     loadEventDayMode();
     function setHostSignedIn(user){
-      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingAdminChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;hostCheckinList.querySelectorAll('input[type="checkbox"]').forEach(item=>{item.disabled=!hostIsSignedIn;});
+      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;document.querySelectorAll('[data-shopping-control]').forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;hostCheckinList.querySelectorAll('input[type="checkbox"]').forEach(item=>{item.disabled=!hostIsSignedIn;});
       eventModeToggle.disabled=!hostIsSignedIn;
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
     }
@@ -1630,7 +1630,7 @@
       { version: '2026-11-24-13', description: 'Moved sweet potato casserole into the dessert section.' },
       { version: '2026-11-24-14', description: 'Fixed the update announcement loop by keeping the live version and newest published announcement in sync.' },
       { version: '2026-11-24-15', description: 'Renamed the cookbook main section to Main Dishes.' },
-      { version: '2026-11-24-16', description: 'Added a host-only shared Event Day Mode switch for all website visitors.' }
+      { version: '2026-11-24-16', description: 'Added a host-only shared Event Day Mode switch for all website visitors.' },
       { version: '2026-11-24-17', description: 'Added a public live guest check-in dashboard with host-only editing and real-time arrival updates.' },
       { version: '2026-11-24-18', description: 'Fixed Supabase initialization order so the countdown, trivia, host panel, and other page scripts can run.' },
     ];
