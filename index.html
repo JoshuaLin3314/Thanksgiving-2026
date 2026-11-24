@@ -123,6 +123,22 @@
     body[data-theme="evening"] .host-dashboard-actions button { background:#49382f; color:#f7e9d9; border-color:#71533e; }
     @media(max-width:420px) { .host-dashboard-grid { grid-template-columns:1fr 1fr; } }
 
+    .announcement-section { max-width:790px; margin:26px auto 0; }
+    .announcement-card { display:none; padding:18px 20px; border:1px solid #dfc5a8; border-radius:18px; background:linear-gradient(120deg,rgba(255,250,242,.97),rgba(244,225,201,.94)); box-shadow:0 10px 25px rgba(80,52,33,.07); }
+    .announcement-card.show { display:block; }
+    .announcement-eyebrow { color:var(--rust); font-size:.68rem; font-weight:800; letter-spacing:.17em; text-transform:uppercase; }
+    .announcement-card h2 { margin:7px 0; color:var(--brown); font:600 1.45rem 'Playfair Display',Georgia,serif; }
+    .announcement-message { margin:0; line-height:1.65; overflow-wrap:anywhere; }
+    .announcement-time { display:block; margin-top:10px; color:var(--muted); font-size:.72rem; }
+    .announcement-admin textarea { width:100%; min-height:90px; resize:vertical; border:1px solid #d7c3aa; border-radius:10px; padding:11px; background:#fffaf2; color:#493126; font:inherit; }
+    .announcement-admin-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:9px; }
+    .announcement-admin-actions button { border:0; border-radius:999px; padding:10px 15px; background:#75452f; color:#fff8ee; font:700 .8rem 'DM Sans',sans-serif; cursor:pointer; }
+    .announcement-admin-actions button.secondary { background:#eee0cd; color:#633b2b; }
+    #announcementAdminMessage { min-height:1.2em; margin:8px 0 0; color:var(--muted); font-size:.76rem; }
+    body[data-theme="evening"] .announcement-card { background:#302724; border-color:#554239; }
+    body[data-theme="evening"] .announcement-admin textarea { background:#49382f; color:#f7e9d9; border-color:#71533e; }
+    body[data-theme="evening"] .announcement-admin-actions button.secondary { background:#49382f; color:#f7e9d9; }
+
     .food-tracker-section { max-width: 790px; margin: 38px auto 0; }
     .food-tracker-card { padding: 25px; border: 1px solid #e7d5bd; border-radius: 22px; background: rgba(255,250,242,.94); box-shadow: 0 12px 30px rgba(80,52,33,.07); }
     .food-tracker-heading { text-align:center; margin-bottom:20px; }
@@ -541,6 +557,15 @@
     </section>
 
 
+    <section class="announcement-section" aria-live="polite" aria-atomic="true">
+      <article class="announcement-card" id="liveAnnouncementCard">
+        <div class="announcement-eyebrow">📣 A Message from the Hosts</div>
+        <h2>Live Announcement</h2>
+        <p class="announcement-message" id="liveAnnouncementMessage"></p>
+        <time class="announcement-time" id="liveAnnouncementTime"></time>
+      </article>
+    </section>
+
     <section class="theme-section" aria-labelledby="theme-title">
       <div class="theme-card">
         <h2 id="theme-title">Choose Your Autumn Theme 🎨</h2>
@@ -885,6 +910,18 @@
         <label class="host-checkin-person"><input type="checkbox" value="Henry"><span>Henry</span></label>
       </div>
 
+      <div class="food-admin announcement-admin">
+        <h4>Live Announcements 📣</h4>
+        <p class="food-admin-intro">Post a message for everyone viewing the invitation. It appears on their screens automatically.</p>
+        <label for="announcementInput" class="food-admin-intro">Your announcement (up to 240 characters)</label>
+        <textarea id="announcementInput" maxlength="240" placeholder="Example: Dinner is ready! Please come to the table."></textarea>
+        <div class="announcement-admin-actions">
+          <button type="button" id="publishAnnouncement">Publish Announcement ↗</button>
+          <button type="button" class="secondary" id="clearAnnouncement">Clear Announcement</button>
+        </div>
+        <p id="announcementAdminMessage" role="status" aria-live="polite"></p>
+      </div>
+
       <div class="food-admin">
         <h4>Food Status Controls 🍽️</h4>
         <p class="food-admin-intro">Update each dish as it gets prepared. Everyone viewing the website will see the changes live.</p>
@@ -994,6 +1031,36 @@
       document.getElementById('foodProgressBar').setAttribute('aria-valuenow',readyCount);
       document.getElementById('foodAllReady').classList.toggle('show',readyCount===foodStatusNames.length);
     }
+    // Host-controlled announcements are stored in Supabase and shown to every visitor live.
+    function renderLiveAnnouncement(row){
+      const card=document.getElementById('liveAnnouncementCard'),message=document.getElementById('liveAnnouncementMessage'),time=document.getElementById('liveAnnouncementTime');
+      const textValue=row&&typeof row.message==='string'?row.message.trim():'';
+      card.classList.toggle('show',!!textValue);message.textContent=textValue;
+      if(textValue&&row.updated_at){const date=new Date(row.updated_at);time.textContent='Updated '+date.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}else time.textContent='';
+      const input=document.getElementById('announcementInput');if(input&&!input.matches(':focus'))input.value=textValue;
+    }
+    async function loadLiveAnnouncement(){
+      const {data,error}=await supabaseClient.from('live_announcements').select('message,updated_at').eq('id',1).maybeSingle();
+      if(error){console.error('Could not load live announcement:',error.message);return;}renderLiveAnnouncement(data);
+    }
+    const announcementAdminMessage=document.getElementById('announcementAdminMessage');
+    document.getElementById('publishAnnouncement').addEventListener('click',async()=>{
+      if(!hostIsSignedIn)return;const input=document.getElementById('announcementInput'),message=input.value.trim(),button=document.getElementById('publishAnnouncement');
+      if(!message){announcementAdminMessage.textContent='Write a message before publishing.';return;}
+      button.disabled=true;announcementAdminMessage.textContent='Publishing…';
+      const {data,error}=await supabaseClient.from('live_announcements').update({message}).eq('id',1).select('message,updated_at').single();
+      button.disabled=false;if(error){announcementAdminMessage.textContent='Could not publish. Please sign in again and retry.';return;}
+      renderLiveAnnouncement(data);announcementAdminMessage.textContent='Announcement published! Everyone will see it now. ✓';
+    });
+    document.getElementById('clearAnnouncement').addEventListener('click',async()=>{
+      if(!hostIsSignedIn)return;const button=document.getElementById('clearAnnouncement');button.disabled=true;announcementAdminMessage.textContent='Clearing…';
+      const {data,error}=await supabaseClient.from('live_announcements').update({message:''}).eq('id',1).select('message,updated_at').single();
+      button.disabled=false;if(error){announcementAdminMessage.textContent='Could not clear the announcement. Please retry.';return;}
+      renderLiveAnnouncement(data);announcementAdminMessage.textContent='Announcement cleared.';
+    });
+    supabaseClient.channel('shared-live-announcement').on('postgres_changes',{event:'*',schema:'public',table:'live_announcements',filter:'id=eq.1'},payload=>renderLiveAnnouncement(payload.new)).subscribe();
+    loadLiveAnnouncement();
+
     async function loadFoodStatuses(){
       const {data,error}=await supabaseClient.from('food_status').select('dish,status');
       if(error){console.error('Could not load shared food statuses:',error.message);return;}
@@ -1094,7 +1161,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-45';
+    const updateVersion = '2026-11-23-46';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1122,7 +1189,8 @@
       { version: '2026-11-23-42', description: 'Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.' },
       { version: '2026-11-23-43', description: 'Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.' },
       { version: '2026-11-23-44', description: 'Connected the food tracker to Supabase so dish statuses sync live across devices, with host-only editing.' },
-      { version: '2026-11-23-45', description: 'Added a Thanksgiving Control Center with live guest-arrival and dish-readiness summaries plus quick navigation.' }
+      { version: '2026-11-23-45', description: 'Added a Thanksgiving Control Center with live guest-arrival and dish-readiness summaries plus quick navigation.' },
+      { version: '2026-11-23-46', description: 'Added host-controlled live announcements that appear for all visitors in real time.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
