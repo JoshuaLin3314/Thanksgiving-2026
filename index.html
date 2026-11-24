@@ -275,6 +275,24 @@
     .menu-area h2 { color: var(--brown); font: 600 clamp(1.8rem, 4vw, 2.35rem)/1.15 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
     .menu-note { color: #927966; font-size: .9rem; margin: 0 0 20px; }
     .menu-image { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 8px 22px rgba(80,52,33,.12); }
+    .cookbook-section { width: min(980px, calc(100% - 32px)); margin: 46px auto 0; }
+    .cookbook-cover { padding: clamp(24px, 5vw, 42px); text-align: center; color: #fff4e6; background: linear-gradient(135deg,#75452f,#9b6040 58%,#5d392b); border: 1px solid #9c7156; border-radius: 24px 24px 10px 10px; box-shadow: 0 14px 34px rgba(80,52,33,.14); }
+    .cookbook-kicker { color: #f3d6b5; font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+    .cookbook-cover h2 { margin: 10px 0 8px; font: 600 clamp(2rem,5vw,3rem)/1.1 'Playfair Display',Georgia,serif; }
+    .cookbook-cover p { margin: 0; color: #f5dfc8; }
+    .cookbook-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 18px; }
+    .cookbook-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid #dfc5a8; border-radius: 17px; background: rgba(255,250,242,.96); box-shadow: 0 9px 24px rgba(80,52,33,.07); }
+    .cookbook-art { min-height: 112px; display: grid; place-items: center; background: linear-gradient(135deg,#f1dfc9,#e8c8a6); font-size: 3.3rem; }
+    .cookbook-copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 18px; gap: 8px; }
+    .cookbook-category { color: #a16b43; font-size: .66rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .cookbook-copy h3 { margin: 0; color: var(--brown); font: 600 1.3rem/1.2 'Playfair Display',Georgia,serif; }
+    .cookbook-copy p { margin: 0 0 5px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+    .cookbook-link { display: inline-flex; align-items: center; gap: 7px; margin-top: auto; padding: 9px 13px; border-radius: 999px; background: #75452f; color: #fff7ec; font-size: .82rem; font-weight: 700; text-decoration: none; }
+    .cookbook-link:hover { background: #9b6040; }
+    .cookbook-footnote { margin: 14px 4px 0; color: var(--muted); text-align: center; font-size: .78rem; }
+    body[data-theme="evening"] .cookbook-card { background: #302724; border-color: #71533e; }
+    body[data-theme="evening"] .cookbook-art { background: linear-gradient(135deg,#49382f,#654a3a); }
+    @media (max-width: 620px) { .cookbook-grid { grid-template-columns: 1fr; } .cookbook-art { min-height: 92px; } }
     .clothing-section { max-width: 900px; margin: 42px auto 0; }
     .clothing-card { display: flex; align-items: center; gap: clamp(22px, 5vw, 48px); padding: clamp(25px, 5vw, 42px); border: 1px solid #dfc5a8; border-radius: 24px; background: linear-gradient(120deg, rgba(255,250,242,.97), rgba(244,225,201,.94)); box-shadow: 0 14px 34px rgba(80,52,33,.09); overflow: hidden; }
     .clothing-art { flex: 0 0 clamp(100px, 18vw, 165px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 28px; background: linear-gradient(145deg,#f0dfc8,#e5c5a1); font-size: clamp(4rem, 10vw, 7rem); }
@@ -631,6 +649,41 @@
 
 
 
+
+    <section class="cookbook-section" aria-labelledby="cookbookTitle">
+      <div class="cookbook-cover">
+        <div class="cookbook-kicker">The 2026 Thanksgiving Gathering</div>
+        <h2 id="cookbookTitle">Our Family Cookbook 📖</h2>
+        <p>A collection of the recipes making our Thanksgiving table special.</p>
+      </div>
+      <div class="cookbook-grid">
+        <article class="cookbook-card">
+          <div class="cookbook-art" aria-hidden="true">🧀</div>
+          <div class="cookbook-copy"><span class="cookbook-category">The cheesy favorite</span><h3>Tini's Famous Mac and Cheese</h3><p>A baked, extra-creamy mac and cheese made with three cheeses and a homemade sauce.</p><a class="cookbook-link" href="https://rouxgirl.substack.com/p/tinis-famous-mac-and-cheese" target="_blank" rel="noopener noreferrer">View Original Recipe ↗</a></div>
+        </article>
+        <article class="cookbook-card">
+          <div class="cookbook-art" aria-hidden="true">🥔</div>
+          <div class="cookbook-copy"><span class="cookbook-category">The comfort side</span><h3>Mashed Potato Gratin</h3><p>Creamy mashed potatoes topped with thinly sliced garlic-parmesan potatoes.</p><a class="cookbook-link" href="https://www.dontgobaconmyheart.co.uk/mashed-potato-gratin/" target="_blank" rel="noopener noreferrer">View Original Recipe ↗</a></div>
+        </article>
+        <article class="cookbook-card">
+          <div class="cookbook-art" aria-hidden="true">🥑</div>
+          <div class="cookbook-copy"><span class="cookbook-category">A fresh dip</span><h3>Best Ever Guacamole</h3><p>A fresh avocado dip with onion, tomato, cilantro, jalapeño, lime, garlic, and salt.</p><a class="cookbook-link" href="https://downshiftology.com/recipes/best-ever-guacamole/" target="_blank" rel="noopener noreferrer">View Original Recipe ↗</a></div>
+        </article>
+        <article class="cookbook-card">
+          <div class="cookbook-art" aria-hidden="true">🥖</div>
+          <div class="cookbook-copy"><span class="cookbook-category">Fresh from the oven</span><h3>The Best Garlic Bread You'll Ever Eat</h3><p>Toasted homemade garlic bread with fresh herbs and roasted garlic.</p><a class="cookbook-link" href="https://www.ambitiouskitchen.com/the-best-garlic-bread-recipe/" target="_blank" rel="noopener noreferrer">View Original Recipe ↗</a></div>
+        </article>
+        <article class="cookbook-card">
+          <div class="cookbook-art" aria-hidden="true">🍠</div>
+          <div class="cookbook-copy"><span class="cookbook-category">A sweet classic</span><h3>Sweet Potato Casserole with Marshmallows</h3><p>A smooth, lightly spiced sweet potato filling finished with a golden marshmallow topping.</p><a class="cookbook-link" href="https://www.allrecipes.com/recipe/13478/sweet-potato-casserole-ii/" target="_blank" rel="noopener noreferrer">View Original Recipe ↗</a></div>
+        </article>
+        <article class="cookbook-card">
+          <div class="cookbook-art" aria-hidden="true">🥕</div>
+          <div class="cookbook-copy"><span class="cookbook-category">Autumn vegetables</span><h3>Roasted Fall Vegetables</h3><p>A colorful tray of seasonal vegetables roasted with olive oil and herbs.</p><a class="cookbook-link" href="https://www.happyfoodstube.com/roasted-fall-vegetables/" target="_blank" rel="noopener noreferrer">View Original Recipe ↗</a></div>
+        </article>
+      </div>
+      <p class="cookbook-footnote">Recipe links open the original creators' websites. All recipe details and full instructions belong to their authors.</p>
+    </section>
 
     <section class="food-tracker-section" aria-labelledby="foodTrackerTitle">
       <div class="food-tracker-card">
@@ -1339,7 +1392,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-8';
+    const updateVersion = '2026-11-24-9';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1376,7 +1429,8 @@
       { version: '2026-11-24-4', description: 'Moved shopping controls into the host panel; the guest shopping view is read-only.' },
       { version: '2026-11-24-5', description: 'Restored the public shopping list with host-only editing and fixed the live update version checker.' },
       { version: '2026-11-24-7', description: 'Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.' },
-      { version: '2026-11-24-8', description: 'Put the Thanksgiving menu image directly on the page so everyone can view it while scrolling.' }
+      { version: '2026-11-24-8', description: 'Put the Thanksgiving menu image directly on the page so everyone can view it while scrolling.' },
+      { version: '2026-11-24-9', description: 'Added a family cookbook section with six linked Thanksgiving recipes.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
