@@ -132,6 +132,14 @@
     .food-all-ready.show { display:block; animation:foodPop .35s ease both; }
     @keyframes foodPop { from { opacity:0; transform:scale(.96); } to { opacity:1; transform:scale(1); } }
     .food-tracker-note { text-align:center; color:var(--muted); font-size:.72rem; margin:14px 0 0; }
+    .host-auth-panel { margin:0 0 18px; padding:15px; border:1px solid #eadcc9; border-radius:14px; background:rgba(255,255,255,.35); }
+    .host-auth-panel form { display:grid; gap:8px; }
+    .host-auth-panel label { font-size:.78rem; font-weight:700; color:var(--brown); }
+    .host-auth-panel input { width:100%; box-sizing:border-box; border:1px solid #d7c3aa; border-radius:9px; padding:11px; background:#fffaf2; color:#493126; font:inherit; }
+    .host-auth-panel button { justify-self:start; margin-top:5px; }
+    #hostAuthMessage { min-height:1.2em; margin:2px 0 0; font-size:.78rem; color:var(--accent); }
+    [data-theme="evening"] .host-auth-panel { background:rgba(255,255,255,.04); border-color:#554239; }
+    [data-theme="evening"] .host-auth-panel input { background:#49382f; color:#f7e9d9; border-color:#71533e; }
     .food-admin { margin-top:22px; padding-top:18px; border-top:1px solid #eadcc9; }
     .food-admin h4 { margin:0 0 6px; font:600 1.15rem 'Playfair Display',Georgia,serif; color:var(--brown); }
     .food-admin-intro { margin:0 0 13px; color:var(--muted); font-size:.8rem; }
@@ -567,7 +575,7 @@
 <article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
 <article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article></div>
         <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
-        <p class="food-tracker-note">Statuses are updated by the host in the hidden Host Check-In panel.</p>
+        <p class="food-tracker-note">Statuses sync live across devices as the host updates each dish.</p>
       </div>
     </section>
 
@@ -835,8 +843,8 @@
     <div class="modal">
       <div class="modal-icon" aria-hidden="true">🔒</div>
       <h3 id="hostCheckinTitle">Host Check-In 👋</h3>
-      <p class="host-checkin-intro">Your organizer checklist. Check a name when they arrive!</p>
-      <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
+      <p class="host-checkin-intro">Sign in to access your host checklist and food controls.</p><div id="hostAuthPanel" class="host-auth-panel"><form id="hostLoginForm"><label for="hostEmail">Host email</label><input id="hostEmail" type="email" autocomplete="username" required placeholder="Your email address"><label for="hostPassword">Password</label><input id="hostPassword" type="password" autocomplete="current-password" required placeholder="Your password"><button class="host-checkin-close" type="submit" id="hostLoginButton">Sign In</button><p id="hostAuthMessage" role="status" aria-live="polite"></p></form><div id="hostSignedIn" hidden><p>Signed in as <strong id="hostSignedInEmail"></strong></p><button class="host-checkin-reset" id="hostLogoutButton" type="button">Sign Out</button></div></div>
+      <div id="hostProtectedControls" hidden><div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
       <div class="host-checkin-list" id="hostCheckinList">
         <label class="host-checkin-person"><input type="checkbox" value="Joshua"><span>Joshua</span><small>Host</small></label>
         <label class="host-checkin-person"><input type="checkbox" value="Lawrence"><span>Lawrence</span></label>
@@ -848,7 +856,7 @@
 
       <div class="food-admin">
         <h4>Food Status Controls 🍽️</h4>
-        <p class="food-admin-intro">Update each dish as it gets prepared. The public tracker will reflect your changes on this device.</p>
+        <p class="food-admin-intro">Update each dish as it gets prepared. Everyone viewing the website will see the changes live.</p>
         <div class="food-admin-list" id="foodAdminList"><label class="food-admin-row"><span>🧀 Mac &amp; Cheese</span><select data-food-status="0" aria-label="Status for Mac &amp; Cheese"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
 <label class="food-admin-row"><span>🥔 Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</span><select data-food-status="1" aria-label="Status for Mashed Potato Gratin (1/2 Scalloped, ½ mashed)"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
 <label class="food-admin-row"><span>🥦 Veggie Mix</span><select data-food-status="2" aria-label="Status for Veggie Mix"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
@@ -864,6 +872,7 @@
         <button class="host-checkin-close" id="hostCheckinClose" type="button">Done</button>
       </div>
     </div>
+  </div></div>
   </div>
 
   <div class="modal-backdrop" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateDescription">
@@ -892,6 +901,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
 
     // Organizer check-in: tap the footer five times to open the panel.
@@ -930,44 +940,58 @@
       if (event.target === hostCheckinModal) hostCheckinModal.classList.remove('open');
     });
 
-    // Thanksgiving food tracker: seven exact menu dishes, controlled by the host.
-    const foodStatusStorageKey = 'thanksgivingFoodStatuses';
-    const foodStatusNames = ["Mac & Cheese","Mashed Potato Gratin (1/2 Scalloped, ½ mashed)","Veggie Mix","HEB Chicken","Garlic Bread","Chips and Guac","Marshmallow Sweet Potato Cassarole"];
-    const foodStatusOptions = ['Not Started', 'In Progress', 'Ready!'];
-    let foodStatuses = {};
-    try { foodStatuses = JSON.parse(localStorage.getItem(foodStatusStorageKey) || '{}'); } catch (error) { foodStatuses = {}; }
-    function renderFoodStatuses() {
-      const readyCount = foodStatusNames.filter((name, index) => foodStatuses[index] === 'Ready!').length;
-      foodStatusNames.forEach((name, index) => {
-        const status = foodStatusOptions.includes(foodStatuses[index]) ? foodStatuses[index] : 'Not Started';
-        const item = document.querySelector('[data-food-item="' + index + '"]');
-        const label = document.getElementById('foodStatusLabel' + index);
-        const dot = document.getElementById('foodStatusDot' + index);
-        if (item) item.dataset.status = status;
-        if (label) label.textContent = status;
-        if (dot) dot.textContent = status === 'Ready!' ? '✓' : status === 'In Progress' ? '◷' : '○';
-        const control = document.querySelector('[data-food-status="' + index + '"]');
-        if (control) control.value = status;
+    // Shared Thanksgiving food tracker powered by Supabase.
+    const foodStatusNames=["Mac & Cheese","Mashed Potato Gratin (1/2 Scalloped, ½ mashed)","Veggie Mix","HEB Chicken","Garlic Bread","Chips and Guac","Marshmallow Sweet Potato Cassarole"];
+    const foodStatusOptions=['Not Started','In Progress','Ready!'];
+    const supabaseClient=window.supabase.createClient('https://synxtczbhikhyfpzpumc.supabase.co','sb_publishable_SlRYesPwC-dPKyhb7A9g-w_RDj57rAl');
+    let foodStatuses={};let hostIsSignedIn=false;
+    const hostAuthMessage=document.getElementById('hostAuthMessage'),hostLoginForm=document.getElementById('hostLoginForm'),hostSignedIn=document.getElementById('hostSignedIn'),hostProtectedControls=document.getElementById('hostProtectedControls');
+    function renderFoodStatuses(){
+      const readyCount=foodStatusNames.filter((name,index)=>foodStatuses[index]==='Ready!').length;
+      foodStatusNames.forEach((name,index)=>{
+        const status=foodStatusOptions.includes(foodStatuses[index])?foodStatuses[index]:'Not Started';
+        const item=document.querySelector('[data-food-item="'+index+'"]'),label=document.getElementById('foodStatusLabel'+index),dot=document.getElementById('foodStatusDot'+index),control=document.querySelector('[data-food-status="'+index+'"]');
+        if(item)item.dataset.status=status;if(label)label.textContent=status;if(dot)dot.textContent=status==='Ready!'?'✓':status==='In Progress'?'◷':'○';if(control)control.value=status;
       });
-      document.getElementById('foodProgressText').textContent = readyCount + ' of ' + foodStatusNames.length + ' dishes ready';
-      document.getElementById('foodProgressPercent').textContent = Math.round(readyCount / foodStatusNames.length * 100) + '%';
-      document.getElementById('foodProgressFill').style.width = (readyCount / foodStatusNames.length * 100) + '%';
-      document.getElementById('foodProgressBar').setAttribute('aria-valuenow', readyCount);
-      document.getElementById('foodAllReady').classList.toggle('show', readyCount === foodStatusNames.length);
-      try { localStorage.setItem(foodStatusStorageKey, JSON.stringify(foodStatuses)); } catch (error) {}
+      document.getElementById('foodProgressText').textContent=readyCount+' of '+foodStatusNames.length+' dishes ready';
+      document.getElementById('foodProgressPercent').textContent=Math.round(readyCount/foodStatusNames.length*100)+'%';
+      document.getElementById('foodProgressFill').style.width=(readyCount/foodStatusNames.length*100)+'%';
+      document.getElementById('foodProgressBar').setAttribute('aria-valuenow',readyCount);
+      document.getElementById('foodAllReady').classList.toggle('show',readyCount===foodStatusNames.length);
     }
-    document.getElementById('foodAdminList').addEventListener('change', event => {
-      if (event.target.matches('[data-food-status]')) {
-        foodStatuses[event.target.dataset.foodStatus] = event.target.value;
-        renderFoodStatuses();
-      }
+    async function loadFoodStatuses(){
+      const {data,error}=await supabaseClient.from('food_status').select('dish,status');
+      if(error){console.error('Could not load shared food statuses:',error.message);return;}
+      foodStatuses={};data.forEach(row=>{const i=foodStatusNames.indexOf(row.dish);if(i!==-1&&foodStatusOptions.includes(row.status))foodStatuses[i]=row.status;});renderFoodStatuses();
+    }
+    function setHostSignedIn(user){
+      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;
+      document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
+    }
+    hostLoginForm.addEventListener('submit',async event=>{
+      event.preventDefault();const button=document.getElementById('hostLoginButton');button.disabled=true;hostAuthMessage.textContent='Signing in…';
+      const {data,error}=await supabaseClient.auth.signInWithPassword({email:document.getElementById('hostEmail').value.trim(),password:document.getElementById('hostPassword').value});
+      button.disabled=false;if(error){hostAuthMessage.textContent='Sign-in failed. Check your email and password, then try again.';return;}
+      document.getElementById('hostPassword').value='';setHostSignedIn(data.user);await loadFoodStatuses();
     });
-    document.getElementById('foodStatusReset').addEventListener('click', () => {
-      if (!window.confirm('Reset all seven food statuses?')) return;
-      foodStatuses = {};
-      renderFoodStatuses();
+    document.getElementById('hostLogoutButton').addEventListener('click',async()=>{await supabaseClient.auth.signOut();setHostSignedIn(null);});
+    supabaseClient.auth.onAuthStateChange((_event,session)=>setHostSignedIn(session?session.user:null));
+    document.getElementById('foodAdminList').addEventListener('change',async event=>{
+      if(!event.target.matches('[data-food-status]')||!hostIsSignedIn)return;
+      const i=Number(event.target.dataset.foodStatus),next=event.target.value,previous=foodStatuses[i]||'Not Started';
+      const {error}=await supabaseClient.from('food_status').update({status:next}).eq('dish',foodStatusNames[i]);
+      if(error){event.target.value=previous;hostAuthMessage.textContent='Could not save that status. Please sign in again and retry.';return;}foodStatuses[i]=next;renderFoodStatuses();
     });
-    renderFoodStatuses();
+    document.getElementById('foodStatusReset').addEventListener('click',async()=>{
+      if(!hostIsSignedIn||!window.confirm('Reset all seven food statuses?'))return;
+      const {error}=await supabaseClient.from('food_status').update({status:'Not Started'}).in('dish',foodStatusNames);
+      if(error){hostAuthMessage.textContent='Could not reset statuses. Please try again.';return;}foodStatuses={};renderFoodStatuses();
+    });
+    supabaseClient.channel('shared-food-status').on('postgres_changes',{event:'*',schema:'public',table:'food_status'},payload=>{
+      if(payload.new&&payload.new.dish){const i=foodStatusNames.indexOf(payload.new.dish);if(i!==-1)foodStatuses[i]=payload.new.status;}renderFoodStatuses();
+    }).subscribe();
+    loadFoodStatuses();supabaseClient.auth.getSession().then(({data})=>setHostSignedIn(data.session?data.session.user:null));
+    
 
     let footerTapCount = 0;
     let footerTapTimer;
@@ -1035,7 +1059,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-43';
+    const updateVersion = '2026-11-23-44';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1061,7 +1085,8 @@
       { version: '2026-11-23-40', description: 'Added a hint inviting guests to tap the falling leaves for a surprise, and restored missing update-history entries.' },
       { version: '2026-11-23-41', description: 'Simplified the update history so only the latest update is shown; all previous releases are tucked under View Previous Updates.' },
       { version: '2026-11-23-42', description: 'Changed the countdown to end at 5:00 PM; when it reaches zero, it now says Starting 👀.' },
-      { version: '2026-11-23-43', description: 'Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.' }
+      { version: '2026-11-23-43', description: 'Added a seven-dish Thanksgiving Food Status Tracker with host controls, progress tracking, and a dinner-ready celebration.' },
+      { version: '2026-11-23-44', description: 'Connected the food tracker to Supabase so dish statuses sync live across devices, with host-only editing.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
