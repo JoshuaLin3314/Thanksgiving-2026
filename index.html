@@ -782,6 +782,31 @@
       </div>
     </section>
 
+    <section class="shopping-section" aria-labelledby="shoppingTitle">
+        <div class="shopping-card">
+          <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>See what’s been collected so far — the list updates live for everyone! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
+          <div class="shopping-progress"><span id="shoppingProgressText">0 of 14 items collected</span><strong id="shoppingProgressPercent">0%</strong></div>
+          <div class="shopping-progress-bar" role="progressbar" aria-label="Shopping list progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="shoppingProgressBar"><div class="shopping-progress-fill" id="shoppingProgressFill"></div></div>
+          <div class="shopping-list" id="shoppingList">
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Corkscrew pasta"><span>Corkscrew pasta</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Mozzarella cheese"><span>Mozzarella cheese</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Evaporated milk"><span>Evaporated milk</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Heavy cream"><span>Heavy cream</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Potatoes"><span>Potatoes</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Zucchini"><span>Zucchini</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Carrot"><span>Carrot</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Chips"><span>Chips</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Avocado"><span>Avocado</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Lime"><span>Lime</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="One tomato"><span>One tomato</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Sweet potato"><span>Sweet potato</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Whipped cream"><span>Whipped cream</span></label>
+            <label class="shopping-item"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="H-E-B already made chicken"><span>H-E-B already made chicken</span></label>
+          </div>
+          
+        </div>
+      </section>
+
 
     <section class="trivia-section" aria-labelledby="trivia-title">
       <div class="trivia-heading">
@@ -814,8 +839,8 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-24-6<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-24-7<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Moved the shopping list below the schedule and placed its editing controls in the host panel while keeping the live list visible to everyone.</li></ul></div>
         </details>
 
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
@@ -944,30 +969,7 @@
             </div>
     </section>
 
-      <section class="shopping-section" aria-labelledby="shoppingTitle">
-        <div class="shopping-card">
-          <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>Guests can view shopping progress. Hosts can check items off and changes sync live! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
-          <div class="shopping-progress"><span id="shoppingProgressText">0 of 14 items collected</span><strong id="shoppingProgressPercent">0%</strong></div>
-          <div class="shopping-progress-bar" role="progressbar" aria-label="Shopping list progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="shoppingProgressBar"><div class="shopping-progress-fill" id="shoppingProgressFill"></div></div>
-          <div class="shopping-list" id="shoppingList">
-            <label class="shopping-item"><input type="checkbox" disabled value="Corkscrew pasta"><span>Corkscrew pasta</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Mozzarella cheese"><span>Mozzarella cheese</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Evaporated milk"><span>Evaporated milk</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Heavy cream"><span>Heavy cream</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Potatoes"><span>Potatoes</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Zucchini"><span>Zucchini</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Carrot"><span>Carrot</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Chips"><span>Chips</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Avocado"><span>Avocado</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Lime"><span>Lime</span></label>
-            <label class="shopping-item"><input type="checkbox" value="One tomato"><span>One tomato</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Sweet potato"><span>Sweet potato</span></label>
-            <label class="shopping-item"><input type="checkbox" value="Whipped cream"><span>Whipped cream</span></label>
-            <label class="shopping-item"><input type="checkbox" value="H-E-B already made chicken"><span>H-E-B already made chicken</span></label>
-          </div>
-          <button class="shopping-reset" id="shoppingReset" type="button" hidden>Reset checklist ↻</button>
-        </div>
-      </section>
+      
 
     <footer>Made with <span>♥</span> and a whole lot of gratitude.</footer>
   </main>
@@ -994,12 +996,12 @@
 
       <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
       <div class="host-checkin-list" id="hostCheckinList">
-        <label class="host-checkin-person"><input type="checkbox" value="Joshua"><span>Joshua</span><small>Host</small></label>
-        <label class="host-checkin-person"><input type="checkbox" value="Lawrence"><span>Lawrence</span></label>
-        <label class="host-checkin-person"><input type="checkbox" value="Alice"><span>Alice</span></label>
-        <label class="host-checkin-person"><input type="checkbox" value="Alina"><span>Alina</span></label>
-        <label class="host-checkin-person"><input type="checkbox" value="Alsa"><span>Alsa</span></label>
-        <label class="host-checkin-person"><input type="checkbox" value="Henry"><span>Henry</span></label>
+        <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Joshua"><span>Joshua</span><small>Host</small></label>
+        <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Lawrence"><span>Lawrence</span></label>
+        <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Alice"><span>Alice</span></label>
+        <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Alina"><span>Alina</span></label>
+        <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Alsa"><span>Alsa</span></label>
+        <label class="host-checkin-person"><input type="checkbox" disabled aria-hidden="true" tabindex="-1" value="Henry"><span>Henry</span></label>
       </div>
 
       <div class="food-admin announcement-admin">
@@ -1012,6 +1014,28 @@
           <button type="button" class="secondary" id="clearAnnouncement">Clear Announcement</button>
         </div>
         <p id="announcementAdminMessage" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="food-admin">
+        <h4>Shopping List Controls 🛒</h4>
+        <p class="food-admin-intro">Check items off as they’re collected. Everyone will see the progress update live.</p>
+        <div class="food-admin-list" id="shoppingAdminList">
+          <label class="food-admin-row"><span>Corkscrew pasta</span><input type="checkbox" data-shopping-control="Corkscrew pasta" aria-label="Collected: Corkscrew pasta"></label>
+          <label class="food-admin-row"><span>Mozzarella cheese</span><input type="checkbox" data-shopping-control="Mozzarella cheese" aria-label="Collected: Mozzarella cheese"></label>
+          <label class="food-admin-row"><span>Evaporated milk</span><input type="checkbox" data-shopping-control="Evaporated milk" aria-label="Collected: Evaporated milk"></label>
+          <label class="food-admin-row"><span>Heavy cream</span><input type="checkbox" data-shopping-control="Heavy cream" aria-label="Collected: Heavy cream"></label>
+          <label class="food-admin-row"><span>Potatoes</span><input type="checkbox" data-shopping-control="Potatoes" aria-label="Collected: Potatoes"></label>
+          <label class="food-admin-row"><span>Zucchini</span><input type="checkbox" data-shopping-control="Zucchini" aria-label="Collected: Zucchini"></label>
+          <label class="food-admin-row"><span>Carrot</span><input type="checkbox" data-shopping-control="Carrot" aria-label="Collected: Carrot"></label>
+          <label class="food-admin-row"><span>Chips</span><input type="checkbox" data-shopping-control="Chips" aria-label="Collected: Chips"></label>
+          <label class="food-admin-row"><span>Avocado</span><input type="checkbox" data-shopping-control="Avocado" aria-label="Collected: Avocado"></label>
+          <label class="food-admin-row"><span>Lime</span><input type="checkbox" data-shopping-control="Lime" aria-label="Collected: Lime"></label>
+          <label class="food-admin-row"><span>One tomato</span><input type="checkbox" data-shopping-control="One tomato" aria-label="Collected: One tomato"></label>
+          <label class="food-admin-row"><span>Sweet potato</span><input type="checkbox" data-shopping-control="Sweet potato" aria-label="Collected: Sweet potato"></label>
+          <label class="food-admin-row"><span>Whipped cream</span><input type="checkbox" data-shopping-control="Whipped cream" aria-label="Collected: Whipped cream"></label>
+          <label class="food-admin-row"><span>H-E-B already made chicken</span><input type="checkbox" data-shopping-control="H-E-B already made chicken" aria-label="Collected: H-E-B already made chicken"></label>
+        </div>
+        <button class="host-checkin-reset" id="shoppingReset" type="button" style="margin-top:12px">Reset Shopping List ↻</button>
       </div>
 
       <div class="food-admin">
@@ -1208,7 +1232,7 @@
       foodStatuses={};data.forEach(row=>{const i=foodStatusNames.indexOf(row.dish);if(i!==-1&&foodStatusOptions.includes(row.status))foodStatuses[i]=row.status;});renderFoodStatuses();
     }
     function setHostSignedIn(user){
-      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;document.querySelector('.shopping-heading p').textContent=hostIsSignedIn?'You can check items off as you shop. Changes sync live across all devices! ☁️':'Guests can view shopping progress. Hosts can check items off and changes sync live! ☁️';
+      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;shoppingAdminChecks.forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
     }
     hostLoginForm.addEventListener('submit',async event=>{
@@ -1369,7 +1393,7 @@
       { version: '2026-11-24-3', description: 'Added a secure host password reset option for account sign-in recovery.' },
       { version: '2026-11-24-4', description: 'Moved shopping controls into the host panel; the guest shopping view is read-only.' },
       { version: '2026-11-24-5', description: 'Restored the public shopping list with host-only editing and fixed the live update version checker.' },
-      { version: '2026-11-24-6', description: 'Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.' }
+      { version: '2026-11-24-7', description: 'Moved all earlier website updates into the Previous Updates list, leaving only the newest update visible.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -1381,6 +1405,7 @@
     // Shared Thanksgiving shopping checklist powered by Supabase Realtime.
     const shoppingList = document.getElementById('shoppingList');
     const shoppingChecks = [...shoppingList.querySelectorAll('input[type="checkbox"]')];
+    const shoppingAdminChecks = [...document.querySelectorAll('[data-shopping-control]')];
     const shoppingProgressText = document.getElementById('shoppingProgressText');
     const shoppingProgressPercent = document.getElementById('shoppingProgressPercent');
     const shoppingProgressBar = document.getElementById('shoppingProgressBar');
@@ -1399,6 +1424,8 @@
       rows.forEach(row => {
         const checkbox = shoppingChecks.find(item => item.value === row.item_name);
         if (checkbox) checkbox.checked = !!row.is_checked;
+        const adminCheckbox = shoppingAdminChecks.find(item => item.dataset.shoppingControl === row.item_name);
+        if (adminCheckbox) adminCheckbox.checked = !!row.is_checked;
       });
       updateShoppingProgress();
     }
@@ -1430,9 +1457,11 @@
       }
       shoppingSyncStatus.textContent = '☁️ Saved — everyone’s list is up to date!';
     }
-    shoppingChecks.forEach(item => item.addEventListener('change', () => {
+    shoppingAdminChecks.forEach(item => item.addEventListener('change', () => {
+      const displayCheckbox = shoppingChecks.find(display => display.value === item.dataset.shoppingControl);
+      if (displayCheckbox) displayCheckbox.checked = item.checked;
       updateShoppingProgress();
-      saveShoppingItem(item);
+      saveShoppingItem({ value: item.dataset.shoppingControl, checked: item.checked, disabled: false });
     }));
     document.getElementById('shoppingReset').addEventListener('click', async () => {
       const button = document.getElementById('shoppingReset');
@@ -1447,6 +1476,7 @@
         return;
       }
       shoppingChecks.forEach(item => { item.checked = false; });
+      shoppingAdminChecks.forEach(item => { item.checked = false; });
       updateShoppingProgress();
       shoppingSyncStatus.textContent = 'Shared checklist reset on every device.';
     });
