@@ -568,8 +568,8 @@
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-23-34<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Fixed the update history so only the newest release appears in the main section; all older releases are kept under Previous Update Logs.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-23-35<small>November 23, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Restored the simple, generic new-update popup without displaying version numbers or update descriptions.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">Click here for previous update logs ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -639,7 +639,7 @@
   <div class="modal-backdrop" id="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateTitle" aria-describedby="updateDescription">
     <div class="modal">
       <div class="modal-icon" aria-hidden="true">✨</div>
-      <h3 id="updateTitle">The Creator Just Added a New Update!</h3>
+      <h3 id="updateTitle">The Creator Has Made a New Update!</h3>
       <p id="updateDescription">There's something new on the website! Please refresh the website using the button below to see the latest version.</p>
       <button class="close" id="refreshUpdate" type="button">Refresh Website ↻</button>
     </div>
@@ -665,7 +665,7 @@
   <script>
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-23-34';
+    const updateVersion = '2026-11-23-35';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -682,7 +682,8 @@
       { version: '2026-11-23-31', description: 'Improved automatic update detection so pages that are already open can show new announcements as soon as a newer release is published.' },
       { version: '2026-11-23-32', description: 'Added a Thanksgiving Day timeline with all eight scheduled activities, from check-in to the 10 PM party ending.' },
       { version: '2026-11-23-33', description: 'Strengthened automatic update announcements with checks when the tab becomes visible, regains focus, is restored, or reconnects.' },
-      { version: '2026-11-23-34', description: 'Fixed the update history so only the newest release appears in the main section; older releases are moved under Previous Update Logs.' }
+      { version: '2026-11-23-34', description: 'Fixed the update history so only the newest release appears in the main section; older releases are moved under Previous Update Logs.' },
+      { version: '2026-11-23-35', description: 'Restored the simple, generic new-update popup without displaying version numbers or update descriptions.' }
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -798,8 +799,8 @@
       if (!force && latest.version === seenVersion) return false;
 
       pendingUpdateVersion = latest.version;
-      document.getElementById('updateTitle').textContent = 'New Update: ' + latest.version;
-      document.getElementById('updateDescription').textContent = latest.description;
+      document.getElementById('updateTitle').textContent = 'The Creator Has Made a New Update!';
+      document.getElementById('updateDescription').textContent = 'Please refresh the website to see the latest version!';
       refreshUpdate.textContent = 'Refresh Website ↻';
       testingModal.classList.remove('open');
       updateModal.classList.add('open');
