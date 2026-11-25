@@ -813,7 +813,18 @@ body[data-theme="evening"] footer { border-color: #554239; }
 }
 
   
-/* These live event panels remain visible before the gathering, but are clearly marked as day-of features. */
+  .event-mode-admin{margin:16px 0;padding:17px;border:1px solid rgba(166,91,48,.28);border-radius:16px;background:rgba(166,91,48,.09)}
+  .event-mode-admin h4{margin:0 0 6px}.event-mode-admin p{margin:0 0 12px;color:var(--muted,#76685b);font-size:.92rem}
+  .event-mode-toggle{border:0;border-radius:999px;padding:12px 18px;background:#76503b;color:#fff;font:inherit;font-weight:700;cursor:pointer}.event-mode-toggle:disabled{opacity:.55;cursor:wait}
+  .event-mode-banner{display:none;margin:22px auto;max-width:1000px;padding:clamp(20px,4vw,34px);border-radius:22px;color:#fff8ed;background:linear-gradient(130deg,#75452f,#a85e38 60%,#c17a45);box-shadow:0 14px 35px rgba(91,53,34,.18);text-align:center}
+  body.event-day-mode .event-mode-banner{display:block}.event-mode-banner .event-mode-kicker{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:800}
+  .event-mode-banner h2{margin:8px 0;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem)}.event-mode-banner p{margin:6px 0}
+  .event-mode-next{display:inline-block;margin-top:12px;padding:10px 16px;border:1px solid rgba(255,255,255,.35);border-radius:14px;background:rgba(255,255,255,.13);font-weight:700}
+  body.event-day-mode .coming-that-day{filter:none;opacity:1}
+  body.event-day-mode .coming-that-day::before{display:none}
+  body.event-day-mode .live-status-section{filter:none;opacity:1}
+
+  /* These live event panels remain visible before the gathering, but are clearly marked as day-of features. */
 .coming-that-day {
   position: relative;
   filter: grayscale(.82);
@@ -921,6 +932,13 @@ body[data-theme="evening"] .coming-that-day::before {
           <button class="theme-choice" type="button" data-theme-choice="evening" aria-pressed="false"><span class="theme-swatch evening" aria-hidden="true"></span>Cozy Evening</button>
         </div>
       </div>
+    </section>
+
+    <section class="event-mode-banner" id="eventModeBanner" aria-live="polite">
+      <div class="event-mode-kicker">🍂 Thanksgiving Event Day Mode</div>
+      <h2 id="eventModeHeadline">Thanksgiving Celebration Complete! 🧡</h2>
+      <p id="eventModeSubline">Thank you for celebrating with us!</p>
+      <div class="event-mode-next" id="eventModeNext">Completed! See you next year!</div>
     </section>
 
     <section class="countdown-section" aria-label="Countdown to Thanksgiving">
@@ -1141,7 +1159,7 @@ body[data-theme="evening"] .coming-that-day::before {
 
     <section class="shopping-section" aria-labelledby="shoppingTitle">
         <div class="shopping-card">
-          <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p>See what’s been collected so far — the list updates live for everyone! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
+          <div class="shopping-heading"><h2 id="shoppingTitle">Thanksgiving Shopping List 🛒</h2><p id="shoppingIntro">See what’s been collected so far — the list updates live for everyone! ☁️</p><p id="shoppingSyncStatus" class="shopping-sync-status" role="status" aria-live="polite">Connecting to shared list…</p></div>
           <div class="shopping-progress"><span id="shoppingProgressText">0 of 14 items collected</span><strong id="shoppingProgressPercent">0%</strong></div>
           <div class="shopping-progress-bar" role="progressbar" aria-label="Shopping list progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="shoppingProgressBar"><div class="shopping-progress-fill" id="shoppingProgressFill"></div></div>
           <div class="shopping-list" id="shoppingList">
@@ -1254,7 +1272,11 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-24-7<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-25-1<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Restored host-controlled Event Day Mode. Activating it unlocks the Thanksgiving Day features, changes the countdown and shopping list to a “Completed — see you next year!” message, and moves both sections above the update history.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-24-7<small>November 24, 2026</small></span></summary>
           <div class="history-content"><ul><li>Moved the shopping list below the schedule and placed its editing controls in the host panel while keeping the live list visible to everyone.</li></ul></div>
         </details>
 
@@ -1415,6 +1437,13 @@ body[data-theme="evening"] .coming-that-day::before {
           <button type="button" id="dashboardGoGuests">Guest Check-In ↓</button>
           <button type="button" id="dashboardGoFood">Food Controls ↓</button>
         </div>
+      </section>
+
+      <section class="event-mode-admin" aria-labelledby="eventModeAdminTitle">
+        <h4 id="eventModeAdminTitle">Event Day Mode 🎉</h4>
+        <p>Turn on the Thanksgiving completed layout for everyone visiting the website. You can switch it off again if needed.</p>
+        <button type="button" class="event-mode-toggle" id="eventModeToggle" disabled>Loading event mode…</button>
+        <p id="eventModeAdminMessage" role="status" aria-live="polite" style="margin-top:10px">Only signed-in hosts can change this setting.</p>
       </section>
 
       <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
@@ -1751,8 +1780,83 @@ body[data-theme="evening"] .coming-that-day::before {
       if(error){console.error('Could not load shared food statuses:',error.message);return;}
       foodStatuses={};data.forEach(row=>{const i=foodStatusNames.indexOf(row.dish);if(i!==-1&&foodStatusOptions.includes(row.status))foodStatuses[i]=row.status;});renderFoodStatuses();
     }
+    // Shared host-controlled Event Day Mode: one setting applies to every visitor.
+    let eventDayModeEnabled=false;
+    const eventModeToggle=document.getElementById('eventModeToggle');
+    const eventModeAdminMessage=document.getElementById('eventModeAdminMessage');
+    const countdownSection=document.querySelector('.countdown-section');
+    const shoppingSection=document.querySelector('.shopping-section');
+    const historySection=document.querySelector('.history-section');
+    const countdownHome=document.createComment('countdown original position');
+    const shoppingHome=document.createComment('shopping list original position');
+    countdownSection.parentNode.insertBefore(countdownHome,countdownSection);
+    shoppingSection.parentNode.insertBefore(shoppingHome,shoppingSection);
+
+    function applyEventModeCompletion(enabled){
+      const countdownCard=document.querySelector('.countdown-card');
+      const countdownGrid=document.getElementById('countdown');
+      const countdownEyebrow=countdownCard.querySelector('.countdown-eyebrow');
+      const countdownHeading=countdownCard.querySelector('h2');
+      const countdownSubtitle=countdownCard.querySelector('.countdown-subtitle');
+      const countdownMessageEl=document.getElementById('countdownMessage');
+      countdownEyebrow.textContent=enabled?'The 2026 gathering has wrapped up':'The celebration is getting closer';
+      countdownHeading.textContent=enabled?'Thanksgiving Complete! 🧡':'Countdown to 5:00 PM 👀';
+      countdownSubtitle.textContent=enabled?'See you next year!':"We're saving you a seat!";
+      countdownGrid.hidden=enabled;
+      countdownMessageEl.textContent=enabled?'Completed! See you next year!':'Friday, November 27, 2026 at 5:00 PM';
+      countdownCard.dataset.countdownPhase=enabled?'complete':'counting';
+
+      document.getElementById('shoppingTitle').textContent=enabled?'Shopping List Complete! 🛒':'Thanksgiving Shopping List 🛒';
+      document.getElementById('shoppingIntro').textContent=enabled?'Completed! See you next year! 🧡':'See what’s been collected so far — the list updates live for everyone! ☁️';
+      document.querySelector('.shopping-progress').hidden=enabled;
+      document.querySelector('.shopping-progress-bar').hidden=enabled;
+      document.getElementById('shoppingSyncStatus').hidden=enabled;
+      document.getElementById('shoppingList').hidden=enabled;
+    }
+
+    function renderEventDayMode(enabled){
+      eventDayModeEnabled=!!enabled;
+      document.body.classList.toggle('event-day-mode',eventDayModeEnabled);
+      eventModeToggle.textContent=eventDayModeEnabled?'Turn Event Day Mode Off':'Activate Event Day Mode';
+      eventModeAdminMessage.textContent=eventDayModeEnabled?'Event Day Mode is LIVE for all visitors. ✓':'Event Day Mode is currently off for everyone.';
+      document.querySelectorAll('.coming-that-day').forEach(section=>{
+        if(eventDayModeEnabled){section.classList.remove('coming-that-day');section.removeAttribute('aria-disabled');}
+        else{section.classList.add('coming-that-day');section.setAttribute('aria-disabled','true');}
+      });
+      if(eventDayModeEnabled){
+        historySection.parentNode.insertBefore(countdownSection,historySection);
+        historySection.parentNode.insertBefore(shoppingSection,historySection);
+      }else{
+        countdownHome.parentNode.insertBefore(countdownSection,countdownHome.nextSibling);
+        shoppingHome.parentNode.insertBefore(shoppingSection,shoppingHome.nextSibling);
+      }
+      applyEventModeCompletion(eventDayModeEnabled);
+      updateLiveStatus();
+    }
+
+    async function loadEventDayMode(){
+      const {data,error}=await supabaseClient.from('event_settings').select('event_day_mode').eq('id',1).maybeSingle();
+      if(error){eventModeAdminMessage.textContent='Could not load the shared setting. Refresh and try again.';eventModeToggle.disabled=!hostIsSignedIn;return;}
+      renderEventDayMode(data?.event_day_mode??false);
+      eventModeToggle.disabled=!hostIsSignedIn;
+    }
+    eventModeToggle.addEventListener('click',async()=>{
+      if(!hostIsSignedIn)return;
+      eventModeToggle.disabled=true;
+      eventModeAdminMessage.textContent='Saving shared setting…';
+      const next=!eventDayModeEnabled;
+      const {data,error}=await supabaseClient.from('event_settings').update({event_day_mode:next,updated_at:new Date().toISOString()}).eq('id',1).select('event_day_mode').single();
+      eventModeToggle.disabled=!hostIsSignedIn;
+      if(error){eventModeAdminMessage.textContent='Could not save Event Day Mode. Please try again.';return;}
+      renderEventDayMode(data.event_day_mode);
+    });
+    supabaseClient.channel('shared-event-day-mode')
+      .on('postgres_changes',{event:'*',schema:'public',table:'event_settings',filter:'id=eq.1'},payload=>renderEventDayMode(payload.new.event_day_mode))
+      .subscribe();
+    loadEventDayMode();
+
     function setHostSignedIn(user){
-      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;document.querySelectorAll('[data-shopping-control]').forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;hostCheckinList.querySelectorAll('input[type="checkbox"]').forEach(item=>{item.disabled=!hostIsSignedIn;});
+      hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;document.querySelectorAll('[data-shopping-control]').forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;hostCheckinList.querySelectorAll('input[type="checkbox"]').forEach(item=>{item.disabled=!hostIsSignedIn;});eventModeToggle.disabled=!hostIsSignedIn;
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
     }
     hostLoginForm.addEventListener('submit',async event=>{
@@ -1877,9 +1981,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-25';
+    const updateVersion = '2026-11-25-1';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-1', description: 'Restored Event Day Mode with a completed Thanksgiving layout, unlocked day-of features, and moved the countdown and shopping list above the update history.' },
       { version: '2026-11-24-25', description: 'Restored the creator update popup so visitors are notified when a new website version is published.' },
       { version: '2026-11-24-24', description: 'Fixed the creator update popup repeating after refresh by consistently selecting the newest release.' },
       { version: '2026-11-24-23', description: 'Polished the host dashboard, live schedule transitions, completion states, theme consistency, and accessibility details.' },
@@ -2099,6 +2204,7 @@ body[data-theme="evening"] .coming-that-day::before {
     const thanksgivingDate = new Date(2026, 10, 27, 17, 0, 0);
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
+      if(eventDayModeEnabled){applyEventModeCompletion(true);return;}
       const remaining = thanksgivingDate.getTime() - Date.now();
       const countdownCard = document.querySelector('.countdown-card');
       if (countdownCard) {
@@ -2175,6 +2281,11 @@ body[data-theme="evening"] .coming-that-day::before {
       { time: 22 * 60, title: 'Thanksgiving Celebration Complete! 🧡', message: 'Thanks for celebrating together!' }
     ];
     function updateLiveStatus() {
+      if(eventDayModeEnabled){
+        liveStatusTitle.textContent='Thanksgiving Celebration Complete! 🧡';
+        liveStatusMessage.textContent='Thanks for celebrating together. See you next year!';
+        return;
+      }
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       if (today < eventDayStart) {
