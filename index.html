@@ -369,6 +369,12 @@
     .menu-hint-open { display:none; }
     .menu-item-details[open] .menu-hint-closed { display:none; }
     .menu-item-details[open] .menu-hint-open { display:inline; }
+    .alcohol-policy-section { width:min(900px,calc(100% - 32px)); margin:14px auto 0; }
+    .alcohol-policy-note { padding:15px 18px; border:1px solid #d9c4a6; border-left:4px solid #b87942; border-radius:13px; background:linear-gradient(110deg,rgba(234,212,167,.42),rgba(255,250,242,.92)); }
+    .alcohol-policy-label { display:block; margin-bottom:5px; color:var(--rust); font-size:.65rem; font-weight:800; letter-spacing:.16em; }
+    .alcohol-policy-note p { margin:0; color:var(--ink); font-size:.84rem; line-height:1.6; }
+    body[data-theme="evening"] .alcohol-policy-note { background:#302724; border-color:#71533e; border-left-color:#e7b66d; }
+    body[data-theme="pumpkin"] .alcohol-policy-note { background:linear-gradient(110deg,#f1ddc1,#fff3df); border-color:#e6c49b; border-left-color:#d36b32; }
     .menu-detail-expanded { margin:0 0 8px 42px; padding:0 12px 13px 0; animation:menuReveal .18s ease-out; }
     .menu-detail-expanded > p { margin:0; color:var(--muted); font-size:.85rem; line-height:1.55; }
     .menu-recipe-link { display:inline-block; margin-top:9px; color:var(--rust); font-size:.78rem; font-weight:700; text-decoration:none; }
@@ -1006,14 +1012,18 @@ body[data-theme="evening"] .coming-that-day::before {
           <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Cranberry Ginger Brew</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A sparkling cranberry refreshment with a bright touch of warming ginger.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
           <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Pomegranate Juice</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Refreshing pomegranate juice with a naturally sweet-tart character.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
           <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Yuzu Coconut Water</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Light coconut water paired with the delicate, citrusy brightness of yuzu.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
-          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Alcoholic Drinks</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Please bring your own alcoholic beverages.</p><span class="menu-byob">BRING YOUR OWN</span><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+
         </div>
         <div class="menu-footer">Made to be enjoyed together · Happy Thanksgiving</div>
       </div>
     </section>
 
-
-
+    <section class="alcohol-policy-section" aria-label="Event alcohol policy">
+      <div class="alcohol-policy-note">
+        <span class="alcohol-policy-label">IMPORTANT EVENT NOTE</span>
+        <p>Alcohol will not be provided at this event. Please check with the hosts about the event's alcohol policy.</p>
+      </div>
+    </section>
 
     <section class="cookbook-section" aria-labelledby="cookbookTitle">
       <div class="cookbook-cover">
@@ -1288,11 +1298,15 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-3<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Made every Thanksgiving menu dish expandable, with a fuller description, helpful cookbook links where available, and a reminder to ask the hosts about ingredient or allergy details.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-25-4<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-25-3<small>November 25, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Made every Thanksgiving menu dish expandable, with a fuller description, helpful cookbook links where available, and a reminder to ask the hosts about ingredient or allergy details.</li></ul></div>
+        </details>
 <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-25-2<small>November 25, 2026</small></span></summary>
           <div class="history-content"><ul><li>Kept the countdown and shopping list visible in Event Day Mode, with a muted, greyed-out appearance and a “Completed! See you next year!” message.</li></ul></div>
@@ -2009,9 +2023,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-3';
+    const updateVersion = '2026-11-25-4';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-4', description: 'Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.' },
       { version: '2026-11-25-3', description: 'Made Thanksgiving menu dishes expandable, with details and cookbook links where available.' },
       { version: '2026-11-25-2', description: 'Kept the countdown and shopping list visible in Event Day Mode, with a muted completed appearance and a see-you-next-year message.' },
       { version: '2026-11-25-1', description: 'Restored Event Day Mode with a completed Thanksgiving layout, unlocked day-of features, and moved the countdown and shopping list above the update history.' },
