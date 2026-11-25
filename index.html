@@ -496,6 +496,37 @@
     .upcoming-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
     .upcoming-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
     .seating-section { max-width: 900px; margin: 38px auto 0; }
+    .floorplan-card{padding:clamp(14px,3vw,26px)}.floorplan{width:min(100%,620px);margin:0 auto;border:7px solid #46352b;border-radius:5px;background:#f1e6d6;box-shadow:0 8px 22px rgba(64,43,30,.12);overflow:hidden}
+    .floorplan-dining{height:330px;position:relative;background:repeating-linear-gradient(0deg,rgba(124,83,48,.07) 0 1px,transparent 1px 27px),linear-gradient(135deg,#d9b98f,#cda77a);border-bottom:10px solid #49372c}
+    .floorplan-dining:before{content:"";position:absolute;inset:0;border:10px solid #49372c;border-bottom:0;pointer-events:none}
+    .floorplan-room-label{position:absolute;top:15px;left:50%;transform:translateX(-50%);color:#553b2b;font:600 1rem 'Playfair Display',Georgia,serif}
+    .floorplan-table-area{position:absolute;width:min(76%,360px);aspect-ratio:1;left:50%;top:52%;transform:translate(-50%,-50%)}
+    .floorplan-round-table{position:absolute;width:48%;height:48%;left:26%;top:26%;border-radius:50%;border:7px solid #e6c79e;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.25);cursor:pointer;font:600 .82rem 'DM Sans',sans-serif;text-align:center;z-index:2}
+    .floorplan-round-table span{font-size:1.4rem}.floorplan-round-table:focus-visible{outline:4px solid #d36b32;outline-offset:4px}
+    .floorplan-seat-name{position:absolute;z-index:1;padding:5px 9px;border:1px solid #dfc5a8;border-radius:999px;background:#fffaf2;color:#543a2a;box-shadow:0 3px 8px rgba(80,52,33,.12);font-size:.76rem;font-weight:700;white-space:nowrap}
+    .seat-top{left:50%;top:0;transform:translateX(-50%)}.seat-upper-right{right:0;top:22%}.seat-lower-right{right:0;bottom:22%}.seat-bottom{left:50%;bottom:0;transform:translateX(-50%)}.seat-lower-left{left:0;bottom:22%}.seat-upper-left{left:0;top:22%}
+    .floorplan-opening{position:relative;height:18px;margin-top:-10px;margin-left:0;width:44px;background:#f1e6d6;border-left:7px solid #49372c;border-right:7px solid #49372c;z-index:3}
+    .floorplan-kitchen{min-height:760px;position:relative;background:repeating-linear-gradient(0deg,rgba(110,93,76,.06) 0 1px,transparent 1px 38px),repeating-linear-gradient(90deg,rgba(110,93,76,.05) 0 1px,transparent 1px 38px),#eee8df;border-left:7px solid #49372c;border-right:7px solid #49372c}
+    .floorplan-checkin{position:absolute;left:5%;top:24px;width:112px;min-height:72px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;border:2px solid #8b6546;border-radius:7px;background:linear-gradient(135deg,#b88c62,#936544);color:#fff7ec;box-shadow:0 5px 10px rgba(70,45,27,.18);text-align:center}
+    .floorplan-checkin span{font-size:1.1rem}.floorplan-checkin strong{font-size:.82rem}.floorplan-checkin small{font-size:.68rem;opacity:.9}
+    .floorplan-walkway{position:absolute;left:6%;top:155px;bottom:90px;width:25%;border-left:2px dashed #9c704a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#79563c;text-align:center}
+    .walkway-arrow{font-size:2.4rem;line-height:1}.floorplan-walkway strong{font:600 1rem 'Playfair Display',Georgia,serif}.floorplan-walkway small{font-size:.68rem}
+    .floorplan-island{position:absolute;right:19%;top:27%;width:31%;height:42%;min-height:265px;border:3px solid #b7afa4;border-radius:8px;background:linear-gradient(135deg,#fffdf8,#ded8cf);box-shadow:0 7px 15px rgba(65,52,40,.18);display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:14px 8px;color:#55483e;text-align:center}
+    .floorplan-island strong{font:600 .9rem 'Playfair Display',Georgia,serif}.floorplan-island small{font-size:.68rem}
+    .cooktop{width:74%;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px;border:2px solid #615b56;border-radius:5px;background:#77716b}.cooktop i{display:block;width:24px;height:24px;max-width:100%;margin:auto;border:3px solid #393633;border-radius:50%;background:radial-gradient(circle,#373431 0 45%,#aaa39a 48% 65%,#4d4944 68%)}
+    .floorplan-right-counter{position:absolute;top:0;right:0;bottom:0;width:13%;border-left:3px solid #9d8974;background:linear-gradient(90deg,#d6c7b5,#bba58d);display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;color:#594738;font-size:.65rem;writing-mode:vertical-rl}
+    .counter-sink,.counter-storage{padding:12px 5px;border:1px solid #998875;border-radius:4px;background:#eee8df}
+    .floorplan-backdoor{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:130px;height:43px;border:5px solid #49372c;border-bottom:0;background:#d4c4b1;display:grid;place-items:center;color:#513d2d;font-weight:700;font-size:.8rem}
+    .floorplan-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:9px 18px;margin:17px auto 0;color:var(--muted);font-size:.73rem}.floorplan-legend span{display:inline-flex;align-items:center;gap:6px}.floorplan-legend i{width:15px;height:12px;border:1px solid #a58a70;display:inline-block;border-radius:2px}.legend-wood{background:#d2ae83}.legend-tile{background:#eee8df}.legend-marble{background:#fff}.legend-path{border:0!important;border-top:2px dashed #9c704a!important}.legend-opening{background:#f1e6d6}
+    .seating-details-dialog{width:min(92vw,520px);max-width:520px;padding:0;border:1px solid #d8c2a7;border-radius:22px;background:#fffaf2;color:#4b3325;box-shadow:0 24px 70px rgba(25,15,10,.38)}.seating-details-dialog::backdrop{background:rgba(24,17,13,.62);backdrop-filter:blur(3px)}.seating-dialog-inner{position:relative;padding:28px 22px 22px;text-align:center}
+    .seating-dialog-close{position:absolute;top:10px;right:12px;width:38px;height:38px;border:1px solid #e5d3bd;border-radius:50%;background:#f4e8d8;color:#633b2b;font-size:1.5rem;cursor:pointer}
+    .seating-dialog-eyebrow{color:#9a6845;font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.seating-dialog-inner h3{margin:8px 0;font:600 1.55rem 'Playfair Display',Georgia,serif}.seating-dialog-intro{color:#826c5c;font-size:.85rem}
+    .seating-detail-table{width:min(100%,350px);aspect-ratio:1;margin:18px auto;position:relative}.detail-round-table{position:absolute;width:46%;height:46%;left:27%;top:27%;border:7px solid #e6c79e;border-radius:50%;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.2)}.detail-round-table span{font-size:1.5rem}.detail-round-table strong{font:600 .85rem 'Playfair Display',Georgia,serif}
+    .detail-seat{position:absolute;min-width:76px;padding:7px 9px;border:1px solid #dfc5a8;border-radius:12px;background:#fff;box-shadow:0 3px 8px rgba(80,52,33,.1);display:flex;flex-direction:column;gap:2px;color:#4b3325}.detail-seat span{font-size:.62rem;color:#98785d}.detail-seat strong{font-size:.8rem}.detail-seat-top{top:0;left:50%;transform:translateX(-50%)}.detail-seat-upper-right{top:24%;right:0}.detail-seat-lower-right{bottom:24%;right:0}.detail-seat-bottom{bottom:0;left:50%;transform:translateX(-50%)}.detail-seat-lower-left{bottom:24%;left:0}.detail-seat-upper-left{top:24%;left:0}
+    .seating-dialog-footnote{margin:4px 0 0;color:#98785d;font-size:.75rem}
+    body[data-theme="evening"] .floorplan-card{background:#302724;border-color:#554239}body[data-theme="evening"] .floorplan-round-table,body[data-theme="evening"] .detail-round-table{border-color:#8d6548}body[data-theme="evening"] .seating-details-dialog{background:#302724;color:#f7e9d9;border-color:#71533e}body[data-theme="evening"] .seating-dialog-close{background:#49382f;color:#f7e9d9;border-color:#71533e}body[data-theme="evening"] .seating-dialog-inner h3,body[data-theme="evening"] .detail-seat{color:#f7e9d9}body[data-theme="evening"] .detail-seat{background:#49382f;border-color:#71533e}body[data-theme="evening"] .detail-seat span,body[data-theme="evening"] .seating-dialog-intro,body[data-theme="evening"] .seating-dialog-footnote{color:#c3aa98}
+    @media(max-width:620px){.floorplan-dining{height:280px}.floorplan-kitchen{min-height:650px}.floorplan-island{min-height:225px;right:18%;width:34%}.floorplan-checkin{width:92px;left:4%}.floorplan-walkway{left:5%;width:27%}.floorplan-seat-name{font-size:.65rem;padding:4px 6px}.floorplan-table-area{width:88%}.floorplan-right-counter{width:12%}.seating-dialog-inner{padding:28px 12px 18px}.detail-seat{min-width:65px;padding:6px 5px}.detail-seat strong{font-size:.7rem}}
+
     .seating-heading { text-align: center; margin-bottom: 18px; }
     .seating-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
     .seating-heading p { color: var(--muted); margin: 0; font-size: .92rem; }
@@ -1071,22 +1102,57 @@ body[data-theme="evening"] .coming-that-day::before {
 
     <section class="seating-section" aria-labelledby="seating-title">
       <div class="seating-heading">
-        <h2 id="seating-title">Thanksgiving Seating Chart 🪑</h2>
-        <p>Find your place at the table!</p>
+        <h2 id="seating-title">Thanksgiving Floor Plan 🍂</h2>
+        <p>Explore the dining room, kitchen, and seating arrangement. Tap the dining table for everyone's exact seat.</p>
       </div>
-      <div class="seating-card">
-        <div class="round-table-wrap" role="img" aria-label="Top-down view of one round table with six guest seats arranged evenly around it">
-          <div class="round-table"><div><strong>Thanksgiving</strong><span>🍂 Gather Around 🍂</span></div></div>
-          <div class="seat seat-1"><span class="seat-icon">🪑</span><strong>Lawrence</strong></div>
-          <div class="seat seat-2"><span class="seat-icon">🪑</span><strong>Alice</strong></div>
-          <div class="seat seat-3"><span class="seat-icon">🪑</span><strong>Alina</strong></div>
-          <div class="seat seat-4"><span class="seat-icon">🪑</span><strong>Joshua</strong></div>
-          <div class="seat seat-5"><span class="seat-icon">🪑</span><strong>Alsa</strong></div>
-          <div class="seat seat-6"><span class="seat-icon">🪑</span><strong>Henry</strong></div>
-          <div class="kitchen-label">To Kitchen</div>
+      <div class="seating-card floorplan-card">
+        <div class="floorplan" role="img" aria-label="Top-down floor plan. The dining room is enclosed by walls with only a small two-foot opening at the lower left into the long kitchen. A check-in table is set on the left near the kitchen entrance. The kitchen has a clear walkway along the left, a cooking island with a stovetop toward the right, counters along the right wall, and a back door at the bottom.">
+          <div class="floorplan-dining">
+            <span class="floorplan-room-label">Dining Room</span>
+            <div class="floorplan-table-area">
+              <span class="floorplan-seat-name seat-top">Lawrence</span>
+              <span class="floorplan-seat-name seat-upper-right">Alice</span>
+              <span class="floorplan-seat-name seat-lower-right">Alina</span>
+              <span class="floorplan-seat-name seat-bottom">Joshua</span>
+              <span class="floorplan-seat-name seat-lower-left">Alsa</span>
+              <span class="floorplan-seat-name seat-upper-left">Henry</span>
+              <button class="floorplan-round-table" id="openSeatingDetails" type="button" aria-haspopup="dialog" aria-controls="seatingDetailsDialog" aria-label="Open detailed six-person seating arrangement">
+                <span>🍂</span><strong>Tap for<br>seating details</strong>
+              </button>
+            </div>
+          </div>
+          <div class="floorplan-opening" aria-label="Small two-foot opening on the left"></div>
+          <div class="floorplan-kitchen">
+            <div class="floorplan-checkin"><span>🍁</span><strong>Check-In</strong><small>Table set</small></div>
+            <div class="floorplan-walkway"><span class="walkway-arrow">↑</span><strong>Main<br>Walkway</strong><small>Keep clear</small></div>
+            <div class="floorplan-island"><strong>Cooking Island</strong><div class="cooktop" aria-label="Stovetop with four burners"><i></i><i></i><i></i><i></i></div><small>Stovetop · Prep space</small></div>
+            <div class="floorplan-right-counter"><span>Kitchen counter</span><span class="counter-sink">▤ Sink</span><span class="counter-storage">Storage</span></div>
+            <div class="floorplan-backdoor"><span>Back Door</span></div>
+          </div>
         </div>
-        <p class="seating-note">Six seats · One round table · More details coming soon</p>
+        <div class="floorplan-legend" aria-label="Floor plan legend">
+          <span><i class="legend-wood"></i> Dining room</span><span><i class="legend-tile"></i> Kitchen</span><span><i class="legend-marble"></i> Cooking island</span><span><i class="legend-path"></i> Clear walkway</span><span><i class="legend-opening"></i> 2-foot opening</span>
+        </div>
+        <p class="seating-note">One round table · Six assigned seats · Small left-side opening to the kitchen</p>
       </div>
+      <dialog class="seating-details-dialog" id="seatingDetailsDialog" aria-labelledby="seatingDetailsTitle">
+        <div class="seating-dialog-inner">
+          <button class="seating-dialog-close" id="closeSeatingDetails" type="button" aria-label="Close seating details">×</button>
+          <div class="seating-dialog-eyebrow">Thanksgiving 2026 · Dining Room</div>
+          <h3 id="seatingDetailsTitle">The Six-Person Table 🪑</h3>
+          <p class="seating-dialog-intro">Here's the exact seating arrangement, starting at the top and moving clockwise.</p>
+          <div class="seating-detail-table">
+            <div class="detail-seat detail-seat-top"><span>12 o'clock</span><strong>Lawrence</strong></div>
+            <div class="detail-seat detail-seat-upper-right"><span>2 o'clock</span><strong>Alice</strong></div>
+            <div class="detail-seat detail-seat-lower-right"><span>4 o'clock</span><strong>Alina</strong></div>
+            <div class="detail-seat detail-seat-bottom"><span>6 o'clock</span><strong>Joshua</strong></div>
+            <div class="detail-seat detail-seat-lower-left"><span>8 o'clock</span><strong>Alsa</strong></div>
+            <div class="detail-seat detail-seat-upper-left"><span>10 o'clock</span><strong>Henry</strong></div>
+            <div class="detail-round-table"><span>🍂</span><strong>Thanksgiving</strong></div>
+          </div>
+          <p class="seating-dialog-footnote">Six chairs · One circular dining table</p>
+        </div>
+      </dialog>
     </section>
 
     <section class="attendees-section" aria-labelledby="attendees-title">
@@ -1298,11 +1364,15 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-4<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-25-5<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added an interactive Thanksgiving floor plan with the enclosed dining room, small left-side opening, check-in table, kitchen walkway, cooking island, back door, and clickable six-seat seating details.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-25-4<small>November 25, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-25-3<small>November 25, 2026</small></span></summary>
           <div class="history-content"><ul><li>Made every Thanksgiving menu dish expandable, with a fuller description, helpful cookbook links where available, and a reminder to ask the hosts about ingredient or allergy details.</li></ul></div>
@@ -2021,11 +2091,30 @@ body[data-theme="evening"] .coming-that-day::before {
       leaf.addEventListener('keydown', revealLeaf);
     });
 
+    // Interactive dining-table seating details.
+    const seatingDetailsDialog = document.getElementById('seatingDetailsDialog');
+    const openSeatingDetails = document.getElementById('openSeatingDetails');
+    const closeSeatingDetails = document.getElementById('closeSeatingDetails');
+    if (seatingDetailsDialog && openSeatingDetails && closeSeatingDetails) {
+      openSeatingDetails.addEventListener('click', () => {
+        if (typeof seatingDetailsDialog.showModal === 'function') seatingDetailsDialog.showModal();
+        else seatingDetailsDialog.setAttribute('open', '');
+      });
+      closeSeatingDetails.addEventListener('click', () => {
+        if (typeof seatingDetailsDialog.close === 'function') seatingDetailsDialog.close();
+        else seatingDetailsDialog.removeAttribute('open');
+      });
+      seatingDetailsDialog.addEventListener('click', event => {
+        if (event.target === seatingDetailsDialog && typeof seatingDetailsDialog.close === 'function') seatingDetailsDialog.close();
+      });
+    }
+
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-4';
+    const updateVersion = '2026-11-25-5';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-5', description: 'Added a detailed interactive Thanksgiving floor plan with the six-person seating chart, check-in table, kitchen island, walkway, and back-door layout.' },
       { version: '2026-11-25-4', description: 'Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.' },
       { version: '2026-11-25-3', description: 'Made Thanksgiving menu dishes expandable, with details and cookbook links where available.' },
       { version: '2026-11-25-2', description: 'Kept the countdown and shopping list visible in Event Day Mode, with a muted completed appearance and a see-you-next-year message.' },
