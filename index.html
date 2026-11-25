@@ -629,6 +629,41 @@
     .event-mode-next{display:inline-block;margin-top:12px;padding:10px 16px;border:1px solid rgba(255,255,255,.35);border-radius:14px;background:rgba(255,255,255,.13);font-weight:700}
     body.event-day-mode .live-status-section{display:none}body.event-day-mode .schedule-item.event-current{outline:3px solid #b86b3e;outline-offset:3px;border-radius:14px;background:rgba(184,107,62,.13)}body.event-day-mode .schedule-item.event-complete{opacity:.58}
 
+
+    /* Final small-screen polish: comfortable spacing, readable cards, and touch-friendly controls. */
+    @media (max-width: 620px) {
+      .page { width: calc(100% - 24px); padding-top: 18px; padding-bottom: 30px; }
+      .schedule-section, .shopping-section, .live-status-section { margin-top: 30px; }
+      .schedule-heading { padding: 0 5px; }
+      .schedule-live-status { font-size: .82rem; line-height: 1.45; }
+      .schedule-card, .shopping-card, .trivia-card { border-radius: 17px; }
+      .schedule-item { min-width: 0; }
+      .schedule-detail { min-width: 0; overflow-wrap: anywhere; }
+      .schedule-detail h3 { line-height: 1.3; }
+      .schedule-detail p { line-height: 1.45; }
+      .schedule-state-label { font-size: .58rem; }
+      .host-checkin-modal .modal { width: calc(100% - 24px); max-height: 84dvh; padding: 20px 16px; }
+      .host-checkin-person { min-height: 48px; padding: 11px 12px; }
+      .host-checkin-person input { width: 22px; height: 22px; }
+      .host-checkin-actions button, .event-mode-toggle { min-height: 44px; }
+      .trivia-choice, .trivia-next { min-height: 46px; }
+      .live-announcement-card, .event-mode-banner { overflow-wrap: anywhere; }
+      img, video, iframe { max-width: 100%; }
+    }
+    @media (max-width: 420px) {
+      .page { width: calc(100% - 18px); }
+      .schedule-card { padding: 13px 8px; }
+      .schedule-item { grid-template-columns: 55px 30px minmax(0,1fr); gap: 7px; min-height: 78px; }
+      .schedule-item:not(:last-child)::after { left: 68px; }
+      .schedule-time { font-size: .91rem; }
+      .schedule-marker { width: 30px; height: 30px; font-size: .9rem; }
+      .schedule-detail { padding: 10px 9px; }
+      .schedule-detail h3 { font-size: .9rem; }
+      .schedule-detail p { font-size: .72rem; }
+      .schedule-state-label { padding: 3px 6px; }
+      .host-checkin-actions { flex-direction: column; }
+      .host-checkin-actions button { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -1669,7 +1704,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-20';
+    const updateVersion = '2026-11-24-21';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1718,6 +1753,7 @@
       { version: '2026-11-24-18', description: 'Fixed Supabase initialization order so the countdown, trivia, host panel, and other page scripts can run.' },
       { version: '2026-11-24-19', description: 'Refined the Thanksgiving menu into an elegant vertical restaurant-style layout and corrected its Cozy Evening theme colors.' },
       { version: '2026-11-24-20', description: 'Added live schedule highlighting for the current and upcoming Thanksgiving activities, with mobile-friendly status labels.' },
+      { version: '2026-11-24-21', description: 'Polished the mobile layout with tighter spacing, readable schedule cards, and larger touch-friendly controls.' },
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
