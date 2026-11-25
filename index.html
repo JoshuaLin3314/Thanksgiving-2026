@@ -1877,9 +1877,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-24';
+    const updateVersion = '2026-11-24-25';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-24-25', description: 'Restored the creator update popup so visitors are notified when a new website version is published.' },
       { version: '2026-11-24-24', description: 'Fixed the creator update popup repeating after refresh by consistently selecting the newest release.' },
       { version: '2026-11-24-23', description: 'Polished the host dashboard, live schedule transitions, completion states, theme consistency, and accessibility details.' },
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
