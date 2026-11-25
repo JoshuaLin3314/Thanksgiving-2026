@@ -1314,6 +1314,7 @@ body[data-theme="evening"] .coming-that-day::before {
           <li>Italian seasoning</li>
           <li>Vanilla extract</li>
           <li>The oven</li>
+          <li>Hole puncher</li>
         </ul>
       </div>
     </section>
@@ -1364,11 +1365,15 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-5<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Added an interactive Thanksgiving floor plan with the enclosed dining room, small left-side opening, check-in table, kitchen walkway, cooking island, back door, and clickable six-seat seating details.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-25-6<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a hole puncher to Joshua’s bring list.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-25-5<small>November 25, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added an interactive Thanksgiving floor plan with the enclosed dining room, small left-side opening, check-in table, kitchen walkway, cooking island, back door, and clickable six-seat seating details.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-25-4<small>November 25, 2026</small></span></summary>
           <div class="history-content"><ul><li>Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.</li></ul></div>
@@ -2111,9 +2116,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-5';
+    const updateVersion = '2026-11-25-6';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-6', description: 'Added a hole puncher to Joshua’s bring list.' },
       { version: '2026-11-25-5', description: 'Added a detailed interactive Thanksgiving floor plan with the six-person seating chart, check-in table, kitchen island, walkway, and back-door layout.' },
       { version: '2026-11-25-4', description: 'Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.' },
       { version: '2026-11-25-3', description: 'Made Thanksgiving menu dishes expandable, with details and cookbook links where available.' },
