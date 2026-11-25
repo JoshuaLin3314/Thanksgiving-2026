@@ -360,6 +360,25 @@
     .menu-course-heading span { color:#b17b4d; font:700 .72rem 'DM Sans',sans-serif; letter-spacing:.12em; }
     .menu-course-heading h3 { margin:0; color:var(--brown); font:600 1.25rem 'Playfair Display',Georgia,serif; }
     .menu-item { display:grid; grid-template-columns:22px minmax(0,1fr); gap:12px; align-items:start; padding:13px 0 13px 8px; position:relative; }
+    .menu-item-details { display:block; padding:0; }
+    .menu-item-details > summary { list-style:none; display:grid; grid-template-columns:22px minmax(0,1fr) auto; gap:12px; align-items:center; padding:13px 0 13px 8px; cursor:pointer; border-radius:10px; }
+    .menu-item-details > summary::-webkit-details-marker { display:none; }
+    .menu-item-details > summary:focus-visible { outline:2px solid var(--rust); outline-offset:3px; }
+    .menu-item-name { color:var(--brown); font:600 1.08rem 'Playfair Display',Georgia,serif; }
+    .menu-tap-hint { color:var(--rust); font-size:.72rem; font-weight:700; white-space:nowrap; }
+    .menu-hint-open { display:none; }
+    .menu-item-details[open] .menu-hint-closed { display:none; }
+    .menu-item-details[open] .menu-hint-open { display:inline; }
+    .menu-detail-expanded { margin:0 0 8px 42px; padding:0 12px 13px 0; animation:menuReveal .18s ease-out; }
+    .menu-detail-expanded > p { margin:0; color:var(--muted); font-size:.85rem; line-height:1.55; }
+    .menu-recipe-link { display:inline-block; margin-top:9px; color:var(--rust); font-size:.78rem; font-weight:700; text-decoration:none; }
+    .menu-recipe-link:hover { text-decoration:underline; }
+    .menu-detail-expanded .menu-host-note { margin-top:8px; color:var(--muted); font-size:.73rem; font-style:italic; }
+    .menu-item-details[open] { background:rgba(214,154,77,.07); border-radius:12px; }
+    @keyframes menuReveal { from { opacity:0; transform:translateY(-3px); } to { opacity:1; transform:translateY(0); } }
+    @media (max-width:540px) { .menu-item-details > summary { gap:9px; } .menu-tap-hint { font-size:.66rem; } .menu-detail-expanded { margin-left:39px; } }
+    body[data-theme="evening"] .menu-item-details[open] { background:rgba(232,189,150,.07); }
+
     .menu-item:not(:last-child)::after { content:''; position:absolute; left:18px; top:34px; bottom:-2px; width:1px; background:linear-gradient(#d8b58e,#eadcc9); }
     .menu-marker { z-index:1; display:grid; place-items:center; width:22px; height:22px; color:#b17b4d; font-size:.72rem; background:#f7ecdd; border:1px solid #e8d2b7; border-radius:50%; }
     .menu-detail h4 { margin:0 0 4px; color:var(--brown); font:600 1.08rem 'Playfair Display',Georgia,serif; }
@@ -968,26 +987,26 @@ body[data-theme="evening"] .coming-that-day::before {
       <div class="menu-card">
         <div class="menu-course">
           <div class="menu-course-heading"><span>01</span><h3>To Begin · Appetizers</h3></div>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Garlic Bread</h4><p>Warm, golden bread with fragrant garlic and a rich, buttery finish.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Chips &amp; Guac</h4><p>Crisp tortilla chips accompanied by freshly prepared, creamy guacamole.</p></div></article>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Garlic Bread</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Warm, golden bread with fragrant garlic and a rich, buttery finish.</p><a class="menu-recipe-link" href="https://www.ambitiouskitchen.com/the-best-garlic-bread-recipe/" target="_blank" rel="noopener noreferrer">Open family cookbook recipe ↗</a><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Chips &amp; Guac</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Crisp tortilla chips accompanied by freshly prepared, creamy guacamole.</p><a class="menu-recipe-link" href="https://downshiftology.com/recipes/best-ever-guacamole/" target="_blank" rel="noopener noreferrer">Open family cookbook recipe ↗</a><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
         </div>
         <div class="menu-course">
           <div class="menu-course-heading"><span>02</span><h3>From the Kitchen · Main</h3></div>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Mac &amp; Cheese</h4><p>A comforting classic of tender pasta enveloped in a creamy, savory cheese sauce.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Potato Gratin</h4><p>Delicate layers of potato baked until tender in a luscious, golden finish.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Veggie Mix</h4><p>A colorful medley of vegetables, bringing a fresh and savory note to the table.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Roasted Chicken</h4><p>Tender chicken, oven-roasted to a beautifully golden finish with savory flavor.</p></div></article>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Mac &amp; Cheese</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A comforting classic of tender pasta enveloped in a creamy, savory cheese sauce.</p><a class="menu-recipe-link" href="https://rouxgirl.substack.com/p/tinis-famous-mac-and-cheese" target="_blank" rel="noopener noreferrer">Open family cookbook recipe ↗</a><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Potato Gratin</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Delicate layers of potato baked until tender in a luscious, golden finish.</p><a class="menu-recipe-link" href="https://www.dontgobaconmyheart.co.uk/mashed-potato-gratin/" target="_blank" rel="noopener noreferrer">Open family cookbook recipe ↗</a><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Veggie Mix</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A colorful medley of vegetables, bringing a fresh and savory note to the table.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Roasted Chicken</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Tender chicken, oven-roasted to a beautifully golden finish with savory flavor.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
         </div>
         <div class="menu-course">
           <div class="menu-course-heading"><span>03</span><h3>A Sweet Finish · Dessert</h3></div>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Sweet Potato Casserole</h4><p>A smooth, gently spiced sweet potato casserole finished with a sweet, golden topping.</p></div></article>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Sweet Potato Casserole</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A smooth, gently spiced sweet potato casserole finished with a sweet, golden topping.</p><a class="menu-recipe-link" href="https://www.allrecipes.com/recipe/13478/sweet-potato-casserole-ii/" target="_blank" rel="noopener noreferrer">Open family cookbook recipe ↗</a><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
         </div>
         <div class="menu-course">
           <div class="menu-course-heading"><span>04</span><h3>To Sip · Drinks</h3></div>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Cranberry Ginger Brew</h4><p>A sparkling cranberry refreshment with a bright touch of warming ginger.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Pomegranate Juice</h4><p>Refreshing pomegranate juice with a naturally sweet-tart character.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Yuzu Coconut Water</h4><p>Light coconut water paired with the delicate, citrusy brightness of yuzu.</p></div></article>
-          <article class="menu-item"><div class="menu-marker">✦</div><div class="menu-detail"><h4>Alcoholic Drinks</h4><p>Please bring your own alcoholic beverages.</p><span class="menu-byob">BRING YOUR OWN</span></div></article>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Cranberry Ginger Brew</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A sparkling cranberry refreshment with a bright touch of warming ginger.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Pomegranate Juice</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Refreshing pomegranate juice with a naturally sweet-tart character.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Yuzu Coconut Water</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Light coconut water paired with the delicate, citrusy brightness of yuzu.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Alcoholic Drinks</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>Please bring your own alcoholic beverages.</p><span class="menu-byob">BRING YOUR OWN</span><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
         </div>
         <div class="menu-footer">Made to be enjoyed together · Happy Thanksgiving</div>
       </div>
@@ -1269,7 +1288,13 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-2<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-25-3<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Made every Thanksgiving menu dish expandable, with a fuller description, helpful cookbook links where available, and a reminder to ask the hosts about ingredient or allergy details.</li></ul></div>
+        </details>
+        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
+        <div class="history-previous" id="previousUpdates" hidden>
+<details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-25-2<small>November 25, 2026</small></span></summary>
           <div class="history-content"><ul><li>Kept the countdown and shopping list visible in Event Day Mode, with a muted, greyed-out appearance and a “Completed! See you next year!” message.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -1281,8 +1306,6 @@ body[data-theme="evening"] .coming-that-day::before {
           <div class="history-content"><ul><li>Moved the shopping list below the schedule and placed its editing controls in the host panel while keeping the live list visible to everyone.</li></ul></div>
         </details>
 
-        <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
-        <div class="history-previous" id="previousUpdates" hidden>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-24-18<small>November 24, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Fixed Supabase initialization order so the countdown, trivia, host panel, and other page scripts can run.</li></ul></div>
@@ -1986,9 +2009,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-2';
+    const updateVersion = '2026-11-25-3';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-3', description: 'Made Thanksgiving menu dishes expandable, with details and cookbook links where available.' },
       { version: '2026-11-25-2', description: 'Kept the countdown and shopping list visible in Event Day Mode, with a muted completed appearance and a see-you-next-year message.' },
       { version: '2026-11-25-1', description: 'Restored Event Day Mode with a completed Thanksgiving layout, unlocked day-of features, and moved the countdown and shopping list above the update history.' },
       { version: '2026-11-24-25', description: 'Restored the creator update popup so visitors are notified when a new website version is published.' },
