@@ -823,6 +823,7 @@ body[data-theme="evening"] footer { border-color: #554239; }
   body.event-day-mode .coming-that-day{filter:none;opacity:1}
   body.event-day-mode .coming-that-day::before{display:none}
   body.event-day-mode .live-status-section{filter:none;opacity:1}
+  .countdown-card .countdown-grid[hidden],.shopping-card [hidden]{display:none!important}
 
   /* These live event panels remain visible before the gathering, but are clearly marked as day-of features. */
 .coming-that-day {
@@ -1819,7 +1820,7 @@ body[data-theme="evening"] .coming-that-day::before {
       document.body.classList.toggle('event-day-mode',eventDayModeEnabled);
       eventModeToggle.textContent=eventDayModeEnabled?'Turn Event Day Mode Off':'Activate Event Day Mode';
       eventModeAdminMessage.textContent=eventDayModeEnabled?'Event Day Mode is LIVE for all visitors. ✓':'Event Day Mode is currently off for everyone.';
-      document.querySelectorAll('.coming-that-day').forEach(section=>{
+      document.querySelectorAll('.food-tracker-section, .public-checkin-section, .live-status-section').forEach(section=>{
         if(eventDayModeEnabled){section.classList.remove('coming-that-day');section.removeAttribute('aria-disabled');}
         else{section.classList.add('coming-that-day');section.setAttribute('aria-disabled','true');}
       });
