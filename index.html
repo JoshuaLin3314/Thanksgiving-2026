@@ -1260,13 +1260,7 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
     </section>
 
-    <section class="live-status-section coming-that-day" aria-disabled="true" aria-labelledby="live-status-title">
-      <div class="live-status-card">
-        <div class="live-status-eyebrow">Happening on Thanksgiving Day</div>
-        <h2 id="live-status-title">Getting Ready for Thanksgiving 🍂</h2>
-        <p id="live-status-message" aria-live="off">The celebration is getting closer!</p>
-      </div>
-    </section>
+
 
     <section class="history-section" aria-labelledby="history-title">
       <div class="history-heading">
@@ -2293,6 +2287,7 @@ body[data-theme="evening"] .coming-that-day::before {
       { time: 22 * 60, title: 'Thanksgiving Celebration Complete! 🧡', message: 'Thanks for celebrating together!' }
     ];
     function updateLiveStatus() {
+      if (!liveStatusTitle || !liveStatusMessage) return;
       if(eventDayModeEnabled){
         liveStatusTitle.textContent='Thanksgiving Celebration Complete! 🧡';
         liveStatusMessage.textContent='Thanks for celebrating together. See you next year!';
