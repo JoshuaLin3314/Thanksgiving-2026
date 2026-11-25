@@ -688,6 +688,99 @@
       .host-checkin-actions { flex-direction: column; }
       .host-checkin-actions button { width: 100%; }
     }
+  
+/* Thanksgiving finish pass: consistent surfaces, responsive rhythm, and gentle feedback. */
+:root {
+  --surface-radius: 22px;
+  --surface-shadow: 0 12px 30px rgba(60,38,25,.075);
+  --surface-border: rgba(150,112,77,.22);
+}
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button, .theme-choice, .shopping-item, .trivia-choice, .seat, .attendee-tab,
+.history-previous-button, .menu-button, .host-dashboard-actions button {
+  touch-action: manipulation;
+}
+button:not(:disabled), a, [role="button"] { transition: transform .18s ease, box-shadow .2s ease, filter .2s ease; }
+button:not(:disabled):active, .theme-choice:active, .shopping-item:active, .trivia-choice:active {
+  transform: translateY(1px) scale(.985);
+}
+button:disabled { cursor: not-allowed; opacity: .58; }
+a { text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+.page > section, .page > .announcement-section, .page > .theme-section { scroll-margin-top: 20px; }
+.detail, .countdown-card, .seating-card, .attendee-tab, .upcoming-card,
+.history-entry, .theme-card, .shopping-card, .public-checkin-card,
+.trivia-card, .food-tracker-card, .clothing-card, .schedule-card,
+.bring-note-card, .live-status-card {
+  border-radius: var(--surface-radius);
+}
+.detail, .countdown-card, .seating-card, .attendee-tab, .upcoming-card,
+.history-entry, .shopping-card, .public-checkin-card, .trivia-card,
+.food-tracker-card, .clothing-card, .schedule-card, .bring-note-card,
+.live-status-card {
+  box-shadow: var(--surface-shadow);
+}
+.hero, .modal, .announcement-card, .host-dashboard, .theme-card,
+.shopping-card, .public-checkin-card, .trivia-card {
+  overflow-wrap: anywhere;
+}
+.hero { box-shadow: 0 24px 60px rgba(45,27,19,.2); }
+.theme-choice:focus-visible, button:focus-visible, a:focus-visible,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+.shopping-item:hover, .attendee-tab:hover, .upcoming-card:hover,
+.history-entry:hover, .detail:hover {
+  border-color: color-mix(in srgb, var(--gold) 48%, transparent);
+}
+.schedule-item .schedule-detail { min-width: 0; }
+.schedule-item .schedule-detail h3, .menu-detail, .detail-value,
+.public-checkin-copy strong { overflow-wrap: anywhere; }
+.shopping-progress-fill, .public-checkin-progress span, .food-tracker-fill {
+  will-change: width;
+}
+.announcement-card, .modal, .modal-backdrop {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+footer { text-wrap: pretty; }
+img { max-width: 100%; }
+@media (max-width: 700px) {
+  .page { width: min(100% - 26px, 1080px); padding-top: 18px; }
+  .hero { min-height: 290px; padding: 44px 19px; border-radius: 23px; }
+  .intro { margin: 32px auto 25px; padding-inline: 5px; }
+  .detail, .countdown-card, .seating-card, .shopping-card,
+  .public-checkin-card, .trivia-card, .food-tracker-card,
+  .clothing-card, .schedule-card, .bring-note-card { border-radius: 18px; }
+  .theme-card { padding: 18px 13px; }
+  .theme-options { gap: 8px; }
+  .theme-choice { padding: 9px 12px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .detail:hover, .upcoming-card:hover, .attendee-tab:hover,
+  .shopping-item:hover, .trivia-choice:hover {
+    transform: translateY(-2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+/* Reveal is opt-in at runtime, so content remains visible if scripts are unavailable. */
+.polish-reveal { opacity: 1; transform: none; }
+.polish-reveal.polish-pending { opacity: 0; transform: translateY(12px); }
+.polish-reveal.polish-visible { opacity: 1; transform: translateY(0); transition: opacity .55s ease, transform .55s cubic-bezier(.2,.7,.2,1); }
+@media (prefers-reduced-motion: reduce) {
+  .polish-reveal.polish-pending { opacity: 1; transform: none; }
+  .polish-reveal.polish-visible { transition: none; }
+}
+
   </style>
 </head>
 <body>
@@ -1350,7 +1443,33 @@
       </form>
     </div>
   </section>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    // Small experience refinements. These never gate or hide essential page content.
+    (function initializeFinishPolish() {
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealTargets = document.querySelectorAll(
+        '.intro, .details, .theme-section, .countdown-section, .menu-area, .cookbook-section, .food-tracker-section, .seating-section, .attendees-section, .public-checkin-section, .clothing-section, .live-status-section, .schedule-section, .shopping-section, .trivia-section, .bring-note-section, .history-section'
+      );
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.remove('polish-pending');
+            entry.target.classList.add('polish-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
+        revealTargets.forEach((element, index) => {
+          if (index === 0) return;
+          element.classList.add('polish-reveal', 'polish-pending');
+          revealObserver.observe(element);
+        });
+      }
+      // Give external fonts a graceful fallback instead of delaying first paint.
+      document.documentElement.classList.add('finish-polish-ready');
+    })();
+
+  </script>
   <script>
     const supabaseClient=window.supabase.createClient('https://synxtczbhikhyfpzpumc.supabase.co','sb_publishable_SlRYesPwC-dPKyhb7A9g-w_RDj57rAl');
 
