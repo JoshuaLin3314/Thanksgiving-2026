@@ -1687,9 +1687,10 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-23';
-    // Keep every published release here in chronological order.
+    const updateVersion = '2026-11-24-24';
+    // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-24-24', description: 'Fixed the creator update popup repeating after refresh by consistently selecting the newest release.' },
       { version: '2026-11-24-23', description: 'Polished the host dashboard, live schedule transitions, completion states, theme consistency, and accessibility details.' },
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
       { version: '2026-11-23-21', description: 'Added a button so visitors can open previous website update logs.' },
@@ -2041,7 +2042,7 @@
 
     function openLatestAnnouncement(announcements, force = false) {
       if (!Array.isArray(announcements) || announcements.length === 0) return false;
-      const latest = announcements[announcements.length - 1];
+      const latest = announcements[0];
       let seenVersion = '';
       try { seenVersion = localStorage.getItem(updateStorageKey) || ''; } catch (error) {}
       if (!force && latest.version === seenVersion) return false;
@@ -2080,7 +2081,7 @@
         const publishedVersions = [...listMatch[1].matchAll(/version:\s*'([^']+)'/g)].map(match => match[1]);
         if (publishedVersions.length === 0) return;
         const publishedAnnouncements = publishedVersions.map(version => ({ version }));
-        const latestPublished = publishedAnnouncements[publishedAnnouncements.length - 1];
+        const latestPublished = publishedAnnouncements[0];
         // If this already-open page is older than the published page, announce the release
         // even if this browser previously acknowledged an earlier version.
         if (latestPublished && latestPublished.version !== updateVersion) {
