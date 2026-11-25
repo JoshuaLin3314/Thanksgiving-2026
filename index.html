@@ -781,6 +781,37 @@ img { max-width: 100%; }
   .polish-reveal.polish-visible { transition: none; }
 }
 
+  
+/* Finishing details for the countdown and page close. */
+.countdown-card { position: relative; isolation: isolate; }
+.countdown-card::after {
+  content: '✦';
+  position: absolute;
+  right: 18px; top: 12px;
+  color: color-mix(in srgb, var(--gold) 38%, transparent);
+  font-size: 1.25rem;
+  pointer-events: none;
+  transition: transform .5s ease, opacity .5s ease;
+}
+.countdown-card[data-countdown-phase="tomorrow"]::after { transform: rotate(45deg) scale(1.2); opacity: .9; }
+.countdown-card[data-countdown-phase="today"]::after { transform: rotate(90deg) scale(1.35); opacity: 1; }
+footer {
+  width: min(790px, 100%);
+  margin: 38px auto 0;
+  padding: 20px 14px 8px;
+  border-top: 1px solid var(--surface-border);
+  color: var(--muted);
+  text-align: center;
+  font-size: .82rem;
+  line-height: 1.7;
+  letter-spacing: .015em;
+}
+footer span { color: var(--rust); display: inline-block; padding-inline: 2px; }
+body[data-theme="evening"] footer { border-color: #554239; }
+@media (max-width: 560px) {
+  footer { margin-top: 28px; padding-top: 17px; }
+}
+
   </style>
 </head>
 <body>
@@ -2028,6 +2059,11 @@ img { max-width: 100%; }
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
       const remaining = thanksgivingDate.getTime() - Date.now();
+      const countdownCard = document.querySelector('.countdown-card');
+      if (countdownCard) {
+        const phase = remaining <= 0 ? 'today' : remaining <= 86400000 ? 'tomorrow' : 'counting';
+        countdownCard.dataset.countdownPhase = phase;
+      }
       if (remaining <= 0) {
         document.getElementById('countDays').textContent = '0';
         document.getElementById('countHours').textContent = '00';
