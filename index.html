@@ -620,10 +620,6 @@
     .host-checkin-reset { background: rgba(130, 100, 75, .13); color: inherit; }
     .host-checkin-close { background: #76503b; color: white; }
     [data-theme="evening"] .host-checkin-person { background: rgba(255,255,255,.04); }
-.event-mode-admin h4{margin:0 0 6px}.event-mode-admin p{margin:0 0 12px;color:var(--muted,#76685b);font-size:.92rem}
-.event-mode-banner{display:none;margin:22px auto;max-width:1000px;padding:clamp(20px,4vw,34px);border-radius:22px;color:#fff8ed;background:linear-gradient(130deg,#75452f,#a85e38 60%,#c17a45);box-shadow:0 14px 35px rgba(91,53,34,.18);text-align:center}
-.event-mode-banner h2{margin:8px 0;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem)}.event-mode-banner p{margin:6px 0}
-    .event-mode-next{display:inline-block;margin-top:12px;padding:10px 16px;border:1px solid rgba(255,255,255,.35);border-radius:14px;background:rgba(255,255,255,.13);font-weight:700}
 /* Final small-screen polish: comfortable spacing, readable cards, and touch-friendly controls. */
     @media (max-width: 620px) {
       .page { width: calc(100% - 24px); padding-top: 18px; padding-bottom: 30px; }
@@ -639,9 +635,9 @@
       .host-checkin-modal .modal { width: calc(100% - 24px); max-height: 84dvh; padding: 20px 16px; }
       .host-checkin-person { min-height: 48px; padding: 11px 12px; }
       .host-checkin-person input { width: 22px; height: 22px; }
-      .host-checkin-actions button, .event-mode-toggle { min-height: 44px; }
+      .host-checkin-actions button { min-height: 44px; }
       .trivia-choice, .trivia-next { min-height: 46px; }
-      .live-announcement-card, .event-mode-banner { overflow-wrap: anywhere; }
+      .live-announcement-card { overflow-wrap: anywhere; }
       img, video, iframe { max-width: 100%; }
     }
     @media (max-width: 420px) {
