@@ -394,6 +394,15 @@
     .schedule-highlight .schedule-marker { background: #f4d9bb; border-color: #d7a46d; }
     .schedule-highlight .schedule-detail { background: linear-gradient(110deg,rgba(245,226,202,.65),rgba(255,250,242,.8)); border-color: #e5c9a8; }
     .schedule-final .schedule-detail { border-color: #d8c5a8; }
+    .schedule-item.schedule-past { opacity: .58; }
+    .schedule-item.schedule-current .schedule-detail { border-color: #b87943; box-shadow: 0 0 0 2px rgba(184,121,67,.13); background: linear-gradient(110deg,rgba(245,226,202,.82),rgba(255,250,242,.96)); }
+    .schedule-item.schedule-current .schedule-marker { background: #dca66f; border-color: #a96836; transform: scale(1.08); }
+    .schedule-item.schedule-up-next .schedule-detail { border-color: #d7b58f; }
+    .schedule-state-label { display: inline-block; margin-top: 7px; padding: 3px 8px; border-radius: 999px; background: #f0dfc9; color: #79502f; font: 700 .64rem 'DM Sans',sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+    body[data-theme="evening"] .schedule-item.schedule-current .schedule-detail { background: linear-gradient(110deg,#604735,#49382f); border-color: #d29a65; }
+    body[data-theme="evening"] .schedule-item.schedule-current .schedule-marker { background: #79563b; border-color: #d29a65; }
+    body[data-theme="evening"] .schedule-state-label { background: #654a36; color: #f8e8d5; }
+
     body[data-theme="pumpkin"] .schedule-card { background: rgba(255,243,223,.94); border-color: #e6c49b; }
     body[data-theme="pumpkin"] .schedule-marker { background: #f2d4ae; border-color: #dfb17e; }
     body[data-theme="pumpkin"] .schedule-detail { background: rgba(255,250,242,.72); border-color: #e8cfb0; }
@@ -909,6 +918,7 @@
         <div class="schedule-eyebrow">A day full of gratitude</div>
         <h2 id="schedule-title">Thanksgiving Day Schedule 🍂</h2>
         <p>Here's how we'll spend our time together!</p>
+        <p id="scheduleLiveStatus" class="schedule-live-status" role="status" aria-live="polite">Schedule updates automatically on Thanksgiving Day.</p>
       </div>
       <div class="schedule-card">
         <div class="schedule-timeline">
@@ -1659,7 +1669,7 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-19';
+    const updateVersion = '2026-11-24-20';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
@@ -1707,6 +1717,7 @@
       { version: '2026-11-24-17', description: 'Added a public live guest check-in dashboard with host-only editing and real-time arrival updates.' },
       { version: '2026-11-24-18', description: 'Fixed Supabase initialization order so the countdown, trivia, host panel, and other page scripts can run.' },
       { version: '2026-11-24-19', description: 'Refined the Thanksgiving menu into an elegant vertical restaurant-style layout and corrected its Cozy Evening theme colors.' },
+      { version: '2026-11-24-20', description: 'Added live schedule highlighting for the current and upcoming Thanksgiving activities, with mobile-friendly status labels.' },
     ];
     const updateStorageKey = 'thanksgivingLastSeenUpdate';
     const testingModal = document.getElementById('testingModal');
@@ -1831,6 +1842,45 @@
       previousUpdates.hidden = isExpanded;
       previousUpdatesButton.textContent = isExpanded ? 'Click here for previous update logs ↓' : 'Hide previous update logs ↑';
     });
+
+    // Highlight the activity happening now and the next one on Thanksgiving Day.
+    const scheduleStartMinutes = [17*60, 17*60+30, 19*60, 19*60+30, 20*60, 20*60+30, 21*60, 22*60];
+    const scheduleItems = [...document.querySelectorAll('.schedule-item')];
+    const scheduleLiveStatus = document.getElementById('scheduleLiveStatus');
+    function updateLiveSchedule() {
+      const now = new Date();
+      const eventDay = now.getFullYear() === 2026 && now.getMonth() === 10 && now.getDate() === 27;
+      const todayMinutes = now.getHours()*60 + now.getMinutes();
+      let activeIndex = -1;
+      if (eventDay) activeIndex = scheduleStartMinutes.findIndex((minute,index) => todayMinutes >= minute && (index === scheduleStartMinutes.length-1 || todayMinutes < scheduleStartMinutes[index+1]));
+      const nextIndex = eventDay ? scheduleStartMinutes.findIndex(minute => todayMinutes < minute) : (now < new Date(2026,10,27) ? 0 : -1);
+      scheduleItems.forEach((item,index) => {
+        item.classList.remove('schedule-current','schedule-up-next','schedule-past');
+        item.querySelector('.schedule-state-label')?.remove();
+        item.removeAttribute('aria-current');
+        if (activeIndex >= 0 && index === activeIndex) {
+          item.classList.add('schedule-current');
+          item.setAttribute('aria-current','step');
+          const label=document.createElement('span'); label.className='schedule-state-label'; label.textContent='Happening now';
+          item.querySelector('.schedule-detail').append(label);
+        } else if (nextIndex >= 0 && index === nextIndex) {
+          item.classList.add('schedule-up-next');
+          const label=document.createElement('span'); label.className='schedule-state-label'; label.textContent='Up next';
+          item.querySelector('.schedule-detail').append(label);
+        } else if ((eventDay && index < (activeIndex >= 0 ? activeIndex : nextIndex >= 0 ? nextIndex : scheduleItems.length)) || now >= new Date(2026,10,28)) {
+          item.classList.add('schedule-past');
+        }
+      });
+      if (scheduleLiveStatus) {
+        if (activeIndex >= 0) scheduleLiveStatus.textContent='Happening now: '+scheduleItems[activeIndex].querySelector('h3').textContent+'.';
+        else if (nextIndex >= 0) scheduleLiveStatus.textContent='Coming up: '+scheduleItems[nextIndex].querySelector('h3').textContent+'.';
+        else if (eventDay) scheduleLiveStatus.textContent='That’s a wrap — thank you for celebrating with us!';
+        else if (now >= new Date(2026,10,28)) scheduleLiveStatus.textContent='Thanks for celebrating with us! The gathering has ended.';
+        else scheduleLiveStatus.textContent='The schedule will highlight each activity live on Thanksgiving Day.';
+      }
+    }
+    updateLiveSchedule();
+    setInterval(updateLiveSchedule, 30000);
 
     // Count down to the start of Thanksgiving Day in each visitor's local time zone.
     const thanksgivingDate = new Date(2026, 10, 27, 17, 0, 0);
