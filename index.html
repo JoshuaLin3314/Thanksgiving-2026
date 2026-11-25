@@ -123,6 +123,40 @@
     body[data-theme="evening"] .host-dashboard-actions button { background:#49382f; color:#f7e9d9; border-color:#71533e; }
     @media(max-width:420px) { .host-dashboard-grid { grid-template-columns:1fr 1fr; } }
 
+    /* Final polish: clearer host overview, gentle state transitions, and consistent theme surfaces. */
+    .host-dashboard { position:relative; overflow:hidden; padding:20px; box-shadow:0 12px 28px rgba(80,52,33,.08); }
+    .host-dashboard::before { content:'HOST VIEW'; position:absolute; top:0; right:0; padding:7px 11px; border-radius:0 0 0 12px; background:rgba(120,128,91,.13); color:var(--sage); font-size:.6rem; font-weight:900; letter-spacing:.13em; }
+    .host-dashboard h4 { font-size:1.42rem; }
+    .host-dashboard-stat { transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+    .host-dashboard-stat strong { font-variant-numeric:tabular-nums; }
+    .host-dashboard-stat.is-complete { border-color:#9aaa7b; background:rgba(120,128,91,.13); }
+    .host-dashboard-stat.is-complete strong { color:#64764a; }
+    .host-dashboard-actions button { min-height:40px; transition:transform .18s ease,box-shadow .18s ease; }
+    .host-dashboard-actions button:hover { transform:translateY(-2px); box-shadow:0 5px 12px rgba(80,52,33,.12); }
+    .schedule-item .schedule-detail,.schedule-item .schedule-marker { transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,transform .35s ease,opacity .35s ease; }
+    .schedule-item.schedule-current .schedule-detail { box-shadow:0 5px 18px rgba(184,121,67,.13),0 0 0 2px rgba(184,121,67,.13); }
+    .schedule-item.schedule-up-next .schedule-state-label { background:#e8eadc; color:#53633f; }
+    .food-status-item,.public-checkin-person { transition:background .25s ease,border-color .25s ease,transform .25s ease; }
+    .food-status-item[data-status="Ready!"] { box-shadow:inset 3px 0 #78805b; }
+    .food-all-ready { border:1px solid #b7c49e; }
+    .public-checkin-person.arrived { box-shadow:inset 3px 0 #78805b; }
+    .public-checkin-summary.all-arrived { border-color:#9aaa7b; background:linear-gradient(120deg,rgba(120,128,91,.18),rgba(214,154,77,.12)); }
+    :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+    body[data-theme="pumpkin"] .host-dashboard { background:linear-gradient(135deg,#f5dfc3,#fff3df); border-color:#e6c49b; }
+    body[data-theme="pumpkin"] .host-dashboard-stat { background:rgba(255,255,255,.58); border-color:#e6c49b; }
+    body[data-theme="pumpkin"] .food-all-ready { background:#edf1e4; color:#52643d; }
+    body[data-theme="evening"] .food-all-ready { background:#40503a; border-color:#82966e; color:#f0f5e9; }
+    body[data-theme="evening"] .public-checkin-summary.all-arrived { background:#40503a; border-color:#82966e; }
+    @media(max-width:560px) {
+      .host-dashboard { padding:17px 14px; }
+      .host-dashboard-actions { display:grid; grid-template-columns:1fr 1fr; }
+      .host-dashboard-actions button { padding:9px 8px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .host-dashboard-stat,.host-dashboard-actions button,.schedule-item .schedule-detail,.schedule-item .schedule-marker,.food-status-item,.public-checkin-person { transition:none !important; }
+    }
+
+
     .announcement-section { max-width:790px; margin:26px auto 0; }
     .announcement-card { display:none; padding:18px 20px; border:1px solid #dfc5a8; border-radius:18px; background:linear-gradient(120deg,rgba(255,250,242,.97),rgba(244,225,201,.94)); box-shadow:0 10px 25px rgba(80,52,33,.07); }
     .announcement-card.show { display:block; }
@@ -1337,6 +1371,8 @@
       const checked = checkinGuestNames.filter(name => hostCheckins[name]).length;
       const dashboardGuestCount = document.getElementById('dashboardGuestCount');
       if (dashboardGuestCount) dashboardGuestCount.textContent = checked + ' / 6';
+      const guestStat=dashboardGuestCount?.closest('.host-dashboard-stat');
+      if(guestStat)guestStat.classList.toggle('is-complete',checked===6);
       const boxes = [...hostCheckinList.querySelectorAll('input[type="checkbox"]')];
       boxes.forEach(box => {
         box.checked = Boolean(hostCheckins[box.value]);
@@ -1345,6 +1381,8 @@
       hostCheckinCount.textContent = checked + ' / ' + checkinGuestNames.length;
       hostCheckinStatus.textContent = checked === checkinGuestNames.length ? "Everyone's here! 🎉" : checked === 0 ? 'Nobody checked in yet' : checked + (checked === 1 ? ' person has' : ' people have') + ' arrived';
       publicCheckinCount.textContent = checked + ' / ' + checkinGuestNames.length;
+      const publicSummary = document.querySelector('.public-checkin-summary');
+      if (publicSummary) publicSummary.classList.toggle('all-arrived', checked === checkinGuestNames.length);
       publicCheckinPercent.textContent = Math.round(checked / checkinGuestNames.length * 100) + '%';
       publicCheckinFill.style.width = (checked / checkinGuestNames.length * 100) + '%';
       document.getElementById('publicCheckinProgress').setAttribute('aria-valuenow', String(checked));
@@ -1471,6 +1509,8 @@
         if(item)item.dataset.status=status;if(label)label.textContent=status;if(dot)dot.textContent=status==='Ready!'?'✓':status==='In Progress'?'◷':'○';if(control)control.value=status;
       });
       const dashboardFoodCount=document.getElementById('dashboardFoodCount');if(dashboardFoodCount)dashboardFoodCount.textContent=readyCount+' / '+foodStatusNames.length;
+      const foodStat=dashboardFoodCount?.closest('.host-dashboard-stat');
+      if(foodStat)foodStat.classList.toggle('is-complete',readyCount===foodStatusNames.length);
       document.getElementById('foodProgressText').textContent=readyCount+' of '+foodStatusNames.length+' dishes ready';
       document.getElementById('foodProgressPercent').textContent=Math.round(readyCount/foodStatusNames.length*100)+'%';
       document.getElementById('foodProgressFill').style.width=(readyCount/foodStatusNames.length*100)+'%';
@@ -1647,9 +1687,10 @@
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-24-22';
+    const updateVersion = '2026-11-24-23';
     // Keep every published release here in chronological order.
     const updateAnnouncements = [
+      { version: '2026-11-24-23', description: 'Polished the host dashboard, live schedule transitions, completion states, theme consistency, and accessibility details.' },
       { version: '2026-11-23-20', description: 'Added the Website Update History section and kept the live update checker running.' },
       { version: '2026-11-23-21', description: 'Added a button so visitors can open previous website update logs.' },
       { version: '2026-11-23-22', description: 'Added the first version of the previous update-log button.' },
