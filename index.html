@@ -824,6 +824,8 @@ body[data-theme="evening"] footer { border-color: #554239; }
   body.event-day-mode .coming-that-day::before{display:none}
   body.event-day-mode .live-status-section{filter:none;opacity:1}
   .countdown-card .countdown-grid[hidden],.shopping-card [hidden]{display:none!important}
+  .event-completed-card{filter:grayscale(1);opacity:.62;transition:filter .25s ease,opacity .25s ease}
+  .event-completed-card .shopping-item{cursor:default}
 
   /* These live event panels remain visible before the gathering, but are clearly marked as day-of features. */
 .coming-that-day {
@@ -1273,7 +1275,11 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-1<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-25-2<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Kept the countdown and shopping list visible in Event Day Mode, with a muted, greyed-out appearance and a “Completed! See you next year!” message.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-25-1<small>November 25, 2026</small></span></summary>
           <div class="history-content"><ul><li>Restored host-controlled Event Day Mode. Activating it unlocks the Thanksgiving Day features, changes the countdown and shopping list to a “Completed — see you next year!” message, and moves both sections above the update history.</li></ul></div>
         </details>
         <details class="history-entry">
@@ -1803,16 +1809,20 @@ body[data-theme="evening"] .coming-that-day::before {
       countdownEyebrow.textContent=enabled?'The 2026 gathering has wrapped up':'The celebration is getting closer';
       countdownHeading.textContent=enabled?'Thanksgiving Complete! 🧡':'Countdown to 5:00 PM 👀';
       countdownSubtitle.textContent=enabled?'See you next year!':"We're saving you a seat!";
-      countdownGrid.hidden=enabled;
+      countdownGrid.hidden=false;
+      countdownCard.classList.toggle('event-completed-card',enabled);
       countdownMessageEl.textContent=enabled?'Completed! See you next year!':'Friday, November 27, 2026 at 5:00 PM';
       countdownCard.dataset.countdownPhase=enabled?'complete':'counting';
 
+      const shoppingCard=document.querySelector('.shopping-card');
+      shoppingCard.classList.toggle('event-completed-card',enabled);
       document.getElementById('shoppingTitle').textContent=enabled?'Shopping List Complete! 🛒':'Thanksgiving Shopping List 🛒';
       document.getElementById('shoppingIntro').textContent=enabled?'Completed! See you next year! 🧡':'See what’s been collected so far — the list updates live for everyone! ☁️';
-      document.querySelector('.shopping-progress').hidden=enabled;
-      document.querySelector('.shopping-progress-bar').hidden=enabled;
-      document.getElementById('shoppingSyncStatus').hidden=enabled;
-      document.getElementById('shoppingList').hidden=enabled;
+      document.querySelector('.shopping-progress').hidden=false;
+      document.querySelector('.shopping-progress-bar').hidden=false;
+      document.getElementById('shoppingSyncStatus').hidden=false;
+      document.getElementById('shoppingList').hidden=false;
+      document.getElementById('shoppingList').style.pointerEvents=enabled?'none':'';
     }
 
     function renderEventDayMode(enabled){
@@ -1982,9 +1992,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-1';
+    const updateVersion = '2026-11-25-2';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-2', description: 'Kept the countdown and shopping list visible in Event Day Mode, with a muted completed appearance and a see-you-next-year message.' },
       { version: '2026-11-25-1', description: 'Restored Event Day Mode with a completed Thanksgiving layout, unlocked day-of features, and moved the countdown and shopping list above the update history.' },
       { version: '2026-11-24-25', description: 'Restored the creator update popup so visitors are notified when a new website version is published.' },
       { version: '2026-11-24-24', description: 'Fixed the creator update popup repeating after refresh by consistently selecting the newest release.' },
