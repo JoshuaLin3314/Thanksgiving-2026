@@ -812,6 +812,37 @@ body[data-theme="evening"] footer { border-color: #554239; }
   footer { margin-top: 28px; padding-top: 17px; }
 }
 
+  
+/* These live event panels remain visible before the gathering, but are clearly marked as day-of features. */
+.coming-that-day {
+  position: relative;
+  filter: grayscale(.82);
+  opacity: .68;
+}
+.coming-that-day::before {
+  content: 'Function coming that day';
+  display: table;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin: 0 auto 10px;
+  padding: 7px 13px;
+  border: 1px solid #a99f93;
+  border-radius: 999px;
+  background: #e7e2da;
+  color: #625a51;
+  font: 800 .7rem 'DM Sans', sans-serif;
+  letter-spacing: .035em;
+  text-align: center;
+}
+body[data-theme="evening"] .coming-that-day::before {
+  background: #514941;
+  border-color: #766b60;
+  color: #e4d9cc;
+}
+@media (prefers-reduced-motion: reduce) {
+  .coming-that-day { transition: none !important; }
+}
+
   </style>
 </head>
 <body>
@@ -986,22 +1017,7 @@ body[data-theme="evening"] footer { border-color: #554239; }
 
 
 
-    <section class="food-tracker-section" aria-labelledby="foodTrackerTitle">
-      <div class="food-tracker-card">
-        <div class="food-tracker-heading"><h2 id="foodTrackerTitle">What's Cooking? 👀</h2><p>Follow every dish on our Thanksgiving menu!</p></div>
-        <div class="food-tracker-progress"><span id="foodProgressText">0 of 7 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
-        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
-        <div class="food-status-list" id="foodStatusList"><article class="food-status-item" data-food-item="0"><span class="food-status-emoji" aria-hidden="true">🧀</span><div class="food-status-copy"><strong>Mac &amp; Cheese</strong><span class="food-status-label" id="foodStatusLabel0">Not Started</span></div><span class="food-status-dot" id="foodStatusDot0" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="1"><span class="food-status-emoji" aria-hidden="true">🥔</span><div class="food-status-copy"><strong>Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</strong><span class="food-status-label" id="foodStatusLabel1">Not Started</span></div><span class="food-status-dot" id="foodStatusDot1" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="2"><span class="food-status-emoji" aria-hidden="true">🥦</span><div class="food-status-copy"><strong>Veggie Mix</strong><span class="food-status-label" id="foodStatusLabel2">Not Started</span></div><span class="food-status-dot" id="foodStatusDot2" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="3"><span class="food-status-emoji" aria-hidden="true">🍗</span><div class="food-status-copy"><strong>HEB Chicken</strong><span class="food-status-label" id="foodStatusLabel3">Not Started</span></div><span class="food-status-dot" id="foodStatusDot3" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="4"><span class="food-status-emoji" aria-hidden="true">🥖</span><div class="food-status-copy"><strong>Garlic Bread</strong><span class="food-status-label" id="foodStatusLabel4">Not Started</span></div><span class="food-status-dot" id="foodStatusDot4" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article></div>
-        <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
-        <p class="food-tracker-note">Statuses sync live across devices as the host updates each dish.</p>
-      </div>
-    </section>
+    
 
     <section class="seating-section" aria-labelledby="seating-title">
       <div class="seating-heading">
@@ -1048,23 +1064,7 @@ body[data-theme="evening"] footer { border-color: #554239; }
       </div>
     </section>
 
-    <section class="public-checkin-section" aria-labelledby="publicCheckinTitle">
-      <div class="public-checkin-card">
-        <div class="public-checkin-heading">
-          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
-          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
-          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
-        </div>
-        <div class="public-checkin-summary">
-          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
-          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
-        </div>
-        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
-        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
-        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
-        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
-      </div>
-    </section>
+    
 
     <section class="clothing-section" aria-labelledby="clothing-title">
       <div class="clothing-card">
@@ -1084,13 +1084,7 @@ body[data-theme="evening"] footer { border-color: #554239; }
       </div>
     </section>
 
-    <section class="live-status-section" aria-labelledby="live-status-title">
-      <div class="live-status-card">
-        <div class="live-status-eyebrow">Happening on Thanksgiving Day</div>
-        <h2 id="live-status-title">Getting Ready for Thanksgiving 🍂</h2>
-        <p id="live-status-message" aria-live="off">The celebration is getting closer!</p>
-      </div>
-    </section>
+    
 
     <section class="schedule-section" aria-labelledby="schedule-title">
       <div class="schedule-heading">
@@ -1207,6 +1201,52 @@ body[data-theme="evening"] footer { border-color: #554239; }
         </ul>
       </div>
     </section>
+    
+
+    <!-- Sections reserved for Thanksgiving Day -->
+    <section class="food-tracker-section coming-that-day" aria-disabled="true" aria-labelledby="foodTrackerTitle">
+      <div class="food-tracker-card">
+        <div class="food-tracker-heading"><h2 id="foodTrackerTitle">What's Cooking? 👀</h2><p>Follow every dish on our Thanksgiving menu!</p></div>
+        <div class="food-tracker-progress"><span id="foodProgressText">0 of 7 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
+        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
+        <div class="food-status-list" id="foodStatusList"><article class="food-status-item" data-food-item="0"><span class="food-status-emoji" aria-hidden="true">🧀</span><div class="food-status-copy"><strong>Mac &amp; Cheese</strong><span class="food-status-label" id="foodStatusLabel0">Not Started</span></div><span class="food-status-dot" id="foodStatusDot0" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="1"><span class="food-status-emoji" aria-hidden="true">🥔</span><div class="food-status-copy"><strong>Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</strong><span class="food-status-label" id="foodStatusLabel1">Not Started</span></div><span class="food-status-dot" id="foodStatusDot1" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="2"><span class="food-status-emoji" aria-hidden="true">🥦</span><div class="food-status-copy"><strong>Veggie Mix</strong><span class="food-status-label" id="foodStatusLabel2">Not Started</span></div><span class="food-status-dot" id="foodStatusDot2" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="3"><span class="food-status-emoji" aria-hidden="true">🍗</span><div class="food-status-copy"><strong>HEB Chicken</strong><span class="food-status-label" id="foodStatusLabel3">Not Started</span></div><span class="food-status-dot" id="foodStatusDot3" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="4"><span class="food-status-emoji" aria-hidden="true">🥖</span><div class="food-status-copy"><strong>Garlic Bread</strong><span class="food-status-label" id="foodStatusLabel4">Not Started</span></div><span class="food-status-dot" id="foodStatusDot4" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article></div>
+        <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
+        <p class="food-tracker-note">Statuses sync live across devices as the host updates each dish.</p>
+      </div>
+    </section>
+
+    <section class="public-checkin-section coming-that-day" aria-disabled="true" aria-labelledby="publicCheckinTitle">
+      <div class="public-checkin-card">
+        <div class="public-checkin-heading">
+          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
+          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
+          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
+        </div>
+        <div class="public-checkin-summary">
+          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
+          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
+        </div>
+        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
+        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
+        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
+        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
+      </div>
+    </section>
+
+    <section class="live-status-section coming-that-day" aria-disabled="true" aria-labelledby="live-status-title">
+      <div class="live-status-card">
+        <div class="live-status-eyebrow">Happening on Thanksgiving Day</div>
+        <h2 id="live-status-title">Getting Ready for Thanksgiving 🍂</h2>
+        <p id="live-status-message" aria-live="off">The celebration is getting closer!</p>
+      </div>
+    </section>
+
     <section class="history-section" aria-labelledby="history-title">
       <div class="history-heading">
         <h2 id="history-title">Website Update History 📜</h2>
