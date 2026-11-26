@@ -877,6 +877,21 @@ body[data-theme="evening"] footer { border-color: #554239; }
   .event-mode-admin{margin:16px 0;padding:17px;border:1px solid rgba(166,91,48,.28);border-radius:16px;background:rgba(166,91,48,.09)}
   .event-mode-admin h4{margin:0 0 6px}.event-mode-admin p{margin:0 0 12px;color:var(--muted,#76685b);font-size:.92rem}
   .event-mode-toggle{border:0;border-radius:999px;padding:12px 18px;background:#76503b;color:#fff;font:inherit;font-weight:700;cursor:pointer}.event-mode-toggle:disabled{opacity:.55;cursor:wait}
+  .gray-controls-admin{margin:16px 0;padding:17px;border:1px solid rgba(120,128,91,.32);border-radius:16px;background:rgba(120,128,91,.08)}
+  .gray-controls-admin h4{margin:0 0 6px;color:var(--brown)}
+  .gray-controls-admin p{margin:0 0 12px;color:var(--muted,#76685b);font-size:.88rem}
+  .gray-controls-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .gray-control-option{display:flex;align-items:center;gap:9px;min-width:0;padding:9px 10px;border:1px solid #e5d8c6;border-radius:11px;background:rgba(255,255,255,.65);color:var(--brown);font-size:.82rem;font-weight:650;cursor:pointer}
+  .gray-control-option input{width:17px;height:17px;flex:0 0 auto;accent-color:#7d8063}
+  .gray-controls-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .gray-controls-actions button{border:1px solid #d7c3aa;border-radius:999px;padding:9px 13px;background:#fffaf2;color:#633b2b;font:700 .76rem 'DM Sans',sans-serif;cursor:pointer}
+  #grayControlsMessage{margin:10px 0 0;font-size:.78rem}
+  .host-gray-muted{filter:grayscale(1)!important;opacity:.48!important;transition:filter .2s ease,opacity .2s ease}
+  body[data-theme="evening"] .gray-controls-admin{background:#302f28;border-color:#5c6048}
+  body[data-theme="evening"] .gray-control-option{background:#49382f;border-color:#71533e;color:#f7e9d9}
+  body[data-theme="evening"] .gray-controls-actions button{background:#49382f;color:#f7e9d9;border-color:#71533e}
+  @media(max-width:420px){.gray-controls-list{grid-template-columns:1fr}}
+
   .event-mode-banner{display:none;margin:22px auto;max-width:1000px;padding:clamp(20px,4vw,34px);border-radius:22px;color:#fff8ed;background:linear-gradient(130deg,#75452f,#a85e38 60%,#c17a45);box-shadow:0 14px 35px rgba(91,53,34,.18);text-align:center}
   body.event-day-mode .event-mode-banner{display:block}.event-mode-banner .event-mode-kicker{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:800}
   .event-mode-banner h2{margin:8px 0;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem)}.event-mode-banner p{margin:6px 0}
@@ -1514,11 +1529,15 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-26-4<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Corrected Event Day Mode so it activates the live Thanksgiving event, keeps the countdown and shopping list in their normal active state, and no longer displays a post-event completion message.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-26-5<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-26-4<small>November 26, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Corrected Event Day Mode so it activates the live Thanksgiving event, keeps the countdown and shopping list in their normal active state, and no longer displays a post-event completion message.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-26-3<small>November 26, 2026</small></span></summary>
           <div class="history-content"><ul><li>Restored the Creator’s New Update popup so visitors are notified when a new website update is published.</li></ul></div>
@@ -1721,6 +1740,37 @@ body[data-theme="evening"] .coming-that-day::before {
         <p>Turn on the Thanksgiving completed layout for everyone visiting the website. You can switch it off again if needed.</p>
         <button type="button" class="event-mode-toggle" id="eventModeToggle" disabled>Loading event mode…</button>
         <p id="eventModeAdminMessage" role="status" aria-live="polite" style="margin-top:10px">Only signed-in hosts can change this setting.</p>
+      </section>
+
+      <section class="gray-controls-admin" aria-labelledby="grayControlsTitle">
+        <h4 id="grayControlsTitle">Gray Out Website Sections ◐</h4>
+        <p>Select any parts of the invitation to make them appear muted for everyone. Changes save automatically and sync live across visitors.</p>
+        <div class="gray-controls-list" id="grayControlsList">
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="intro">Welcome message</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="details">Gathering details</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="announcement">Announcement banner</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="theme">Theme selector</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="eventBanner">Event Day banner</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="countdown">Countdown</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="menu">Thanksgiving menu</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="policy">Event policy note</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="cookbook">Family cookbook</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="seating">Seating chart / floor plan</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="attendees">Attendees</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="clothing">Dress code</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="schedule">Schedule</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="shopping">Shopping list</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="trivia">Thanksgiving trivia</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="bring">What to bring</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="foodTracker">Food tracker</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="guestCheckin">Guest check-in</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="history">Website update history</label>
+        </div>
+        <div class="gray-controls-actions">
+          <button type="button" id="grayAllSections">Gray Out All</button>
+          <button type="button" id="clearGraySections">Restore All</button>
+        </div>
+        <p id="grayControlsMessage" role="status" aria-live="polite">Loading shared display settings…</p>
       </section>
 
       <div class="host-checkin-count"><strong id="hostCheckinCount">0 / 6</strong><span id="hostCheckinStatus">Nobody checked in yet</span></div>
@@ -2123,6 +2173,65 @@ body[data-theme="evening"] .coming-that-day::before {
       .subscribe();
     loadEventDayMode();
 
+    // Host-controlled grayscale settings are shared with every visitor.
+    const graySectionTargets={
+      intro:'.intro',details:'.details',announcement:'.announcement-section',theme:'.theme-section',
+      eventBanner:'#eventModeBanner',countdown:'.countdown-section',menu:'.menu-area',policy:'.alcohol-policy-section',
+      cookbook:'.cookbook-section',seating:'.seating-section',attendees:'.attendees-section',clothing:'.clothing-section',
+      schedule:'.schedule-section',shopping:'.shopping-section',trivia:'.trivia-section',bring:'.bring-note-section',
+      foodTracker:'.food-tracker-section',guestCheckin:'.public-checkin-section',history:'.history-section'
+    };
+    const grayControlsList=document.getElementById('grayControlsList');
+    const grayControlsMessage=document.getElementById('grayControlsMessage');
+    let grayedElements=[];
+    function renderGraySections(keys){
+      grayedElements=Array.isArray(keys)?keys.filter(key=>Object.prototype.hasOwnProperty.call(graySectionTargets,key)):[];
+      Object.entries(graySectionTargets).forEach(([key,selector])=>{
+        document.querySelectorAll(selector).forEach(element=>element.classList.toggle('host-gray-muted',grayedElements.includes(key)));
+        const checkbox=grayControlsList.querySelector('[data-gray-key="'+key+'"]');
+        if(checkbox)checkbox.checked=grayedElements.includes(key);
+      });
+    }
+    async function loadGraySections(){
+      const {data,error}=await supabaseClient.from('event_settings').select('grayed_elements').eq('id',1).maybeSingle();
+      if(error){grayControlsMessage.textContent='Could not load shared display settings. Refresh and try again.';return;}
+      renderGraySections(data?.grayed_elements||[]);
+      grayControlsMessage.textContent=grayedElements.length?grayedElements.length+' section(s) are grayed out for everyone.':'All website sections are at full color.';
+    }
+    let graySaveQueue=Promise.resolve();
+    async function saveGraySections(nextKeys){
+      grayedElements=[...new Set(nextKeys)].filter(key=>Object.prototype.hasOwnProperty.call(graySectionTargets,key));
+      renderGraySections(grayedElements);
+      grayControlsMessage.textContent='Saving shared display settings…';
+      graySaveQueue=graySaveQueue.then(async()=>{
+        const {data,error}=await supabaseClient.from('event_settings').update({grayed_elements:grayedElements,updated_at:new Date().toISOString()}).eq('id',1).select('grayed_elements').single();
+        if(error){grayControlsMessage.textContent='Could not save changes. Please try again.';await loadGraySections();return;}
+        renderGraySections(data?.grayed_elements||[]);
+        grayControlsMessage.textContent=grayedElements.length?grayedElements.length+' section(s) grayed out for everyone. ✓':'All website sections restored. ✓';
+      });
+      return graySaveQueue;
+    }
+    grayControlsList.addEventListener('change',event=>{
+      const checkbox=event.target.closest('[data-gray-key]');
+      if(!checkbox||!hostIsSignedIn)return;
+      const next=new Set(grayedElements);
+      if(checkbox.checked)next.add(checkbox.dataset.grayKey);else next.delete(checkbox.dataset.grayKey);
+      saveGraySections([...next]);
+    });
+    document.getElementById('grayAllSections').addEventListener('click',()=>{
+      if(hostIsSignedIn)saveGraySections(Object.keys(graySectionTargets));
+    });
+    document.getElementById('clearGraySections').addEventListener('click',()=>{
+      if(hostIsSignedIn)saveGraySections([]);
+    });
+    supabaseClient.channel('shared-gray-sections')
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'event_settings',filter:'id=eq.1'},payload=>{
+        renderGraySections(payload.new.grayed_elements||[]);
+        grayControlsMessage.textContent=grayedElements.length?grayedElements.length+' section(s) grayed out for everyone.':'All website sections are at full color.';
+      })
+      .subscribe();
+    loadGraySections();
+
     function setHostSignedIn(user){
       hostIsSignedIn=!!user;hostLoginForm.hidden=hostIsSignedIn;hostSignedIn.hidden=!hostIsSignedIn;hostProtectedControls.hidden=!hostIsSignedIn;document.querySelectorAll('[data-shopping-control]').forEach(item=>{item.disabled=!hostIsSignedIn;});document.getElementById('shoppingReset').hidden=!hostIsSignedIn;hostCheckinList.querySelectorAll('input[type="checkbox"]').forEach(item=>{item.disabled=!hostIsSignedIn;});eventModeToggle.disabled=!hostIsSignedIn;
       document.getElementById('hostSignedInEmail').textContent=user?user.email:'';hostAuthMessage.textContent='';
@@ -2267,9 +2376,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-26-4';
+    const updateVersion = '2026-11-26-5';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-26-5', description: 'Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.' },
       { version: '2026-11-26-4', description: 'Corrected Event Day Mode so it activates the live Thanksgiving event instead of showing a post-event completion state.' },
       { version: '2026-11-26-3', description: 'Restored the Creator’s New Update popup and repaired the live release announcement.' },
       { version: '2026-11-26-2', description: 'Renamed the 9:00 PM outing to IDOL Walk to MTea and added gloves to Joshua’s bring list.' },
