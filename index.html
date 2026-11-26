@@ -1529,11 +1529,15 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-26-5<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-26-6<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Expanded the shared gray-out controls to include the entire invitation and footer, in addition to individual sections.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-26-5<small>November 26, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-26-4<small>November 26, 2026</small></span></summary>
           <div class="history-content"><ul><li>Corrected Event Day Mode so it activates the live Thanksgiving event, keeps the countdown and shopping list in their normal active state, and no longer displays a post-event completion message.</li></ul></div>
@@ -1746,6 +1750,7 @@ body[data-theme="evening"] .coming-that-day::before {
         <h4 id="grayControlsTitle">Gray Out Website Sections ◐</h4>
         <p>Select any parts of the invitation to make them appear muted for everyone. Changes save automatically and sync live across visitors.</p>
         <div class="gray-controls-list" id="grayControlsList">
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="wholeInvitation">Entire invitation</label>
           <label class="gray-control-option"><input type="checkbox" data-gray-key="intro">Welcome message</label>
           <label class="gray-control-option"><input type="checkbox" data-gray-key="details">Gathering details</label>
           <label class="gray-control-option"><input type="checkbox" data-gray-key="announcement">Announcement banner</label>
@@ -1765,6 +1770,7 @@ body[data-theme="evening"] .coming-that-day::before {
           <label class="gray-control-option"><input type="checkbox" data-gray-key="foodTracker">Food tracker</label>
           <label class="gray-control-option"><input type="checkbox" data-gray-key="guestCheckin">Guest check-in</label>
           <label class="gray-control-option"><input type="checkbox" data-gray-key="history">Website update history</label>
+          <label class="gray-control-option"><input type="checkbox" data-gray-key="footer">Footer</label>
         </div>
         <div class="gray-controls-actions">
           <button type="button" id="grayAllSections">Gray Out All</button>
@@ -2175,11 +2181,11 @@ body[data-theme="evening"] .coming-that-day::before {
 
     // Host-controlled grayscale settings are shared with every visitor.
     const graySectionTargets={
-      intro:'.intro',details:'.details',announcement:'.announcement-section',theme:'.theme-section',
+      wholeInvitation:'.page',intro:'.intro',details:'.details',announcement:'.announcement-section',theme:'.theme-section',
       eventBanner:'#eventModeBanner',countdown:'.countdown-section',menu:'.menu-area',policy:'.alcohol-policy-section',
       cookbook:'.cookbook-section',seating:'.seating-section',attendees:'.attendees-section',clothing:'.clothing-section',
       schedule:'.schedule-section',shopping:'.shopping-section',trivia:'.trivia-section',bring:'.bring-note-section',
-      foodTracker:'.food-tracker-section',guestCheckin:'.public-checkin-section',history:'.history-section'
+      foodTracker:'.food-tracker-section',guestCheckin:'.public-checkin-section',history:'.history-section',footer:'footer'
     };
     const grayControlsList=document.getElementById('grayControlsList');
     const grayControlsMessage=document.getElementById('grayControlsMessage');
@@ -2376,9 +2382,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-26-5';
+    const updateVersion = '2026-11-26-6';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-26-6', description: 'Expanded the shared gray-out controls to include the entire invitation and footer, in addition to individual sections.' },
       { version: '2026-11-26-5', description: 'Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.' },
       { version: '2026-11-26-4', description: 'Corrected Event Day Mode so it activates the live Thanksgiving event instead of showing a post-event completion state.' },
       { version: '2026-11-26-3', description: 'Restored the Creator’s New Update popup and repaired the live release announcement.' },
