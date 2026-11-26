@@ -995,6 +995,74 @@ body[data-theme="evening"] .coming-that-day::before {
       .announcement-ack, .shopping-reset { min-height: 44px; }
     }
 
+  
+    /* iPhone floor-plan repair: keep the cooktop compact and counter labels upright. */
+    @media (max-width: 620px) {
+      .floorplan-kitchen { min-height: 650px; }
+      .floorplan-island {
+        right: 19%;
+        left: auto;
+        width: 40%;
+        min-height: 225px;
+        height: 43%;
+        padding: 12px 5px;
+        gap: 8px;
+        justify-content: space-evenly;
+      }
+      .floorplan-island strong { font-size: .76rem; line-height: 1.15; }
+      .floorplan-island small { font-size: .58rem; line-height: 1.2; }
+      .cooktop {
+        width: 88%;
+        max-width: 132px;
+        padding: 7px 5px;
+        gap: 5px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-items: center;
+        align-items: center;
+      }
+      .cooktop i {
+        width: clamp(13px, 4.8vw, 19px);
+        height: clamp(13px, 4.8vw, 19px);
+        border-width: 2px;
+      }
+      .floorplan-right-counter {
+        width: 16%;
+        right: 0;
+        writing-mode: horizontal-tb;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 9px;
+        padding: 12px 3px;
+        font-size: .52rem;
+        line-height: 1.15;
+        text-align: center;
+        overflow: hidden;
+      }
+      .floorplan-right-counter > span:first-child {
+        font-size: .54rem;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+      }
+      .counter-sink, .counter-storage {
+        display: grid;
+        place-items: center;
+        min-height: 43px;
+        padding: 5px 1px;
+        font-size: .52rem;
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+      }
+    }
+    @media (max-width: 380px) {
+      .floorplan-island { width: 39%; right: 19%; padding-inline: 3px; }
+      .floorplan-island strong { font-size: .68rem; }
+      .floorplan-right-counter { width: 17%; padding-inline: 2px; gap: 7px; }
+      .floorplan-right-counter > span:first-child { font-size: .48rem; }
+      .counter-sink, .counter-storage { font-size: .48rem; min-height: 39px; }
+      .cooktop { width: 92%; padding: 5px 3px; gap: 4px; }
+    }
+
   </style>
 </head>
 <body>
@@ -2198,9 +2266,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-12';
+    const updateVersion = '2026-11-25-13';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-13', description: 'Fixed the iPhone kitchen floor plan: stovetop burners now fit neatly on the island, and sink/storage labels are upright and contained in the counter.' },
       { version: '2026-11-25-12', description: 'A dedicated iPad layout adds more breathing room, refined tablet-width grids, larger touch targets, and a roomier floor plan.' },
       { version: '2026-11-25-11', description: 'Moved the seating labels closer to the table and corrected the check-in table placement so it sits separately above the kitchen counter.' },
       { version: '2026-11-25-10', description: 'Moved the seating names closer to the circular table, repositioned check-in above the kitchen counter, and widened and offset the dining-room opening.' },
