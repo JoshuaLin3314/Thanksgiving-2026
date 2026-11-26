@@ -1146,9 +1146,9 @@ body[data-theme="evening"] .coming-that-day::before {
 
     <section class="event-mode-banner" id="eventModeBanner" aria-live="polite">
       <div class="event-mode-kicker">🍂 Thanksgiving Event Day Mode</div>
-      <h2 id="eventModeHeadline">Thanksgiving Celebration Complete! 🧡</h2>
-      <p id="eventModeSubline">Thank you for celebrating with us!</p>
-      <div class="event-mode-next" id="eventModeNext">Completed! See you next year!</div>
+      <h2 id="eventModeHeadline">Thanksgiving Is LIVE! 🧡</h2>
+      <p id="eventModeSubline">The celebration is happening now — welcome!</p>
+      <div class="event-mode-next" id="eventModeNext">Enjoy the food, activities, and time together! 🍂</div>
     </section>
 
     <section class="countdown-section" aria-label="Countdown to Thanksgiving">
@@ -1514,11 +1514,15 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-26-3<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Restored the Creator’s New Update popup so visitors are notified when a new website update is published.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-26-4<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Corrected Event Day Mode so it activates the live Thanksgiving event, keeps the countdown and shopping list in their normal active state, and no longer displays a post-event completion message.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-26-3<small>November 26, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Restored the Creator’s New Update popup so visitors are notified when a new website update is published.</li></ul></div>
+        </details>
         <details class="history-entry">
           <summary><span class="history-version">Version 2026-11-26-2<small>November 26, 2026</small></span></summary>
           <div class="history-content"><ul><li>Renamed the 9:00 PM outing to IDOL Walk to MTea and added gloves to Joshua's bring list.</li></ul></div>
@@ -2059,36 +2063,30 @@ body[data-theme="evening"] .coming-that-day::before {
     const eventModeAdminMessage=document.getElementById('eventModeAdminMessage');
     const countdownSection=document.querySelector('.countdown-section');
     const shoppingSection=document.querySelector('.shopping-section');
-    const historySection=document.querySelector('.history-section');
-    const countdownHome=document.createComment('countdown original position');
-    const shoppingHome=document.createComment('shopping list original position');
-    countdownSection.parentNode.insertBefore(countdownHome,countdownSection);
-    shoppingSection.parentNode.insertBefore(shoppingHome,shoppingSection);
-
-    function applyEventModeCompletion(enabled){
+    function applyEventModeLiveState(enabled){
       const countdownCard=document.querySelector('.countdown-card');
       const countdownGrid=document.getElementById('countdown');
       const countdownEyebrow=countdownCard.querySelector('.countdown-eyebrow');
       const countdownHeading=countdownCard.querySelector('h2');
       const countdownSubtitle=countdownCard.querySelector('.countdown-subtitle');
       const countdownMessageEl=document.getElementById('countdownMessage');
-      countdownEyebrow.textContent=enabled?'The 2026 gathering has wrapped up':'The celebration is getting closer';
-      countdownHeading.textContent=enabled?'Thanksgiving Complete! 🧡':'Countdown to 5:00 PM 👀';
-      countdownSubtitle.textContent=enabled?'See you next year!':"We're saving you a seat!";
+      countdownEyebrow.textContent='The celebration is getting closer';
+      countdownHeading.textContent='Countdown to 5:00 PM 👀';
+      countdownSubtitle.textContent="We're saving you a seat!";
       countdownGrid.hidden=false;
-      countdownCard.classList.toggle('event-completed-card',enabled);
-      countdownMessageEl.textContent=enabled?'Completed! See you next year!':'Friday, November 27, 2026 at 5:00 PM';
-      countdownCard.dataset.countdownPhase=enabled?'complete':'counting';
+      countdownCard.classList.remove('event-completed-card');
+      countdownMessageEl.textContent='Friday, November 27, 2026 at 5:00 PM';
+      countdownCard.dataset.countdownPhase='counting';
 
       const shoppingCard=document.querySelector('.shopping-card');
-      shoppingCard.classList.toggle('event-completed-card',enabled);
-      document.getElementById('shoppingTitle').textContent=enabled?'Shopping List Complete! 🛒':'Thanksgiving Shopping List 🛒';
-      document.getElementById('shoppingIntro').textContent=enabled?'Completed! See you next year! 🧡':'See what’s been collected so far — the list updates live for everyone! ☁️';
+      shoppingCard.classList.remove('event-completed-card');
+      document.getElementById('shoppingTitle').textContent='Thanksgiving Shopping List 🛒';
+      document.getElementById('shoppingIntro').textContent='See what’s been collected so far — the list updates live for everyone! ☁️';
       document.querySelector('.shopping-progress').hidden=false;
       document.querySelector('.shopping-progress-bar').hidden=false;
       document.getElementById('shoppingSyncStatus').hidden=false;
       document.getElementById('shoppingList').hidden=false;
-      document.getElementById('shoppingList').style.pointerEvents=enabled?'none':'';
+      document.getElementById('shoppingList').style.pointerEvents='';
     }
 
     function renderEventDayMode(enabled){
@@ -2100,14 +2098,7 @@ body[data-theme="evening"] .coming-that-day::before {
         if(eventDayModeEnabled){section.classList.remove('coming-that-day');section.removeAttribute('aria-disabled');}
         else{section.classList.add('coming-that-day');section.setAttribute('aria-disabled','true');}
       });
-      if(eventDayModeEnabled){
-        historySection.parentNode.insertBefore(countdownSection,historySection);
-        historySection.parentNode.insertBefore(shoppingSection,historySection);
-      }else{
-        countdownHome.parentNode.insertBefore(countdownSection,countdownHome.nextSibling);
-        shoppingHome.parentNode.insertBefore(shoppingSection,shoppingHome.nextSibling);
-      }
-      applyEventModeCompletion(eventDayModeEnabled);
+      applyEventModeLiveState(eventDayModeEnabled);
       updateLiveStatus();
     }
 
@@ -2276,9 +2267,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-26-3';
+    const updateVersion = '2026-11-26-4';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-26-4', description: 'Corrected Event Day Mode so it activates the live Thanksgiving event instead of showing a post-event completion state.' },
       { version: '2026-11-26-3', description: 'Restored the Creator’s New Update popup and repaired the live release announcement.' },
       { version: '2026-11-26-2', description: 'Renamed the 9:00 PM outing to IDOL Walk to MTea and added gloves to Joshua’s bring list.' },
       { version: '2026-11-26-1', description: 'Broadened the dress code: any fall-colored clothing works, with no specific shirt or jeans required.' },
@@ -2592,11 +2584,6 @@ body[data-theme="evening"] .coming-that-day::before {
     ];
     function updateLiveStatus() {
       if (!liveStatusTitle || !liveStatusMessage) return;
-      if(eventDayModeEnabled){
-        liveStatusTitle.textContent='Thanksgiving Celebration Complete! 🧡';
-        liveStatusMessage.textContent='Thanks for celebrating together. See you next year!';
-        return;
-      }
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       if (today < eventDayStart) {
