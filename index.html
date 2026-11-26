@@ -1517,8 +1517,21 @@ body[data-theme="evening"] .coming-that-day::before {
           <summary><span class="history-version">Version 2026-11-26-2<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
           <div class="history-content"><ul><li>Renamed the 9:00 PM outing to IDOL Walk to MTea and added gloves to Joshua's bring list.</li></ul></div>
         </details>
+        <details class="history-entry" open>
+          <summary><span class="history-version">Version 2026-11-26-3<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Restored the Creator’s New Update popup so visitors are notified when a new website update is published.</li></ul></div>
+        </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-26-2<small>November 26, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Renamed the 9:00 PM outing to IDOL Walk to MTea and added gloves to Joshua's bring list.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-26-1<small>November 26, 2026</small></span></summary>
+          <div class="history-content"><ul><li>Broadened the dress code: any fall-colored clothing works, with no specific shirt or jeans required.</li></ul></div>
+        </details>
+
         <details class="history-entry" open>
           <summary><span class="history-version">Version 2026-11-26-1<small>November 26, 2026</small></span></summary>
           <div class="history-content"><ul><li>Broadened the dress code: any fall-colored clothing works, with no specific shirt or jeans required.</li></ul></div>
@@ -2272,9 +2285,11 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-26-1';
+    const updateVersion = '2026-11-26-3';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-26-3', description: 'Restored the Creator’s New Update popup and repaired the live release announcement.' },
+      { version: '2026-11-26-2', description: 'Renamed the 9:00 PM outing to IDOL Walk to MTea and added gloves to Joshua’s bring list.' },
       { version: '2026-11-26-1', description: 'Broadened the dress code: any fall-colored clothing works, with no specific shirt or jeans required.' },
       { version: '2026-11-25-13', description: 'Fixed the iPhone kitchen floor plan: stovetop burners now fit neatly on the island, and sink/storage labels are upright and contained in the counter.' },
       { version: '2026-11-25-12', description: 'A dedicated iPad layout adds more breathing room, refined tablet-width grids, larger touch targets, and a roomier floor plan.' },
