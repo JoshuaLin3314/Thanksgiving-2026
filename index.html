@@ -2506,7 +2506,6 @@ body[data-theme="evening"] .coming-that-day::before {
     const thanksgivingDate = new Date(2026, 10, 27, 17, 0, 0);
     const countdownMessage = document.getElementById('countdownMessage');
     function updateCountdown() {
-      if(eventDayModeEnabled){applyEventModeCompletion(true);return;}
       const remaining = thanksgivingDate.getTime() - Date.now();
       const countdownCard = document.querySelector('.countdown-card');
       if (countdownCard) {
