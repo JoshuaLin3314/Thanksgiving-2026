@@ -917,7 +917,23 @@ body[data-theme="evening"] .coming-that-day::before {
   .coming-that-day { transition: none !important; }
 }
 
-  </style>
+  
+    /* Final floor-plan positioning refinements */
+    .floorplan-seat-name.seat-top{top:14%}
+    .floorplan-seat-name.seat-bottom{bottom:14%}
+    .floorplan-seat-name.seat-upper-right{right:6%}
+    .floorplan-seat-name.seat-lower-right{right:6%}
+    .floorplan-seat-name.seat-upper-left{left:6%}
+    .floorplan-seat-name.seat-lower-left{left:6%}
+    .floorplan-kitchen .floorplan-checkin{right:18%;left:auto;top:18px;width:108px;min-height:72px;z-index:4}
+    @media(max-width:560px){
+      .floorplan-kitchen .floorplan-checkin{right:18%;left:auto;top:16px;width:92px}
+      .floorplan-seat-name.seat-top{top:14%}
+      .floorplan-seat-name.seat-bottom{bottom:14%}
+      .floorplan-seat-name.seat-upper-right,.floorplan-seat-name.seat-lower-right{right:6%}
+      .floorplan-seat-name.seat-upper-left,.floorplan-seat-name.seat-lower-left{left:6%}
+    }
+</style>
 </head>
 <body>
   <div class="falling-leaves" id="fallingLeaves">
@@ -2120,9 +2136,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-10';
+    const updateVersion = '2026-11-25-11';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-11', description: 'Moved the seating labels closer to the table and corrected the check-in table placement so it sits separately above the kitchen counter.' },
       { version: '2026-11-25-10', description: 'Moved the seating names closer to the circular table, repositioned check-in above the kitchen counter, and widened and offset the dining-room opening.' },
       { version: '2026-11-25-9', description: 'Corrected the dining-room table to be circular again, with six seats arranged around it.' },
       { version: '2026-11-25-8', description: 'Moved the check-in table to the right side of the kitchen and widened the left-side dining-room entrance.' },
