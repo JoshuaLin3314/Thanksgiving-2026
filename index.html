@@ -505,9 +505,9 @@
     .floorplan-round-table span{font-size:1.4rem}.floorplan-round-table:focus-visible{outline:4px solid #d36b32;outline-offset:4px}
     .floorplan-seat-name{position:absolute;z-index:1;padding:5px 9px;border:1px solid #dfc5a8;border-radius:999px;background:#fffaf2;color:#543a2a;box-shadow:0 3px 8px rgba(80,52,33,.12);font-size:.76rem;font-weight:700;white-space:nowrap}
     .seat-top{left:28%;top:0;transform:translateX(-50%)}.seat-upper-right{right:8%;top:18%}.seat-lower-right{right:8%;bottom:18%}.seat-bottom{left:72%;bottom:0;transform:translateX(-50%)}.seat-lower-left{left:8%;bottom:18%}.seat-upper-left{left:8%;top:18%}
-    .floorplan-opening{position:relative;height:18px;margin-top:-10px;margin-left:0;width:44px;background:#f1e6d6;border-left:7px solid #49372c;border-right:7px solid #49372c;z-index:3}
+    .floorplan-opening{position:relative;height:20px;margin-top:-10px;margin-left:0;width:60px;background:#f1e6d6;border-left:7px solid #49372c;border-right:7px solid #49372c;z-index:3}
     .floorplan-kitchen{min-height:760px;position:relative;background:repeating-linear-gradient(0deg,rgba(110,93,76,.06) 0 1px,transparent 1px 38px),repeating-linear-gradient(90deg,rgba(110,93,76,.05) 0 1px,transparent 1px 38px),#eee8df;border-left:7px solid #49372c;border-right:7px solid #49372c}
-    .floorplan-checkin{position:absolute;left:4%;top:18px;width:108px;min-height:72px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;border:2px solid #8b6546;border-radius:7px;background:linear-gradient(135deg,#b88c62,#936544);color:#fff7ec;box-shadow:0 5px 10px rgba(70,45,27,.18);text-align:center}
+    .floorplan-checkin{position:absolute;right:4%;left:auto;top:18px;width:108px;min-height:72px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;border:2px solid #8b6546;border-radius:7px;background:linear-gradient(135deg,#b88c62,#936544);color:#fff7ec;box-shadow:0 5px 10px rgba(70,45,27,.18);text-align:center}
     .floorplan-checkin span{font-size:1.1rem}.floorplan-checkin strong{font-size:.82rem}.floorplan-checkin small{font-size:.68rem;opacity:.9}
     .floorplan-walkway{position:absolute;left:6%;top:155px;bottom:90px;width:25%;border-left:2px dashed #9c704a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#79563c;text-align:center}
     .walkway-arrow{font-size:2.4rem;line-height:1}.floorplan-walkway strong{font:600 1rem 'Playfair Display',Georgia,serif}.floorplan-walkway small{font-size:.68rem}
@@ -1365,8 +1365,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-7<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Updated the kitchen floor plan to match the reference photo, including a rectangular table and the red-marked check-in location.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-25-8<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Moved the check-in table to the right side of the kitchen and widened the left-side dining-room entrance.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -2116,10 +2116,11 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-7';
+    const updateVersion = '2026-11-25-8';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
-      { version: '2026-11-25-7', description: 'Updated the kitchen floor plan to match the reference photo, including a rectangular table and the red-marked check-in location.' },
+      { version: '2026-11-25-8', description: 'Moved the check-in table to the right side of the kitchen and widened the left-side dining-room entrance.' },
+      { version: '2026-11-25-7', description: 'Updated the kitchen floor plan to match the reference photo, including the rectangular foreground table and red-marked check-in location.' },
       { version: '2026-11-25-6', description: 'Added a hole puncher to Joshua’s bring list.' },
       { version: '2026-11-25-5', description: 'Added a detailed interactive Thanksgiving floor plan with the six-person seating chart, check-in table, kitchen island, walkway, and back-door layout.' },
       { version: '2026-11-25-4', description: 'Added a clear event alcohol-policy notice directly beneath the Thanksgiving menu.' },
