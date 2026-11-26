@@ -500,11 +500,11 @@
     .floorplan-dining{height:330px;position:relative;background:repeating-linear-gradient(0deg,rgba(124,83,48,.07) 0 1px,transparent 1px 27px),linear-gradient(135deg,#d9b98f,#cda77a);border-bottom:10px solid #49372c}
     .floorplan-dining:before{content:"";position:absolute;inset:0;border:10px solid #49372c;border-bottom:0;pointer-events:none}
     .floorplan-room-label{position:absolute;top:15px;left:50%;transform:translateX(-50%);color:#553b2b;font:600 1rem 'Playfair Display',Georgia,serif}
-    .floorplan-table-area{position:absolute;width:min(88%,520px);height:230px;left:50%;top:52%;transform:translate(-50%,-50%)}
-    .floorplan-round-table{position:absolute;width:64%;height:48%;left:18%;top:26%;border-radius:14px;border:7px solid #e6c79e;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.25);cursor:pointer;font:600 .82rem 'DM Sans',sans-serif;text-align:center;z-index:2}
+    .floorplan-table-area{position:absolute;width:min(76%,360px);aspect-ratio:1;left:50%;top:52%;transform:translate(-50%,-50%)}
+    .floorplan-round-table{position:absolute;width:48%;height:48%;left:26%;top:26%;border-radius:50%;border:7px solid #e6c79e;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.25);cursor:pointer;font:600 .82rem 'DM Sans',sans-serif;text-align:center;z-index:2}
     .floorplan-round-table span{font-size:1.4rem}.floorplan-round-table:focus-visible{outline:4px solid #d36b32;outline-offset:4px}
     .floorplan-seat-name{position:absolute;z-index:1;padding:5px 9px;border:1px solid #dfc5a8;border-radius:999px;background:#fffaf2;color:#543a2a;box-shadow:0 3px 8px rgba(80,52,33,.12);font-size:.76rem;font-weight:700;white-space:nowrap}
-    .seat-top{left:28%;top:0;transform:translateX(-50%)}.seat-upper-right{right:8%;top:18%}.seat-lower-right{right:8%;bottom:18%}.seat-bottom{left:72%;bottom:0;transform:translateX(-50%)}.seat-lower-left{left:8%;bottom:18%}.seat-upper-left{left:8%;top:18%}
+    .seat-top{left:50%;top:0;transform:translateX(-50%)}.seat-upper-right{right:0;top:22%}.seat-lower-right{right:0;bottom:22%}.seat-bottom{left:50%;bottom:0;transform:translateX(-50%)}.seat-lower-left{left:0;bottom:22%}.seat-upper-left{left:0;top:22%}
     .floorplan-opening{position:relative;height:20px;margin-top:-10px;margin-left:0;width:60px;background:#f1e6d6;border-left:7px solid #49372c;border-right:7px solid #49372c;z-index:3}
     .floorplan-kitchen{min-height:760px;position:relative;background:repeating-linear-gradient(0deg,rgba(110,93,76,.06) 0 1px,transparent 1px 38px),repeating-linear-gradient(90deg,rgba(110,93,76,.05) 0 1px,transparent 1px 38px),#eee8df;border-left:7px solid #49372c;border-right:7px solid #49372c}
     .floorplan-checkin{position:absolute;right:4%;left:auto;top:18px;width:108px;min-height:72px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;border:2px solid #8b6546;border-radius:7px;background:linear-gradient(135deg,#b88c62,#936544);color:#fff7ec;box-shadow:0 5px 10px rgba(70,45,27,.18);text-align:center}
@@ -521,11 +521,11 @@
     .seating-details-dialog{width:min(92vw,520px);max-width:520px;padding:0;border:1px solid #d8c2a7;border-radius:22px;background:#fffaf2;color:#4b3325;box-shadow:0 24px 70px rgba(25,15,10,.38)}.seating-details-dialog::backdrop{background:rgba(24,17,13,.62);backdrop-filter:blur(3px)}.seating-dialog-inner{position:relative;padding:28px 22px 22px;text-align:center}
     .seating-dialog-close{position:absolute;top:10px;right:12px;width:38px;height:38px;border:1px solid #e5d3bd;border-radius:50%;background:#f4e8d8;color:#633b2b;font-size:1.5rem;cursor:pointer}
     .seating-dialog-eyebrow{color:#9a6845;font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.seating-dialog-inner h3{margin:8px 0;font:600 1.55rem 'Playfair Display',Georgia,serif}.seating-dialog-intro{color:#826c5c;font-size:.85rem}
-    .seating-detail-table{width:min(100%,420px);aspect-ratio:1.5;margin:18px auto;position:relative}.detail-round-table{position:absolute;width:58%;height:48%;left:21%;top:26%;border:7px solid #e6c79e;border-radius:12px;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.2)}.detail-round-table span{font-size:1.5rem}.detail-round-table strong{font:600 .85rem 'Playfair Display',Georgia,serif}
+    .seating-detail-table{width:min(100%,350px);aspect-ratio:1;margin:18px auto;position:relative}.detail-round-table{position:absolute;width:46%;height:46%;left:27%;top:27%;border:7px solid #e6c79e;border-radius:50%;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.2)}.detail-round-table span{font-size:1.5rem}.detail-round-table strong{font:600 .85rem 'Playfair Display',Georgia,serif}
     .detail-seat{position:absolute;min-width:76px;padding:7px 9px;border:1px solid #dfc5a8;border-radius:12px;background:#fff;box-shadow:0 3px 8px rgba(80,52,33,.1);display:flex;flex-direction:column;gap:2px;color:#4b3325}.detail-seat span{font-size:.62rem;color:#98785d}.detail-seat strong{font-size:.8rem}.detail-seat-top{top:0;left:50%;transform:translateX(-50%)}.detail-seat-upper-right{top:24%;right:0}.detail-seat-lower-right{bottom:24%;right:0}.detail-seat-bottom{bottom:0;left:50%;transform:translateX(-50%)}.detail-seat-lower-left{bottom:24%;left:0}.detail-seat-upper-left{top:24%;left:0}
     .seating-dialog-footnote{margin:4px 0 0;color:#98785d;font-size:.75rem}
     body[data-theme="evening"] .floorplan-card{background:#302724;border-color:#554239}body[data-theme="evening"] .floorplan-round-table,body[data-theme="evening"] .detail-round-table{border-color:#8d6548}body[data-theme="evening"] .seating-details-dialog{background:#302724;color:#f7e9d9;border-color:#71533e}body[data-theme="evening"] .seating-dialog-close{background:#49382f;color:#f7e9d9;border-color:#71533e}body[data-theme="evening"] .seating-dialog-inner h3,body[data-theme="evening"] .detail-seat{color:#f7e9d9}body[data-theme="evening"] .detail-seat{background:#49382f;border-color:#71533e}body[data-theme="evening"] .detail-seat span,body[data-theme="evening"] .seating-dialog-intro,body[data-theme="evening"] .seating-dialog-footnote{color:#c3aa98}
-    @media(max-width:620px){.floorplan-dining{height:280px}.floorplan-kitchen{min-height:650px}.floorplan-island{min-height:225px;right:18%;width:34%}.floorplan-checkin{width:92px;left:4%}.floorplan-walkway{left:5%;width:27%}.floorplan-seat-name{font-size:.65rem;padding:4px 6px}.floorplan-table-area{width:88%}.floorplan-right-counter{width:12%}.seating-dialog-inner{padding:28px 12px 18px}.detail-seat{min-width:65px;padding:6px 5px}.detail-seat strong{font-size:.7rem}}
+    @media(max-width:620px){.floorplan-dining{height:280px}.floorplan-kitchen{min-height:650px}.floorplan-island{min-height:225px;right:18%;width:34%}.floorplan-checkin{width:92px;right:3%;left:auto}.floorplan-walkway{left:5%;width:27%}.floorplan-seat-name{font-size:.65rem;padding:4px 6px}.floorplan-table-area{width:88%}.floorplan-right-counter{width:12%}.seating-dialog-inner{padding:28px 12px 18px}.detail-seat{min-width:65px;padding:6px 5px}.detail-seat strong{font-size:.7rem}}
 
     .seating-heading { text-align: center; margin-bottom: 18px; }
     .seating-heading h2 { font: 600 clamp(1.7rem, 4vw, 2.25rem)/1.2 'Playfair Display', Georgia, serif; margin: 0 0 8px; }
@@ -1133,7 +1133,7 @@ body[data-theme="evening"] .coming-that-day::before {
         <div class="floorplan-legend" aria-label="Floor plan legend">
           <span><i class="legend-wood"></i> Dining room</span><span><i class="legend-tile"></i> Kitchen</span><span><i class="legend-marble"></i> Cooking island</span><span><i class="legend-path"></i> Clear walkway</span><span><i class="legend-opening"></i> 2-foot opening</span>
         </div>
-        <p class="seating-note">One rectangular table · Six assigned seats · Check-in beside the archway</p>
+        <p class="seating-note">One circular dining table · Six assigned seats · Check-in beside the archway</p>
       </div>
       <dialog class="seating-details-dialog" id="seatingDetailsDialog" aria-labelledby="seatingDetailsTitle">
         <div class="seating-dialog-inner">
@@ -1150,7 +1150,7 @@ body[data-theme="evening"] .coming-that-day::before {
             <div class="detail-seat detail-seat-upper-left"><span>10 o'clock</span><strong>Henry</strong></div>
             <div class="detail-round-table"><span>🍂</span><strong>Thanksgiving</strong></div>
           </div>
-          <p class="seating-dialog-footnote">Six chairs · One rectangular dining table</p>
+          <p class="seating-dialog-footnote">Six chairs · One circular dining table</p>
         </div>
       </dialog>
     </section>
@@ -1365,8 +1365,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-8<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Moved the check-in table to the right side of the kitchen and widened the left-side dining-room entrance.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-25-9<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Corrected the dining-room table to be circular again, with six seats arranged around it.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -2116,9 +2116,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-8';
+    const updateVersion = '2026-11-25-9';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-9', description: 'Corrected the dining-room table to be circular again, with six seats arranged around it.' },
       { version: '2026-11-25-8', description: 'Moved the check-in table to the right side of the kitchen and widened the left-side dining-room entrance.' },
       { version: '2026-11-25-7', description: 'Updated the kitchen floor plan to match the reference photo, including the rectangular foreground table and red-marked check-in location.' },
       { version: '2026-11-25-6', description: 'Added a hole puncher to Joshua’s bring list.' },
