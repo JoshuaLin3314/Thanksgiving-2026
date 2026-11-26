@@ -429,6 +429,7 @@
     .color-dot.orange { background: #d97832; }
     .color-dot.brown { background: #75452f; }
     .color-dot.red { background: #a83c32; }
+    .color-dot.autumn { background: linear-gradient(135deg,#d97832 0 25%,#a83c32 25% 50%,#75452f 50% 75%,#c5a04b 75%); }
     .jeans-icon { font-style: normal; font-size: 1rem; }
     .clothing-note { margin-top: 17px; color: var(--muted); font-size: .86rem; }
     body[data-theme="evening"] .clothing-card { background: linear-gradient(120deg,#302724,#49382f); border-color:#71533e; }
@@ -1340,12 +1341,9 @@ body[data-theme="evening"] .coming-that-day::before {
           <h2 id="clothing-title">What to Wear 🍂</h2>
           <p>Show up in the colors of the season!</p>
           <div class="clothing-details">
-            <span><i class="color-dot orange"></i> Orange shirt</span>
-            <span><i class="color-dot brown"></i> Brown shirt</span>
-            <span><i class="color-dot red"></i> Red shirt</span>
-            <span><i class="jeans-icon">👖</i> Jeans</span>
+            <span><i class="color-dot autumn"></i> Any fall colors!</span>
           </div>
-          <div class="clothing-note">Choose an orange, brown, or red fall-color shirt with jeans. 🍁</div>
+          <div class="clothing-note">Wear anything in autumn colors — orange, brown, red, yellow, gold, burgundy, olive, cream, and more. No specific outfit required! 🍁</div>
         </div>
       </div>
     </section>
@@ -1515,7 +1513,11 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-25-9<small>November 25, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <summary><span class="history-version">Version 2026-11-26-1<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Broadened the dress code: any fall-colored clothing works, with no specific shirt or jeans required.</li></ul></div>
+        </details>
+        <details class="history-entry">
+          <summary><span class="history-version">Version 2026-11-25-9<small>November 25, 2026</small></span></summary>
           <div class="history-content"><ul><li>Corrected the dining-room table to be circular again, with six seats arranged around it.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
@@ -2266,9 +2268,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-13';
+    const updateVersion = '2026-11-26-1';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-26-1', description: 'Broadened the dress code: any fall-colored clothing works, with no specific shirt or jeans required.' },
       { version: '2026-11-25-13', description: 'Fixed the iPhone kitchen floor plan: stovetop burners now fit neatly on the island, and sink/storage labels are upright and contained in the counter.' },
       { version: '2026-11-25-12', description: 'A dedicated iPad layout adds more breathing room, refined tablet-width grids, larger touch targets, and a roomier floor plan.' },
       { version: '2026-11-25-11', description: 'Moved the seating labels closer to the table and corrected the check-in table placement so it sits separately above the kitchen counter.' },
@@ -2534,7 +2537,7 @@ body[data-theme="evening"] .coming-that-day::before {
       { question:'What time does check-in and roll call begin?', choices:['4:30 PM','5:00 PM','5:30 PM','6:00 PM'], answer:1, fact:'Check-in and roll call begin at 5:00 PM.' },
       { question:'When does dinner begin?', choices:['5:00 PM','5:15 PM','5:30 PM','6:00 PM'], answer:2, fact:'Dinner begins at 5:30 PM.' },
       { question:'How many seats are shown around the Thanksgiving table?', choices:['Four','Five','Six','Eight'], answer:2, fact:'There are six seats around the table.' },
-      { question:'Which colors are suggested for the Thanksgiving shirt?', choices:['Blue, green, or purple','Orange, brown, or red','Black, white, or gray','Pink, yellow, or teal'], answer:1, fact:'The suggested shirt colors are orange, brown, or red.' },
+      { question:'What is the Thanksgiving dress code?', choices:['Blue, green, or purple','Anything in fall colors','Black, white, or gray','A specific shirt and jeans'], answer:1, fact:'Anything in fall colors works — there is no specific outfit required!' },
       { question:'What is planned for 8:00 PM?', choices:['Dinner','Dessert','Card games','Check-in'], answer:1, fact:'Dessert is scheduled for 8:00 PM.' },
       { question:'What starts at 8:30 PM?', choices:['Card games','The walk to MTea','Dinner','Roll call'], answer:0, fact:'Card games begin at 8:30 PM.' },
       { question:'What time is the planned walk to MTea?', choices:['7:30 PM','8:00 PM','8:30 PM','9:00 PM'], answer:3, fact:'The walk to MTea is scheduled for 9:00 PM.' }
