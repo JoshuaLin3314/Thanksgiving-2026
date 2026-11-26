@@ -504,8 +504,12 @@
     .floorplan-round-table{position:absolute;width:48%;height:48%;left:26%;top:26%;border-radius:50%;border:7px solid #e6c79e;background:radial-gradient(circle at 35% 28%,#a96d48,#633b2b 78%);color:#fff5e7;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;box-shadow:0 6px 15px rgba(50,30,20,.25);cursor:pointer;font:600 .82rem 'DM Sans',sans-serif;text-align:center;z-index:2}
     .floorplan-round-table span{font-size:1.4rem}.floorplan-round-table:focus-visible{outline:4px solid #d36b32;outline-offset:4px}
     .floorplan-seat-name{position:absolute;z-index:1;padding:5px 9px;border:1px solid #dfc5a8;border-radius:999px;background:#fffaf2;color:#543a2a;box-shadow:0 3px 8px rgba(80,52,33,.12);font-size:.76rem;font-weight:700;white-space:nowrap}
-    .seat-top{left:50%;top:0;transform:translateX(-50%)}.seat-upper-right{right:0;top:22%}.seat-lower-right{right:0;bottom:22%}.seat-bottom{left:50%;bottom:0;transform:translateX(-50%)}.seat-lower-left{left:0;bottom:22%}.seat-upper-left{left:0;top:22%}
-    .floorplan-opening{position:relative;height:20px;margin-top:-10px;margin-left:0;width:60px;background:#f1e6d6;border-left:7px solid #49372c;border-right:7px solid #49372c;z-index:3}
+    .seat-top{left:50%;top:8%;transform:translateX(-50%)}.seat-upper-right{right:8%;top:26%}.seat-lower-right{right:8%;bottom:26%}.seat-bottom{left:50%;bottom:8%;transform:translateX(-50%)}.seat-lower-left{left:8%;bottom:26%}.seat-upper-left{left:8%;top:26%}
+    .floorplan-opening{position:relative;height:20px;margin-top:-10px;width:100%;background:linear-gradient(to right,#49372c 0 15%,transparent 15% 39%,#49372c 39% 100%) center/100% 7px no-repeat;z-index:3}
+    .floorplan-opening:before,.floorplan-opening:after{content:"";position:absolute;top:6px;width:5px;height:5px;border-radius:50%;background:#49372c}
+    .floorplan-opening:before{left:15%}.floorplan-opening:after{left:39%}
+    .floorplan-checkin{right:16%;top:18px;width:108px;min-height:72px}
+    @media(max-width:560px){.floorplan-checkin{right:14%;width:92px}.floorplan-opening{background:linear-gradient(to right,#49372c 0 12%,transparent 12% 40%,#49372c 40% 100%) center/100% 7px no-repeat}.floorplan-opening:before{left:12%}.floorplan-opening:after{left:40%}}
     .floorplan-kitchen{min-height:760px;position:relative;background:repeating-linear-gradient(0deg,rgba(110,93,76,.06) 0 1px,transparent 1px 38px),repeating-linear-gradient(90deg,rgba(110,93,76,.05) 0 1px,transparent 1px 38px),#eee8df;border-left:7px solid #49372c;border-right:7px solid #49372c}
     .floorplan-checkin{position:absolute;right:4%;left:auto;top:18px;width:108px;min-height:72px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;border:2px solid #8b6546;border-radius:7px;background:linear-gradient(135deg,#b88c62,#936544);color:#fff7ec;box-shadow:0 5px 10px rgba(70,45,27,.18);text-align:center}
     .floorplan-checkin span{font-size:1.1rem}.floorplan-checkin strong{font-size:.82rem}.floorplan-checkin small{font-size:.68rem;opacity:.9}
@@ -2116,9 +2120,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-25-9';
+    const updateVersion = '2026-11-25-10';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-25-10', description: 'Moved the seating names closer to the circular table, repositioned check-in above the kitchen counter, and widened and offset the dining-room opening.' },
       { version: '2026-11-25-9', description: 'Corrected the dining-room table to be circular again, with six seats arranged around it.' },
       { version: '2026-11-25-8', description: 'Moved the check-in table to the right side of the kitchen and widened the left-side dining-room entrance.' },
       { version: '2026-11-25-7', description: 'Updated the kitchen floor plan to match the reference photo, including the rectangular foreground table and red-marked check-in location.' },
