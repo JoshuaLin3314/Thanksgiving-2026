@@ -1226,6 +1226,24 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
     </section>
 
+    <section class="food-tracker-section coming-that-day" aria-disabled="true" aria-labelledby="foodTrackerTitle">
+      <div class="food-tracker-card">
+        <div class="food-tracker-heading"><h2 id="foodTrackerTitle">What's Cooking? 👀</h2><p>Follow every dish on our Thanksgiving menu!</p></div>
+        <div class="food-tracker-progress"><span id="foodProgressText">0 of 8 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
+        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
+        <div class="food-status-list" id="foodStatusList"><article class="food-status-item" data-food-item="0"><span class="food-status-emoji" aria-hidden="true">🧀</span><div class="food-status-copy"><strong>Mac &amp; Cheese</strong><span class="food-status-label" id="foodStatusLabel0">Not Started</span></div><span class="food-status-dot" id="foodStatusDot0" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="1"><span class="food-status-emoji" aria-hidden="true">🥔</span><div class="food-status-copy"><strong>Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</strong><span class="food-status-label" id="foodStatusLabel1">Not Started</span></div><span class="food-status-dot" id="foodStatusDot1" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="2"><span class="food-status-emoji" aria-hidden="true">🥦</span><div class="food-status-copy"><strong>Veggie Mix</strong><span class="food-status-label" id="foodStatusLabel2">Not Started</span></div><span class="food-status-dot" id="foodStatusDot2" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="3"><span class="food-status-emoji" aria-hidden="true">🍗</span><div class="food-status-copy"><strong>HEB Chicken</strong><span class="food-status-label" id="foodStatusLabel3">Not Started</span></div><span class="food-status-dot" id="foodStatusDot3" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="4"><span class="food-status-emoji" aria-hidden="true">🥖</span><div class="food-status-copy"><strong>Garlic Bread</strong><span class="food-status-label" id="foodStatusLabel4">Not Started</span></div><span class="food-status-dot" id="foodStatusDot4" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="7"><span class="food-status-emoji" aria-hidden="true">🍓</span><div class="food-status-copy"><strong>Assorted Mini Fruit Tarts</strong><span class="food-status-label" id="foodStatusLabel7">Not Started</span></div><span class="food-status-dot" id="foodStatusDot7" aria-hidden="true">○</span></article></div>
+        <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
+        <p class="food-tracker-note">Statuses sync live across devices as the host updates each dish.</p>
+      </div>
+    </section>
+
     <section class="cookbook-section" aria-labelledby="cookbookTitle">
       <div class="cookbook-cover">
         <div class="cookbook-kicker">The 2026 Thanksgiving Gathering</div>
@@ -1273,6 +1291,24 @@ body[data-theme="evening"] .coming-that-day::before {
 
 
     
+
+    <section class="public-checkin-section coming-that-day" aria-disabled="true" aria-labelledby="publicCheckinTitle">
+      <div class="public-checkin-card">
+        <div class="public-checkin-heading">
+          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
+          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
+          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
+        </div>
+        <div class="public-checkin-summary">
+          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
+          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
+        </div>
+        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
+        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
+        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
+        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
+      </div>
+    </section>
 
     <section class="seating-section" aria-labelledby="seating-title">
       <div class="seating-heading">
@@ -1494,41 +1530,9 @@ body[data-theme="evening"] .coming-that-day::before {
     
 
     <!-- Sections reserved for Thanksgiving Day -->
-    <section class="food-tracker-section coming-that-day" aria-disabled="true" aria-labelledby="foodTrackerTitle">
-      <div class="food-tracker-card">
-        <div class="food-tracker-heading"><h2 id="foodTrackerTitle">What's Cooking? 👀</h2><p>Follow every dish on our Thanksgiving menu!</p></div>
-        <div class="food-tracker-progress"><span id="foodProgressText">0 of 8 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
-        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
-        <div class="food-status-list" id="foodStatusList"><article class="food-status-item" data-food-item="0"><span class="food-status-emoji" aria-hidden="true">🧀</span><div class="food-status-copy"><strong>Mac &amp; Cheese</strong><span class="food-status-label" id="foodStatusLabel0">Not Started</span></div><span class="food-status-dot" id="foodStatusDot0" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="1"><span class="food-status-emoji" aria-hidden="true">🥔</span><div class="food-status-copy"><strong>Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</strong><span class="food-status-label" id="foodStatusLabel1">Not Started</span></div><span class="food-status-dot" id="foodStatusDot1" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="2"><span class="food-status-emoji" aria-hidden="true">🥦</span><div class="food-status-copy"><strong>Veggie Mix</strong><span class="food-status-label" id="foodStatusLabel2">Not Started</span></div><span class="food-status-dot" id="foodStatusDot2" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="3"><span class="food-status-emoji" aria-hidden="true">🍗</span><div class="food-status-copy"><strong>HEB Chicken</strong><span class="food-status-label" id="foodStatusLabel3">Not Started</span></div><span class="food-status-dot" id="foodStatusDot3" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="4"><span class="food-status-emoji" aria-hidden="true">🥖</span><div class="food-status-copy"><strong>Garlic Bread</strong><span class="food-status-label" id="foodStatusLabel4">Not Started</span></div><span class="food-status-dot" id="foodStatusDot4" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="7"><span class="food-status-emoji" aria-hidden="true">🍓</span><div class="food-status-copy"><strong>Assorted Mini Fruit Tarts</strong><span class="food-status-label" id="foodStatusLabel7">Not Started</span></div><span class="food-status-dot" id="foodStatusDot7" aria-hidden="true">○</span></article></div>
-        <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
-        <p class="food-tracker-note">Statuses sync live across devices as the host updates each dish.</p>
-      </div>
-    </section>
+    
 
-    <section class="public-checkin-section coming-that-day" aria-disabled="true" aria-labelledby="publicCheckinTitle">
-      <div class="public-checkin-card">
-        <div class="public-checkin-heading">
-          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
-          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
-          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
-        </div>
-        <div class="public-checkin-summary">
-          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
-          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
-        </div>
-        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
-        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
-        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
-        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
-      </div>
-    </section>
+    
 
 
 
@@ -1539,8 +1543,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-27-3<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Added the fruit tart photo and an Assorted Mini Fruit Tarts card to the family cookbook.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-27-4<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Moved What’s Cooking above the family cookbook and Guest Check-In above the floor plan.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -2393,9 +2397,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-27-3';
+    const updateVersion = '2026-11-27-4';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-27-4', description: 'Moved What’s Cooking above the family cookbook and Guest Check-In above the floor plan.' },
       { version: '2026-11-27-3', description: 'Added the fruit tart photo and an Assorted Mini Fruit Tarts card to the family cookbook.' },
       { version: '2026-11-27-2', description: 'Added assorted mini fruit tarts to the dessert menu and live What’s Cooking tracker.' },
       { version: '2026-11-27-1', description: 'Added assorted mini fruit tarts to the dessert menu with a description of the assortment.' },
