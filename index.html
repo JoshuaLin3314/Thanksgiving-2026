@@ -1169,6 +1169,24 @@ body[data-theme="evening"] .coming-that-day::before {
       <div class="event-mode-next" id="eventModeNext">Enjoy the food, activities, and time together! 🍂</div>
     </section>
 
+    <section class="public-checkin-section coming-that-day" aria-disabled="true" aria-labelledby="publicCheckinTitle">
+      <div class="public-checkin-card">
+        <div class="public-checkin-heading">
+          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
+          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
+          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
+        </div>
+        <div class="public-checkin-summary">
+          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
+          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
+        </div>
+        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
+        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
+        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
+        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
+      </div>
+    </section>
+
     <section class="countdown-section" aria-label="Countdown to Thanksgiving">
       <div class="countdown-card">
         <div class="countdown-eyebrow">The celebration is getting closer</div>
@@ -1292,23 +1310,7 @@ body[data-theme="evening"] .coming-that-day::before {
 
     
 
-    <section class="public-checkin-section coming-that-day" aria-disabled="true" aria-labelledby="publicCheckinTitle">
-      <div class="public-checkin-card">
-        <div class="public-checkin-heading">
-          <div class="public-checkin-eyebrow">A warm welcome starts here</div>
-          <h2 id="publicCheckinTitle">Guest Check-In 👋</h2>
-          <p>See who's arrived! Our hosts keep this board updated throughout the evening.</p>
-        </div>
-        <div class="public-checkin-summary">
-          <div><strong id="publicCheckinCount">0 / 6</strong><span>Guests arrived</span></div>
-          <strong class="public-checkin-percent" id="publicCheckinPercent">0%</strong>
-        </div>
-        <div class="public-checkin-progress" role="progressbar" aria-label="Guest arrival progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="publicCheckinProgress"><span id="publicCheckinFill"></span></div>
-        <div class="public-checkin-list" id="publicCheckinList" aria-live="polite"></div>
-        <p class="public-checkin-live" id="publicCheckinStatus" role="status" aria-live="polite">Connecting to the live arrival board…</p>
-        <p class="public-checkin-note">🔒 Check-ins can only be changed by the event hosts.</p>
-      </div>
-    </section>
+    
 
     <section class="seating-section" aria-labelledby="seating-title">
       <div class="seating-heading">
@@ -1543,8 +1545,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-27-4<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Moved What’s Cooking above the family cookbook and Guest Check-In above the floor plan.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-27-5<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Moved Guest Check-In above the countdown.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -2397,9 +2399,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-27-4';
+    const updateVersion = '2026-11-27-5';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-27-5', description: 'Moved Guest Check-In above the countdown.' },
       { version: '2026-11-27-4', description: 'Moved What’s Cooking above the family cookbook and Guest Check-In above the floor plan.' },
       { version: '2026-11-27-3', description: 'Added the fruit tart photo and an Assorted Mini Fruit Tarts card to the family cookbook.' },
       { version: '2026-11-27-2', description: 'Added assorted mini fruit tarts to the dessert menu and live What’s Cooking tracker.' },
