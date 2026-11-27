@@ -1203,6 +1203,7 @@ body[data-theme="evening"] .coming-that-day::before {
         <div class="menu-course">
           <div class="menu-course-heading"><span>03</span><h3>A Sweet Finish · Dessert</h3></div>
           <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Sweet Potato Casserole</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A smooth, gently spiced sweet potato casserole finished with a sweet, golden topping.</p><a class="menu-recipe-link" href="https://www.allrecipes.com/recipe/13478/sweet-potato-casserole-ii/" target="_blank" rel="noopener noreferrer">Open family cookbook recipe ↗</a><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
+          <details class="menu-item menu-item-details"><summary class="menu-item-summary"><span class="menu-marker" aria-hidden="true">✦</span><span class="menu-item-name">Assorted Mini Fruit Tarts</span><span class="menu-tap-hint"><span class="menu-hint-closed">View details +</span><span class="menu-hint-open">Hide details −</span></span></summary><div class="menu-detail-expanded"><p>A beautiful assortment of bite-sized pastries topped with colorful fruit, including strawberries, raspberries, blueberries, and green grapes, alongside creamy and chocolate-topped varieties.</p><p class="menu-host-note">For ingredient or allergy questions, please check with the hosts.</p></div></details>
         </div>
         <div class="menu-course">
           <div class="menu-course-heading"><span>04</span><h3>To Sip · Drinks</h3></div>
@@ -1530,8 +1531,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-26-7<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Added a fire extinguisher to Joshua’s bring list.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-27-1<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added assorted mini fruit tarts to the dessert menu with a description of the assortment.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -2383,9 +2384,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-26-7';
+    const updateVersion = '2026-11-27-1';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-27-1', description: 'Added assorted mini fruit tarts to the dessert menu with a description of the assortment.' },
       { version: '2026-11-26-7', description: 'Added a fire extinguisher to Joshua’s bring list.' },
       { version: '2026-11-26-6', description: 'Expanded the shared gray-out controls to include the entire invitation and footer, in addition to individual sections.' },
       { version: '2026-11-26-5', description: 'Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.' },
