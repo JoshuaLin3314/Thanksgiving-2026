@@ -1490,15 +1490,16 @@ body[data-theme="evening"] .coming-that-day::before {
     <section class="food-tracker-section coming-that-day" aria-disabled="true" aria-labelledby="foodTrackerTitle">
       <div class="food-tracker-card">
         <div class="food-tracker-heading"><h2 id="foodTrackerTitle">What's Cooking? 👀</h2><p>Follow every dish on our Thanksgiving menu!</p></div>
-        <div class="food-tracker-progress"><span id="foodProgressText">0 of 7 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
-        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
+        <div class="food-tracker-progress"><span id="foodProgressText">0 of 8 dishes ready</span><strong id="foodProgressPercent">0%</strong></div>
+        <div class="food-tracker-bar" role="progressbar" aria-label="Thanksgiving dishes ready" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="foodProgressBar"><div class="food-tracker-fill" id="foodProgressFill"></div></div>
         <div class="food-status-list" id="foodStatusList"><article class="food-status-item" data-food-item="0"><span class="food-status-emoji" aria-hidden="true">🧀</span><div class="food-status-copy"><strong>Mac &amp; Cheese</strong><span class="food-status-label" id="foodStatusLabel0">Not Started</span></div><span class="food-status-dot" id="foodStatusDot0" aria-hidden="true">○</span></article>
 <article class="food-status-item" data-food-item="1"><span class="food-status-emoji" aria-hidden="true">🥔</span><div class="food-status-copy"><strong>Mashed Potato Gratin (1/2 Scalloped, ½ mashed)</strong><span class="food-status-label" id="foodStatusLabel1">Not Started</span></div><span class="food-status-dot" id="foodStatusDot1" aria-hidden="true">○</span></article>
 <article class="food-status-item" data-food-item="2"><span class="food-status-emoji" aria-hidden="true">🥦</span><div class="food-status-copy"><strong>Veggie Mix</strong><span class="food-status-label" id="foodStatusLabel2">Not Started</span></div><span class="food-status-dot" id="foodStatusDot2" aria-hidden="true">○</span></article>
 <article class="food-status-item" data-food-item="3"><span class="food-status-emoji" aria-hidden="true">🍗</span><div class="food-status-copy"><strong>HEB Chicken</strong><span class="food-status-label" id="foodStatusLabel3">Not Started</span></div><span class="food-status-dot" id="foodStatusDot3" aria-hidden="true">○</span></article>
 <article class="food-status-item" data-food-item="4"><span class="food-status-emoji" aria-hidden="true">🥖</span><div class="food-status-copy"><strong>Garlic Bread</strong><span class="food-status-label" id="foodStatusLabel4">Not Started</span></div><span class="food-status-dot" id="foodStatusDot4" aria-hidden="true">○</span></article>
 <article class="food-status-item" data-food-item="5"><span class="food-status-emoji" aria-hidden="true">🥑</span><div class="food-status-copy"><strong>Chips and Guac</strong><span class="food-status-label" id="foodStatusLabel5">Not Started</span></div><span class="food-status-dot" id="foodStatusDot5" aria-hidden="true">○</span></article>
-<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article></div>
+<article class="food-status-item" data-food-item="6"><span class="food-status-emoji" aria-hidden="true">🍠</span><div class="food-status-copy"><strong>Marshmallow Sweet Potato Cassarole</strong><span class="food-status-label" id="foodStatusLabel6">Not Started</span></div><span class="food-status-dot" id="foodStatusDot6" aria-hidden="true">○</span></article>
+<article class="food-status-item" data-food-item="7"><span class="food-status-emoji" aria-hidden="true">🍓</span><div class="food-status-copy"><strong>Assorted Mini Fruit Tarts</strong><span class="food-status-label" id="foodStatusLabel7">Not Started</span></div><span class="food-status-dot" id="foodStatusDot7" aria-hidden="true">○</span></article></div>
         <div class="food-all-ready" id="foodAllReady" role="status">🎉 DINNER IS READY! 🍽️</div>
         <p class="food-tracker-note">Statuses sync live across devices as the host updates each dish.</p>
       </div>
@@ -1531,8 +1532,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-27-1<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Added assorted mini fruit tarts to the dessert menu with a description of the assortment.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-27-2<small>November 27, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added assorted mini fruit tarts to the dessert menu and live What’s Cooking tracker.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -1834,7 +1835,8 @@ body[data-theme="evening"] .coming-that-day::before {
 <label class="food-admin-row"><span>🍗 HEB Chicken</span><select data-food-status="3" aria-label="Status for HEB Chicken"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
 <label class="food-admin-row"><span>🥖 Garlic Bread</span><select data-food-status="4" aria-label="Status for Garlic Bread"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
 <label class="food-admin-row"><span>🥑 Chips and Guac</span><select data-food-status="5" aria-label="Status for Chips and Guac"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
-<label class="food-admin-row"><span>🍠 Marshmallow Sweet Potato Cassarole</span><select data-food-status="6" aria-label="Status for Marshmallow Sweet Potato Cassarole"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label></div>
+<label class="food-admin-row"><span>🍠 Marshmallow Sweet Potato Cassarole</span><select data-food-status="6" aria-label="Status for Marshmallow Sweet Potato Cassarole"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label>
+<label class="food-admin-row"><span>🍓 Assorted Mini Fruit Tarts</span><select data-food-status="7" aria-label="Status for Assorted Mini Fruit Tarts"><option value="Not Started">Not Started</option><option value="In Progress">In Progress</option><option value="Ready!">Ready!</option></select></label></div>
         <button class="host-checkin-reset" id="foodStatusReset" type="button" style="margin-top:12px">Reset Food Statuses ↻</button>
       </div>
 
@@ -2026,7 +2028,7 @@ body[data-theme="evening"] .coming-that-day::before {
     });
 
     // Shared Thanksgiving food tracker powered by Supabase.
-    const foodStatusNames=["Mac & Cheese","Mashed Potato Gratin (1/2 Scalloped, ½ mashed)","Veggie Mix","HEB Chicken","Garlic Bread","Chips and Guac","Marshmallow Sweet Potato Cassarole"];
+    const foodStatusNames=["Mac & Cheese","Mashed Potato Gratin (1/2 Scalloped, ½ mashed)","Veggie Mix","HEB Chicken","Garlic Bread","Chips and Guac","Marshmallow Sweet Potato Cassarole","Assorted Mini Fruit Tarts"];
     const foodStatusOptions=['Not Started','In Progress','Ready!'];
     let foodStatuses={};let hostIsSignedIn=false;
     const hostAuthMessage=document.getElementById('hostAuthMessage'),hostLoginForm=document.getElementById('hostLoginForm'),hostSignedIn=document.getElementById('hostSignedIn'),hostProtectedControls=document.getElementById('hostProtectedControls');
@@ -2384,9 +2386,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-27-1';
+    const updateVersion = '2026-11-27-2';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-27-2', description: 'Added assorted mini fruit tarts to the dessert menu and live What’s Cooking tracker.' },
       { version: '2026-11-27-1', description: 'Added assorted mini fruit tarts to the dessert menu with a description of the assortment.' },
       { version: '2026-11-26-7', description: 'Added a fire extinguisher to Joshua’s bring list.' },
       { version: '2026-11-26-6', description: 'Expanded the shared gray-out controls to include the entire invitation and footer, in addition to individual sections.' },
