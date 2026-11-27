@@ -1479,6 +1479,7 @@ body[data-theme="evening"] .coming-that-day::before {
           <li>The oven</li>
           <li>Hole puncher</li>
           <li>Gloves</li>
+          <li>Fire extinguisher</li>
         </ul>
       </div>
     </section>
@@ -1529,8 +1530,8 @@ body[data-theme="evening"] .coming-that-day::before {
       </div>
       <div class="history-list">
         <details class="history-entry" open>
-          <summary><span class="history-version">Version 2026-11-26-6<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
-          <div class="history-content"><ul><li>Expanded the shared gray-out controls to include the entire invitation and footer, in addition to individual sections.</li></ul></div>
+          <summary><span class="history-version">Version 2026-11-26-7<small>November 26, 2026</small></span><span class="history-current">Latest Update</span></summary>
+          <div class="history-content"><ul><li>Added a fire extinguisher to Joshua’s bring list.</li></ul></div>
         </details>
         <button class="history-previous-button" id="previousUpdatesButton" type="button" aria-expanded="false" aria-controls="previousUpdates">View Previous Updates ↓</button>
         <div class="history-previous" id="previousUpdates" hidden>
@@ -2382,9 +2383,10 @@ body[data-theme="evening"] .coming-that-day::before {
 
     const updateModal = document.getElementById('updateModal');
     const refreshUpdate = document.getElementById('refreshUpdate');
-    const updateVersion = '2026-11-26-6';
+    const updateVersion = '2026-11-26-7';
     // Releases are listed newest first; always select the first entry.
     const updateAnnouncements = [
+      { version: '2026-11-26-7', description: 'Added a fire extinguisher to Joshua’s bring list.' },
       { version: '2026-11-26-6', description: 'Expanded the shared gray-out controls to include the entire invitation and footer, in addition to individual sections.' },
       { version: '2026-11-26-5', description: 'Added shared host controls to gray out individual website sections for every visitor, with live syncing and restore options.' },
       { version: '2026-11-26-4', description: 'Corrected Event Day Mode so it activates the live Thanksgiving event instead of showing a post-event completion state.' },
